@@ -1,0 +1,26 @@
+{
+  "name": "learn-cangjie",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run build:rescript && vite build",
+    "build:rescript": "rescript",
+    "preview": "vite preview",
+    "clean": "rescript clean",
+    "res:watch": "rescript -w",
+    "res:build": "rescript"
+  },
+  "dependencies": {
+    "@rescript/react": "^0.12.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "rescript": "^11.0.1",
+    "sass": "^1.69.5",
+    "vite": "^5.0.8"
+  }
+}
