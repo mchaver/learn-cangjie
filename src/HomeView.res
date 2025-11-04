@@ -3,7 +3,7 @@
 open Types
 
 @react.component
-let make = (~onStartLearning: unit => unit, ~userProgress: userProgress) => {
+let make = (~onStartLearning: unit => unit, ~onPlacementTest: unit => unit, ~userProgress: userProgress) => {
   let completedCount = userProgress.completedLessons->Js.Array2.length
   let totalLessons = CangjieData.getAllLessons()->Js.Array2.length
 
@@ -19,6 +19,24 @@ let make = (~onStartLearning: unit => unit, ~userProgress: userProgress) => {
             {React.string(`${Belt.Int.toString(completedCount)} / ${Belt.Int.toString(totalLessons)}`)}
           </div>
         </div>
+        {switch userProgress.placementResult {
+        | Some(result) =>
+          <>
+            <div className="stat-item">
+              <div className="stat-label"> {React.string("程度測驗準確率")} </div>
+              <div className="stat-value">
+                {React.string(`${Js.Float.toFixedWithPrecision(result.accuracy *. 100.0, ~digits=1)}%`)}
+              </div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-label"> {React.string("程度測驗速度")} </div>
+              <div className="stat-value">
+                {React.string(`${Js.Float.toFixedWithPrecision(result.speed, ~digits=1)} 字/分`)}
+              </div>
+            </div>
+          </>
+        | None => React.null
+        }}
       </div>
 
       <div className="home-actions">
@@ -29,6 +47,11 @@ let make = (~onStartLearning: unit => unit, ~userProgress: userProgress) => {
             "開始學習"
           })}
         </button>
+        {!userProgress.placementTestTaken
+          ? <button className="btn btn-secondary btn-large" onClick={_ => onPlacementTest()}>
+              {React.string("程度測驗")}
+            </button>
+          : React.null}
       </div>
 
       <div className="home-info">

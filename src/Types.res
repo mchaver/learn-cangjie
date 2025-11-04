@@ -12,17 +12,28 @@ type characterInfo = {
   radicals: option<array<string>>, // Visual breakdown of radicals
 }
 
+// Lesson category
+type lessonCategory =
+  | Radicals      // Basic radicals
+  | CommonWords   // Common 2-3 character words
+  | Phrases       // Longer phrases
+  | Chengyu       // 成語 (4-character idioms)
+  | Sentences     // Full sentences
+  | Custom        // User-created lessons
+
 // Lesson type
 type lessonType =
   | Introduction  // Learn new radicals
   | Practice      // Practice with hints
-  | Test         // Timed test without hints
+  | Test          // Timed test without hints
+  | PlacementTest // Determine user's level
 
 // A single lesson
 type lesson = {
   id: int,
   title: string,
   description: string,
+  category: lessonCategory,
   lessonType: lessonType,
   introducedKeys: array<cangjieKey>, // Keys introduced in this lesson
   characters: array<characterInfo>,
@@ -40,12 +51,21 @@ type lessonProgress = {
   lastAttemptDate: option<Js.Date.t>,
 }
 
+// Placement test result
+type placementResult = {
+  accuracy: float,
+  speed: float,
+  recommendedLessonId: int,
+  date: Js.Date.t,
+}
+
 // User's overall progress
 type userProgress = {
   completedLessons: array<int>,
   lessonProgress: array<lessonProgress>,
   currentLesson: int,
   placementTestTaken: bool,
+  placementResult: option<placementResult>,
 }
 
 // Typing session statistics
