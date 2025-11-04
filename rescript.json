@@ -1,0 +1,21 @@
+{
+  "name": "learn-cangjie",
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    }
+  ],
+  "package-specs": [
+    {
+      "module": "esmodule",
+      "in-source": true
+    }
+  ],
+  "suffix": ".bs.js",
+  "bs-dependencies": ["@rescript/react"],
+  "jsx": {
+    "version": 4,
+    "mode": "automatic"
+  }
+}

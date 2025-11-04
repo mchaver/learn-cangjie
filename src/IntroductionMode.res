@@ -1,0 +1,60 @@
+// Introduction mode - teaches new radicals
+
+open Types
+
+@react.component
+let make = (~lesson: lesson, ~onContinue: unit => unit) => {
+  <div className="introduction-mode">
+    <div className="intro-content">
+      <h2> {React.string("新字根介紹")} </h2>
+      <p className="intro-description"> {React.string(lesson.description)} </p>
+
+      <div className="radicals-grid">
+        {lesson.introducedKeys
+        ->Js.Array2.map(key => {
+          <div key={CangjieUtils.keyToString(key)} className="radical-card">
+            <div className="radical-key"> {React.string(CangjieUtils.keyToString(key))} </div>
+            <div className="radical-char"> {React.string(CangjieUtils.keyToRadicalName(key))} </div>
+            <div className="radical-description">
+              {React.string(CangjieUtils.keyToDescription(key))}
+            </div>
+          </div>
+        })
+        ->React.array}
+      </div>
+
+      <div className="example-characters">
+        <h3> {React.string("範例字符")} </h3>
+        <div className="characters-list">
+          {lesson.characters
+          ->Js.Array2.map(charInfo => {
+            <div key={charInfo.character} className="character-example">
+              <div className="character-display"> {React.string(charInfo.character)} </div>
+              <div className="character-code">
+                {React.string(CangjieUtils.keysToCode(charInfo.cangjieCode))}
+              </div>
+              <div className="character-breakdown">
+                {charInfo.cangjieCode
+                ->Js.Array2.map(key => {
+                  <span key={CangjieUtils.keyToString(key)} className="code-part">
+                    {React.string(
+                      `${CangjieUtils.keyToString(key)}(${CangjieUtils.keyToRadicalName(key)})`,
+                    )}
+                  </span>
+                })
+                ->React.array}
+              </div>
+            </div>
+          })
+          ->React.array}
+        </div>
+      </div>
+
+      <div className="intro-actions">
+        <button className="btn btn-primary btn-large" onClick={_ => onContinue()}>
+          {React.string("開始練習")}
+        </button>
+      </div>
+    </div>
+  </div>
+}
