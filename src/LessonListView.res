@@ -6,15 +6,6 @@ open Types
 let make = (~onLessonSelect: int => unit, ~onBack: unit => unit, ~userProgress: userProgress) => {
   let lessons = CangjieData.getAllLessons()
 
-  let getLessonTypeIcon = (lessonType: lessonType): string => {
-    switch lessonType {
-    | Introduction => "📖"
-    | Practice => "✍️"
-    | Test => "📝"
-    | PlacementTest => "🎯"
-    }
-  }
-
   let getLessonTypeLabel = (lessonType: lessonType): string => {
     switch lessonType {
     | Introduction => "介紹"
@@ -46,15 +37,12 @@ let make = (~onLessonSelect: int => unit, ~onBack: unit => unit, ~userProgress: 
           onClick={_ => onLessonSelect(lesson.id)}>
           <div className="lesson-item-header">
             <div className="lesson-type">
-              <span className="lesson-type-icon">
-                {React.string(getLessonTypeIcon(lesson.lessonType))}
-              </span>
               <span className="lesson-type-label">
                 {React.string(getLessonTypeLabel(lesson.lessonType))}
               </span>
             </div>
             {isCompleted
-              ? <span className="lesson-status-badge completed"> {React.string("✓ 已完成")} </span>
+              ? <span className="lesson-status-badge completed"> {React.string("已完成")} </span>
               : <span className="lesson-status-badge"> {React.string("未完成")} </span>}
           </div>
 

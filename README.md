@@ -4,16 +4,18 @@ A progressive web application for learning the Cangjie (倉頡) input method, bu
 
 ## Features
 
-- 📚 **Progressive Lessons** - Learn Cangjie radicals step by step, 5 at a time
-- ✍️ **Practice Mode** - Practice with visual hints and decomposition on hover
-- 📝 **Test Mode** - Timed tests to assess your proficiency
-- 🎯 **Placement Test** - Assess your current level and start from the right lesson
-- 📝 **Word & Phrase Practice** - Practice common words, chengyu (成語), and phrases
-- 🗄️ **Comprehensive Database** - 68,000+ characters from Cangjie 5 database
-- 📊 **Progress Tracking** - Track your accuracy, speed (CPM), and completion
-- 💾 **Auto-save** - Your progress is automatically saved to localStorage
-- 📱 **Responsive** - Works on desktop and mobile devices
-- 🇹🇼 **Traditional Chinese** - All content uses Traditional Chinese characters
+- **Progressive Lessons** - Learn Cangjie radicals step by step, 5 at a time
+- **Practice Mode** - Practice with visual hints and decomposition on hover
+- **Test Mode** - Timed tests to assess your proficiency
+- **Placement Test** - Assess your current level and start from the right lesson
+- **Word & Phrase Practice** - Practice common words, chengyu (成語), and sentences
+- **Dictionary/Search** - Search 68,000+ characters by character or Cangjie code
+- **Custom Lesson Generator** - Create lessons from any text or by difficulty level
+- **Comprehensive Database** - 68,000+ characters from Cangjie 5 database
+- **Progress Tracking** - Track your accuracy, speed (CPM), and completion
+- **Auto-save** - Your progress is automatically saved to localStorage
+- **Responsive** - Works on desktop and mobile devices
+- **Traditional Chinese** - All content uses Traditional Chinese characters
 
 ## Getting Started
 

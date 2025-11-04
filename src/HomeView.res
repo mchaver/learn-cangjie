@@ -3,7 +3,13 @@
 open Types
 
 @react.component
-let make = (~onStartLearning: unit => unit, ~onPlacementTest: unit => unit, ~userProgress: userProgress) => {
+let make = (
+  ~onStartLearning: unit => unit,
+  ~onPlacementTest: unit => unit,
+  ~onDictionary: unit => unit,
+  ~onLessonGenerator: unit => unit,
+  ~userProgress: userProgress,
+) => {
   let completedCount = userProgress.completedLessons->Js.Array2.length
   let totalLessons = CangjieData.getAllLessons()->Js.Array2.length
 
@@ -54,6 +60,20 @@ let make = (~onStartLearning: unit => unit, ~onPlacementTest: unit => unit, ~use
           : React.null}
       </div>
 
+      <div className="home-tools">
+        <h2> {React.string("工具與功能")} </h2>
+        <div className="tools-grid">
+          <button className="tool-card" onClick={_ => onDictionary()}>
+            <h3> {React.string("倉頡字典")} </h3>
+            <p> {React.string("查詢漢字的倉頡碼或根據倉頡碼查字")} </p>
+          </button>
+          <button className="tool-card" onClick={_ => onLessonGenerator()}>
+            <h3> {React.string("自訂練習")} </h3>
+            <p> {React.string("輸入任何文字或按難度生成練習課程")} </p>
+          </button>
+        </div>
+      </div>
+
       <div className="home-info">
         <h2> {React.string("關於倉頡輸入法")} </h2>
         <p>
@@ -63,16 +83,20 @@ let make = (~onStartLearning: unit => unit, ~onPlacementTest: unit => unit, ~use
         </p>
         <div className="features">
           <div className="feature-item">
-            <h3> {React.string("📚 系統化學習")} </h3>
+            <h3> {React.string("系統化學習")} </h3>
             <p> {React.string("從基礎字根開始，逐步學習所有倉頡字根")} </p>
           </div>
           <div className="feature-item">
-            <h3> {React.string("✍️ 實踐練習")} </h3>
+            <h3> {React.string("實踐練習")} </h3>
             <p> {React.string("通過練習模式熟悉字根組合")} </p>
           </div>
           <div className="feature-item">
-            <h3> {React.string("📊 追蹤進度")} </h3>
+            <h3> {React.string("追蹤進度")} </h3>
             <p> {React.string("記錄您的準確率和打字速度")} </p>
+          </div>
+          <div className="feature-item">
+            <h3> {React.string("字典查詢")} </h3>
+            <p> {React.string("68,000+ 字符的完整倉頡資料庫")} </p>
           </div>
         </div>
       </div>

@@ -155,6 +155,80 @@ let chengyu3 = [
   makeChar("異", "YGWJ", None),
 ]
 
+// Sentence practice data
+let sentence1 = [
+  makeChar("你", "ONF", None),
+  makeChar("好", "VND", None),
+  makeChar("嗎", "RMMR", None),
+]
+
+let sentence2 = [
+  makeChar("我", "HQO", None),
+  makeChar("很", "HPHPM", None),
+  makeChar("好", "VND", None),
+]
+
+let sentence3 = [
+  makeChar("今", "OIN", None),
+  makeChar("天", "MK", None),
+  makeChar("天", "MK", None),
+  makeChar("氣", "ONMVN", None),
+  makeChar("很", "HPHPM", None),
+  makeChar("好", "VND", None),
+]
+
+let sentence4 = [
+  makeChar("謝", "YROMR", None),
+  makeChar("謝", "YROMR", None),
+  makeChar("你", "ONF", None),
+]
+
+let sentence5 = [
+  makeChar("我", "HQO", None),
+  makeChar("喜", "GRHR", None),
+  makeChar("歡", "MCNO", None),
+  makeChar("學", "GOMB", None),
+  makeChar("習", "QMFF", None),
+  makeChar("中", "L", None),
+  makeChar("文", "YOK", None),
+]
+
+let sentence6 = [
+  makeChar("學", "GOMB", None),
+  makeChar("習", "QMFF", None),
+  makeChar("倉", "OIHS", None),
+  makeChar("頡", "YKMBC", None),
+  makeChar("輸", "XXSJ", None),
+  makeChar("入", "OH", None),
+  makeChar("法", "EILE", None),
+  makeChar("可", "MNIR", None),
+  makeChar("以", "VFHS", None),
+  makeChar("提", "QNAU", None),
+  makeChar("高", "YCOK", None),
+  makeChar("打", "QMN", None),
+  makeChar("字", "JKND", None),
+  makeChar("速", "SMYFD", None),
+  makeChar("度", "KJSO", None),
+]
+
+let sentence7 = [
+  makeChar("中", "L", None),
+  makeChar("文", "YOK", None),
+  makeChar("是", "AMYO", None),
+  makeChar("世", "PT", None),
+  makeChar("界", "WLMC", None),
+  makeChar("上", "YM", None),
+  makeChar("使", "OJLN", None),
+  makeChar("用", "BQ", None),
+  makeChar("人", "O", None),
+  makeChar("數", "OKOK", None),
+  makeChar("最", "BTJE", None),
+  makeChar("多", "NMQ", None),
+  makeChar("的", "WJK", None),
+  makeChar("語", "YRNOB", None),
+  makeChar("言", "YMCR", None),
+]
+
 // Placement test characters (mix of all difficulty levels)
 let placementTestChars = [
   makeChar("我", "HQO", None),
@@ -247,6 +321,29 @@ let getAllLessons = (): array<lesson> => {
       Js.Array2.concat(chengyu1, Js.Array2.concat(chengyu2, chengyu3))),
   ]
 
+  let sentenceLessons = [
+    makeLesson(26, "句子練習（一）：你好嗎", "練習簡單問候語",
+      Sentences, Practice, [], sentence1),
+    makeLesson(27, "句子練習（二）：我很好", "練習簡單回答",
+      Sentences, Practice, [], sentence2),
+    makeLesson(28, "句子練習（三）：今天天氣很好", "練習描述天氣",
+      Sentences, Practice, [], sentence3),
+    makeLesson(29, "句子練習（四）：謝謝你", "練習感謝用語",
+      Sentences, Practice, [], sentence4),
+    makeLesson(30, "句子練習（五）：我喜歡學習中文", "練習表達喜好",
+      Sentences, Practice, [], sentence5),
+    makeLesson(31, "句子練習（六）：長句練習", "練習較長的句子",
+      Sentences, Practice, [], sentence6),
+    makeLesson(32, "句子練習（七）：中文語言", "練習描述性長句",
+      Sentences, Practice, [], sentence7),
+    makeLesson(33, "句子綜合測驗", "測試句子打字能力",
+      Sentences, Test, [],
+      Js.Array2.concat(
+        sentence1,
+        Js.Array2.concat(sentence2, Js.Array2.concat(sentence3, sentence4))
+      )),
+  ]
+
   // Placement test
   let placementTest = [
     makeLesson(100, "程度測驗", "測試您的倉頡輸入水平",
@@ -256,7 +353,13 @@ let getAllLessons = (): array<lesson> => {
   // Combine all lessons
   Js.Array2.concat(
     basicRadicalLessons,
-    Js.Array2.concat(wordLessons, Js.Array2.concat(chengyuLessons, placementTest))
+    Js.Array2.concat(
+      wordLessons,
+      Js.Array2.concat(
+        chengyuLessons,
+        Js.Array2.concat(sentenceLessons, placementTest)
+      )
+    )
   )
 }
 
