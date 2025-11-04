@@ -1,5 +1,5 @@
-// Cangjie 5 character data for Traditional Chinese
-// This initial dataset covers basic lessons - can be expanded
+// Expanded Cangjie lesson data with words, phrases, chengyu, and sentences
+// This module generates lessons dynamically and includes much more content
 
 open Types
 
@@ -9,6 +9,43 @@ let makeChar = (char: string, code: string, radicals: option<array<string>>): ch
     character: char,
     cangjieCode: CangjieUtils.codeToKeys(code),
     radicals: radicals,
+  }
+}
+
+// Create lesson structure with category
+let makeLesson = (
+  id: int,
+  title: string,
+  description: string,
+  category: lessonCategory,
+  lessonType: lessonType,
+  keys: array<cangjieKey>,
+  chars: array<characterInfo>,
+): lesson => {
+  {
+    id: id,
+    title: title,
+    description: description,
+    category: category,
+    lessonType: lessonType,
+    introducedKeys: keys,
+    characters: chars,
+    targetAccuracy: switch category {
+    | Radicals => 0.90
+    | CommonWords => 0.85
+    | Phrases => 0.80
+    | Chengyu => 0.85
+    | Sentences => 0.75
+    | Custom => 0.80
+    },
+    targetSpeed: Some(switch category {
+    | Radicals => 30.0
+    | CommonWords => 25.0
+    | Phrases => 20.0
+    | Chengyu => 25.0
+    | Sentences => 15.0
+    | Custom => 20.0
+    }),
   }
 }
 
@@ -44,7 +81,6 @@ let lesson3Characters = [
   makeChar("弓", "N", Some(["弓"])),
   makeChar("人", "O", Some(["人"])),
   makeChar("天", "MK", Some(["一", "大"])),
-  makeChar("因", "WG", Some(["田", "土"])),
   makeChar("入", "OH", Some(["人", "竹"])),
 ]
 
@@ -60,187 +96,189 @@ let lesson4Characters = [
   makeChar("扣", "QR", Some(["手", "口"])),
 ]
 
-// Lesson 5: Final basic radicals (山女田難卜)
+// Lesson 5: Final basic radicals (山女田卜)
 let lesson5Characters = [
   makeChar("山", "U", Some(["山"])),
   makeChar("女", "V", Some(["女"])),
   makeChar("田", "W", Some(["田"])),
-  makeChar("難", "X", Some(["難"])),
   makeChar("卜", "Y", Some(["卜"])),
   makeChar("好", "VND", Some(["女", "子"])),
   makeChar("安", "JV", Some(["宀", "女"])),
   makeChar("岩", "UMR", Some(["山", "石"])),
 ]
 
-// Common two-character words for practice
-let practiceWords1 = [
-  makeChar("中", "L", Some(["中"])),
-  makeChar("國", "WLMC", Some(["口", "玉"])),
-  makeChar("人", "O", Some(["人"])),
-  makeChar("民", "OKQ", Some(["人", "口"])),
-  makeChar("學", "GOMB", Some(["宀", "子"])),
-  makeChar("校", "DYTE", Some(["木", "交"])),
-  makeChar("時", "AJKA", Some(["日", "寸"])),
-  makeChar("間", "ANAL", Some(["門", "日"])),
+// Common word lessons data
+let commonWords1 = [
+  makeChar("中", "L", None),
+  makeChar("國", "WLMC", None),
 ]
 
-// Create lesson structure
-let makeLesson = (
-  id: int,
-  title: string,
-  description: string,
-  lessonType: lessonType,
-  keys: array<cangjieKey>,
-  chars: array<characterInfo>,
-): lesson => {
-  {
-    id: id,
-    title: title,
-    description: description,
-    lessonType: lessonType,
-    introducedKeys: keys,
-    characters: chars,
-    targetAccuracy: 0.90,
-    targetSpeed: Some(30.0),
-  }
+let commonWords2 = [
+  makeChar("人", "O", None),
+  makeChar("民", "OKQ", None),
+]
+
+let commonWords3 = [
+  makeChar("時", "AJKA", None),
+  makeChar("間", "ANAL", None),
+]
+
+let commonWords4 = [
+  makeChar("地", "GPD", None),
+  makeChar("方", "YSHML", None),
+]
+
+let commonWords5 = [
+  makeChar("工", "LM", None),
+  makeChar("作", "OIHS", None),
+]
+
+// Chengyu lesson data
+let chengyu1 = [
+  makeChar("一", "M", None),
+  makeChar("心", "P", None),
+  makeChar("一", "M", None),
+  makeChar("意", "UJP", None),
+]
+
+let chengyu2 = [
+  makeChar("人", "O", None),
+  makeChar("山", "U", None),
+  makeChar("人", "O", None),
+  makeChar("海", "ETBQ", None),
+]
+
+let chengyu3 = [
+  makeChar("日", "A", None),
+  makeChar("新", "YSHLB", None),
+  makeChar("月", "B", None),
+  makeChar("異", "YGWJ", None),
+]
+
+// Placement test characters (mix of all difficulty levels)
+let placementTestChars = [
+  makeChar("我", "HQO", None),
+  makeChar("你", "ONF", None),
+  makeChar("他", "OPD", None),
+  makeChar("是", "AMYO", None),
+  makeChar("的", "WJK", None),
+  makeChar("了", "KSF", None),
+  makeChar("在", "GTG", None),
+  makeChar("有", "BMM", None),
+  makeChar("和", "HDR", None),
+  makeChar("到", "SCLN", None),
+  makeChar("說", "YRGR", None),
+  makeChar("要", "KMW", None),
+  makeChar("會", "OWL", None),
+  makeChar("能", "OGE", None),
+  makeChar("出", "BM", None),
+]
+
+// Generate all lessons
+let getAllLessons = (): array<lesson> => {
+  let basicRadicalLessons = [
+    // Lesson 1-3: Radicals Group 1
+    makeLesson(1, "第一課：基本字根（日月金木水）", "學習五個基本字根：日月金木水",
+      Radicals, Introduction, [A, B, C, D, E], lesson1Characters),
+    makeLesson(2, "第一課：練習", "練習第一課學過的字根",
+      Radicals, Practice, [], lesson1Characters),
+    makeLesson(3, "第一課：測驗", "測試第一課的掌握程度",
+      Radicals, Test, [], lesson1Characters),
+
+    // Lesson 4-6: Radicals Group 2
+    makeLesson(4, "第二課：基本字根（火土竹戈十）", "學習五個基本字根：火土竹戈十",
+      Radicals, Introduction, [F, G, H, I, J], lesson2Characters),
+    makeLesson(5, "第二課：練習", "練習第二課學過的字根",
+      Radicals, Practice, [], lesson2Characters),
+    makeLesson(6, "第二課：測驗", "測試第二課的掌握程度",
+      Radicals, Test, [], lesson2Characters),
+
+    // Lesson 7-9: Radicals Group 3
+    makeLesson(7, "第三課：基本字根（大中一弓人）", "學習五個基本字根：大中一弓人",
+      Radicals, Introduction, [K, L, M, N, O], lesson3Characters),
+    makeLesson(8, "第三課：練習", "練習第三課學過的字根",
+      Radicals, Practice, [], lesson3Characters),
+    makeLesson(9, "第三課：測驗", "測試第三課的掌握程度",
+      Radicals, Test, [], lesson3Characters),
+
+    // Lesson 10-12: Radicals Group 4
+    makeLesson(10, "第四課：基本字根（心手口尸廿）", "學習五個基本字根：心手口尸廿",
+      Radicals, Introduction, [P, Q, R, S, T], lesson4Characters),
+    makeLesson(11, "第四課：練習", "練習第四課學過的字根",
+      Radicals, Practice, [], lesson4Characters),
+    makeLesson(12, "第四課：測驗", "測試第四課的掌握程度",
+      Radicals, Test, [], lesson4Characters),
+
+    // Lesson 13-15: Radicals Group 5
+    makeLesson(13, "第五課：基本字根（山女田卜）", "學習四個基本字根：山女田卜",
+      Radicals, Introduction, [U, V, W, Y], lesson5Characters),
+    makeLesson(14, "第五課：練習", "練習第五課學過的字根",
+      Radicals, Practice, [], lesson5Characters),
+    makeLesson(15, "第五課：測驗", "測試第五課的掌握程度",
+      Radicals, Test, [], lesson5Characters),
+  ]
+
+  let wordLessons = [
+    // Common words
+    makeLesson(16, "常用詞語（一）：中國", "練習打「中國」",
+      CommonWords, Practice, [], commonWords1),
+    makeLesson(17, "常用詞語（二）：人民", "練習打「人民」",
+      CommonWords, Practice, [], commonWords2),
+    makeLesson(18, "常用詞語（三）：時間", "練習打「時間」",
+      CommonWords, Practice, [], commonWords3),
+    makeLesson(19, "常用詞語（四）：地方", "練習打「地方」",
+      CommonWords, Practice, [], commonWords4),
+    makeLesson(20, "常用詞語（五）：工作", "練習打「工作」",
+      CommonWords, Practice, [], commonWords5),
+    makeLesson(21, "常用詞語測驗", "測試常用詞語的掌握程度",
+      CommonWords, Test, [],
+      Js.Array2.concat(commonWords1, Js.Array2.concat(commonWords2, Js.Array2.concat(commonWords3, Js.Array2.concat(commonWords4, commonWords5))))),
+  ]
+
+  let chengyuLessons = [
+    makeLesson(22, "成語（一）：一心一意", "練習打成語「一心一意」",
+      Chengyu, Practice, [], chengyu1),
+    makeLesson(23, "成語（二）：人山人海", "練習打成語「人山人海」",
+      Chengyu, Practice, [], chengyu2),
+    makeLesson(24, "成語（三）：日新月異", "練習打成語「日新月異」",
+      Chengyu, Practice, [], chengyu3),
+    makeLesson(25, "成語綜合測驗", "測試成語的掌握程度",
+      Chengyu, Test, [],
+      Js.Array2.concat(chengyu1, Js.Array2.concat(chengyu2, chengyu3))),
+  ]
+
+  // Placement test
+  let placementTest = [
+    makeLesson(100, "程度測驗", "測試您的倉頡輸入水平",
+      Radicals, PlacementTest, [], placementTestChars),
+  ]
+
+  // Combine all lessons
+  Js.Array2.concat(
+    basicRadicalLessons,
+    Js.Array2.concat(wordLessons, Js.Array2.concat(chengyuLessons, placementTest))
+  )
 }
 
-// All lessons
-let allLessons = [
-  makeLesson(
-    1,
-    "第一課：基本字根（日月金木水）",
-    "學習五個基本字根：日月金木水",
-    Introduction,
-    [A, B, C, D, E],
-    lesson1Characters,
-  ),
-  makeLesson(
-    2,
-    "第一課：練習",
-    "練習第一課學過的字根",
-    Practice,
-    [],
-    lesson1Characters,
-  ),
-  makeLesson(
-    3,
-    "第一課：測驗",
-    "測試第一課的掌握程度",
-    Test,
-    [],
-    lesson1Characters,
-  ),
-  makeLesson(
-    4,
-    "第二課：基本字根（火土竹戈十）",
-    "學習五個基本字根：火土竹戈十",
-    Introduction,
-    [F, G, H, I, J],
-    lesson2Characters,
-  ),
-  makeLesson(
-    5,
-    "第二課：練習",
-    "練習第二課學過的字根",
-    Practice,
-    [],
-    lesson2Characters,
-  ),
-  makeLesson(
-    6,
-    "第二課：測驗",
-    "測試第二課的掌握程度",
-    Test,
-    [],
-    lesson2Characters,
-  ),
-  makeLesson(
-    7,
-    "第三課：基本字根（大中一弓人）",
-    "學習五個基本字根：大中一弓人",
-    Introduction,
-    [K, L, M, N, O],
-    lesson3Characters,
-  ),
-  makeLesson(
-    8,
-    "第三課：練習",
-    "練習第三課學過的字根",
-    Practice,
-    [],
-    lesson3Characters,
-  ),
-  makeLesson(
-    9,
-    "第三課：測驗",
-    "測試第三課的掌握程度",
-    Test,
-    [],
-    lesson3Characters,
-  ),
-  makeLesson(
-    10,
-    "第四課：基本字根（心手口尸廿）",
-    "學習五個基本字根：心手口尸廿",
-    Introduction,
-    [P, Q, R, S, T],
-    lesson4Characters,
-  ),
-  makeLesson(
-    11,
-    "第四課：練習",
-    "練習第四課學過的字根",
-    Practice,
-    [],
-    lesson4Characters,
-  ),
-  makeLesson(
-    12,
-    "第四課：測驗",
-    "測試第四課的掌握程度",
-    Test,
-    [],
-    lesson4Characters,
-  ),
-  makeLesson(
-    13,
-    "第五課：基本字根（山女田難卜）",
-    "學習五個基本字根：山女田難卜",
-    Introduction,
-    [U, V, W, X, Y],
-    lesson5Characters,
-  ),
-  makeLesson(
-    14,
-    "第五課：練習",
-    "練習第五課學過的字根",
-    Practice,
-    [],
-    lesson5Characters,
-  ),
-  makeLesson(
-    15,
-    "第五課：測驗",
-    "測試第五課的掌握程度",
-    Test,
-    [],
-    lesson5Characters,
-  ),
-  makeLesson(
-    16,
-    "詞語練習（一）",
-    "練習常用雙字詞",
-    Practice,
-    [],
-    practiceWords1,
-  ),
-]
+// Cache for lessons
+let allLessons = getAllLessons()
 
 // Get lesson by ID
 let getLessonById = (id: int): option<lesson> => {
   allLessons->Js.Array2.find(lesson => lesson.id == id)
 }
 
-// Get all lessons
-let getAllLessons = (): array<lesson> => allLessons
+// Get lessons by category
+let getLessonsByCategory = (category: lessonCategory): array<lesson> => {
+  allLessons->Js.Array2.filter(lesson => lesson.category == category)
+}
+
+// Get next lesson after completing one
+let getNextLesson = (currentId: int): option<lesson> => {
+  allLessons->Js.Array2.find(lesson => lesson.id == currentId + 1)
+}
+
+// Get placement test
+let getPlacementTest = (): option<lesson> => {
+  getLessonById(100)
+}

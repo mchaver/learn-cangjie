@@ -8,6 +8,7 @@ let make = (~lesson: lesson, ~onStart: unit => unit) => {
   | Introduction => "學習"
   | Practice => "練習"
   | Test => "測驗"
+  | PlacementTest => "程度測驗"
   }
 
   <div className="ready-screen">

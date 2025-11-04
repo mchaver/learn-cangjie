@@ -11,6 +11,7 @@ let make = (~onLessonSelect: int => unit, ~onBack: unit => unit, ~userProgress: 
     | Introduction => "📖"
     | Practice => "✍️"
     | Test => "📝"
+    | PlacementTest => "🎯"
     }
   }
 
@@ -19,6 +20,7 @@ let make = (~onLessonSelect: int => unit, ~onBack: unit => unit, ~userProgress: 
     | Introduction => "介紹"
     | Practice => "練習"
     | Test => "測驗"
+    | PlacementTest => "程度測驗"
     }
   }
 

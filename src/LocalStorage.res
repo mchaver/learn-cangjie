@@ -14,6 +14,21 @@ let defaultProgress: userProgress = {
   lessonProgress: [],
   currentLesson: 1,
   placementTestTaken: false,
+  placementResult: None,
+}
+
+// Encode placement result to JSON
+let encodePlacementResult = (result: option<placementResult>): Js.Json.t => {
+  switch result {
+  | None => Js.Json.null
+  | Some(r) =>
+    Js.Dict.fromArray([
+      ("accuracy", Js.Json.number(r.accuracy)),
+      ("speed", Js.Json.number(r.speed)),
+      ("recommendedLessonId", Js.Json.number(float_of_int(r.recommendedLessonId))),
+      ("date", Js.Json.number(r.date->Js.Date.getTime)),
+    ])->Js.Json.object_
+  }
 }
 
 // Encode user progress to JSON
@@ -22,6 +37,7 @@ let encodeProgress = (progress: userProgress): Js.Json.t => {
     ("completedLessons", Js.Json.numberArray(progress.completedLessons->Js.Array2.map(float_of_int))),
     ("currentLesson", Js.Json.number(float_of_int(progress.currentLesson))),
     ("placementTestTaken", Js.Json.boolean(progress.placementTestTaken)),
+    ("placementResult", encodePlacementResult(progress.placementResult)),
     ("lessonProgress", Js.Json.array(progress.lessonProgress->Js.Array2.map(lp => {
       Js.Dict.fromArray([
         ("lessonId", Js.Json.number(float_of_int(lp.lessonId))),
@@ -58,6 +74,31 @@ let decodeLessonProgress = (json: Js.Json.t): option<lessonProgress> => {
   })
 }
 
+// Decode placement result from JSON
+let decodePlacementResult = (json: Js.Json.t): option<placementResult> => {
+  json->Js.Json.decodeObject->Belt.Option.flatMap(dict => {
+    let accuracy = dict->Js.Dict.get("accuracy")->Belt.Option.flatMap(Js.Json.decodeNumber)
+    let speed = dict->Js.Dict.get("speed")->Belt.Option.flatMap(Js.Json.decodeNumber)
+    let recommendedLessonId = dict->Js.Dict.get("recommendedLessonId")
+      ->Belt.Option.flatMap(Js.Json.decodeNumber)
+      ->Belt.Option.map(int_of_float)
+    let date = dict->Js.Dict.get("date")
+      ->Belt.Option.flatMap(Js.Json.decodeNumber)
+      ->Belt.Option.map(t => Js.Date.fromFloat(t))
+
+    switch (accuracy, speed, recommendedLessonId, date) {
+    | (Some(a), Some(s), Some(r), Some(d)) =>
+      Some({
+        accuracy: a,
+        speed: s,
+        recommendedLessonId: r,
+        date: d,
+      })
+    | _ => None
+    }
+  })
+}
+
 // Decode user progress from JSON
 let decodeProgress = (json: Js.Json.t): option<userProgress> => {
   json->Js.Json.decodeObject->Belt.Option.flatMap(dict => {
@@ -74,6 +115,15 @@ let decodeProgress = (json: Js.Json.t): option<userProgress> => {
     let placementTestTaken = dict->Js.Dict.get("placementTestTaken")
       ->Belt.Option.flatMap(Js.Json.decodeBoolean)
 
+    let placementResult = dict->Js.Dict.get("placementResult")
+      ->Belt.Option.flatMap(v =>
+        switch Js.Json.classify(v) {
+        | Js.Json.JSONNull => Some(None)
+        | _ => decodePlacementResult(v)->Belt.Option.map(r => Some(r))
+        }
+      )
+      ->Belt.Option.getWithDefault(None)
+
     let lessonProgress = dict->Js.Dict.get("lessonProgress")
       ->Belt.Option.flatMap(Js.Json.decodeArray)
       ->Belt.Option.map(arr =>
@@ -89,6 +139,7 @@ let decodeProgress = (json: Js.Json.t): option<userProgress> => {
         lessonProgress: lp,
         currentLesson: curr,
         placementTestTaken: pt,
+        placementResult: placementResult,
       })
     | _ => None
     }
