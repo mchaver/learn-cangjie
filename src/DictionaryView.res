@@ -1,7 +1,5 @@
 // Dictionary/Search view component
 
-open Types
-
 type searchMode =
   | ByCharacter
   | ByCode

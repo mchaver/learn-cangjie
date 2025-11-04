@@ -13,7 +13,6 @@ let make = (
   ~lessonId: int,
   ~onBack: unit => unit,
   ~onUpdateProgress: (int, float, float, bool) => unit,
-  ~userProgress: userProgress,
 ) => {
   let lesson = CangjieData.getLessonById(lessonId)
   let (state, setState) = React.useState(() => Introduction)

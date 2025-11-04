@@ -128,7 +128,6 @@ let make = () => {
           lessonId={lessonId}
           onBack={handleBackToList}
           onUpdateProgress={handleUpdateProgress}
-          userProgress={userProgress}
         />
       | DynamicLessonView(lesson) =>
         <DynamicLessonView
