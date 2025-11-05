@@ -107,6 +107,17 @@ let make = (
     }
   }
 
+  // Convert Roman letters to Cangjie radicals for display
+  let displayInput = inputState.currentInput
+    ->Js.String2.split("")
+    ->Js.Array2.map(char => {
+      switch CangjieUtils.stringToKey(char) {
+      | Some(key) => CangjieUtils.keyToRadicalName(key)
+      | None => char
+      }
+    })
+    ->Js.Array2.joinWith("")
+
   <div className="practice-mode">
     <div className="practice-header">
       <div className="progress-bar">
@@ -150,7 +161,7 @@ let make = (
           ref={ReactDOM.Ref.domRef(inputRef)}
           type_="text"
           className="cangjie-input"
-          value={inputState.currentInput}
+          value={displayInput}
           onChange={handleInputChange}
           onKeyPress={handleKeyPress}
           autoFocus={true}

@@ -31,6 +31,18 @@ let make = (
     }: inputState
   ))
 
+  // Skip ready screen for non-Introduction lessons
+  React.useEffect1(() => {
+    switch lesson {
+    | Some(l) =>
+      if l.lessonType != Types.Introduction && state == Introduction {
+        setState(_ => Active)
+      }
+    | None => ()
+    }
+    None
+  }, [state])
+
   let handleStart = () => {
     setInputState(_ => {
       {
@@ -92,7 +104,7 @@ let make = (
 
       {switch (lesson.lessonType, state) {
       | (Types.Introduction, Introduction) =>
-        <IntroductionMode lesson={lesson} onContinue={() => setState(_ => Ready)} />
+        <IntroductionMode lesson={lesson} onContinue={handleStart} />
       | (_, Introduction) | (_, Ready) =>
         <ReadyScreen lesson={lesson} onStart={handleStart} />
       | (Types.Practice, Active) =>

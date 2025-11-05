@@ -3,10 +3,8 @@
 open Types
 
 @react.component
-let make = (~characterInfo: characterInfo, ~showHint: bool, ~currentInput: string) => {
+let make = (~characterInfo: characterInfo, ~showHint: bool, ~currentInput as _: string) => {
   let (showDecomposition, setShowDecomposition) = React.useState(() => false)
-
-  let expectedCode = CangjieUtils.keysToCode(characterInfo.cangjieCode)
 
   <div
     className="character-display-container"
@@ -14,21 +12,6 @@ let make = (~characterInfo: characterInfo, ~showHint: bool, ~currentInput: strin
     onMouseLeave={_ => setShowDecomposition(_ => false)}>
     <div className="character-main">
       <div className="character-char"> {React.string(characterInfo.character)} </div>
-
-      <div className="character-input-display">
-        {currentInput
-        ->Js.String2.split("")
-        ->Js.Array2.mapi((char, i) => {
-          let isCorrect = i < Js.String2.length(expectedCode) &&
-            char == Js.String2.charAt(expectedCode, i)
-
-          <span key={Belt.Int.toString(i)} className={`input-char ${isCorrect ? "correct" : "incorrect"}`}>
-            {React.string(char)}
-          </span>
-        })
-        ->React.array}
-        <span className="input-cursor"> {React.string("_")} </span>
-      </div>
     </div>
 
     {showHint && showDecomposition
