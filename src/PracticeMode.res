@@ -24,49 +24,34 @@ let make = (
 
   let currentChar = lesson.characters->Belt.Array.get(inputState.currentIndex)
 
-  let handleKeyPress = (event: ReactEvent.Keyboard.t) => {
-    let key = ReactEvent.Keyboard.key(event)->Js.String2.toUpperCase
-
+  let handleSubmit = () => {
     switch currentChar {
     | None => ()
     | Some(charInfo) => {
-        // Get expected code
         let expectedCode = CangjieUtils.keysToCode(charInfo.cangjieCode)
-        let currentInput = inputState.currentInput ++ key
+        let isCorrect = inputState.currentInput == expectedCode
+        let isLast = inputState.currentIndex == lesson.characters->Js.Array2.length - 1
 
-        // Check if input matches so far
-        let isCorrectSoFar = Js.String2.startsWith(expectedCode, currentInput)
-
-        if isCorrectSoFar {
-          // Correct input so far
-          if currentInput == expectedCode {
-            // Complete match - move to next character
-            let isLast = inputState.currentIndex == lesson.characters->Js.Array2.length - 1
-
-            setInputState(prev => {
-              {
-                currentIndex: prev.currentIndex + 1,
-                currentInput: "",
-                stats: {
-                  ...prev.stats,
-                  totalCharacters: prev.stats.totalCharacters + 1,
-                  correctCharacters: prev.stats.correctCharacters + 1,
-                },
-                errors: prev.errors,
-              }
-            })
-
-            if isLast {
-              onComplete()
+        if isCorrect {
+          // Correct answer
+          setInputState(prev => {
+            {
+              currentIndex: prev.currentIndex + 1,
+              currentInput: "",
+              stats: {
+                ...prev.stats,
+                totalCharacters: prev.stats.totalCharacters + 1,
+                correctCharacters: prev.stats.correctCharacters + 1,
+              },
+              errors: prev.errors,
             }
-          } else {
-            // Partial match - update input
-            setInputState(prev => {
-              {...prev, currentInput: currentInput}
-            })
+          })
+
+          if isLast {
+            onComplete()
           }
         } else {
-          // Incorrect input - record error and reset
+          // Incorrect answer - record error and reset input
           setInputState(prev => {
             {
               ...prev,
@@ -76,7 +61,7 @@ let make = (
                 totalCharacters: prev.stats.totalCharacters + 1,
                 incorrectCharacters: prev.stats.incorrectCharacters + 1,
               },
-              errors: prev.errors->Js.Array2.concat([(prev.currentIndex, currentInput)]),
+              errors: prev.errors->Js.Array2.concat([(prev.currentIndex, inputState.currentInput)]),
             }
           })
         }
@@ -84,9 +69,23 @@ let make = (
     }
   }
 
+  let handleKeyPress = (event: ReactEvent.Keyboard.t) => {
+    let key = ReactEvent.Keyboard.key(event)
+
+    // Submit on Enter key
+    if key == "Enter" {
+      ReactEvent.Keyboard.preventDefault(event)
+      handleSubmit()
+    }
+  }
+
   let handleInputChange = (event: ReactEvent.Form.t) => {
-    // Prevent normal input - we handle it via keyPress
-    ReactEvent.Form.preventDefault(event)
+    let value = ReactEvent.Form.target(event)["value"]
+    let upperValue = value->Js.String2.toUpperCase
+
+    setInputState(prev => {
+      {...prev, currentInput: upperValue}
+    })
   }
 
   let progress = Belt.Float.fromInt(inputState.currentIndex) /. Belt.Float.fromInt(
@@ -130,18 +129,29 @@ let make = (
       }}
     </div>
 
-    <input
-      ref={ReactDOM.Ref.domRef(inputRef)}
-      type_="text"
-      className="hidden-input"
-      value={inputState.currentInput}
-      onChange={handleInputChange}
-      onKeyPress={handleKeyPress}
-      autoFocus={true}
-    />
-
-    <div className="practice-instructions">
-      <p> {React.string("輸入倉頡碼，或將鼠標懸停在字符上查看提示")} </p>
+    <div className="practice-input-area">
+      <div className="input-container">
+        <input
+          ref={ReactDOM.Ref.domRef(inputRef)}
+          type_="text"
+          className="cangjie-input"
+          value={inputState.currentInput}
+          onChange={handleInputChange}
+          onKeyPress={handleKeyPress}
+          autoFocus={true}
+          placeholder="輸入倉頡碼..."
+        />
+        <button
+          className="submit-button"
+          onClick={_ => handleSubmit()}
+          disabled={inputState.currentInput == ""}
+        >
+          {React.string("提交")}
+        </button>
+      </div>
+      <div className="practice-instructions">
+        <p> {React.string("輸入倉頡碼後按 Enter 或點擊提交按鈕。將鼠標懸停在字符上查看提示。")} </p>
+      </div>
     </div>
   </div>
 }
