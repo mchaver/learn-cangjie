@@ -2,17 +2,10 @@
 
 open Types
 
-type view =
-  | Home
-  | LessonList
-  | LessonView(int)
-  | DynamicLessonView(lesson)
-  | Dictionary
-  | LessonGenerator
-
 @react.component
 let make = () => {
-  let (currentView, setCurrentView) = React.useState(() => Home)
+  let currentRoute = Router.useRoute()
+  let (dynamicLesson, setDynamicLesson) = React.useState(() => None)
   let (userProgress, setUserProgress) = React.useState(() => LocalStorage.loadProgress())
   let (database, setDatabase) = React.useState(() => DatabaseLoader.NotLoaded)
 
@@ -34,19 +27,21 @@ let make = () => {
   }, [userProgress])
 
   let handleLessonSelect = (lessonId: int) => {
-    setCurrentView(_ => LessonView(lessonId))
+    Router.push(Lesson(lessonId))
   }
 
   let handleStartDynamicLesson = (lesson: lesson) => {
-    setCurrentView(_ => DynamicLessonView(lesson))
+    setDynamicLesson(_ => Some(lesson))
+    Router.push(Home) // Stay on home but show dynamic lesson
   }
 
   let handleBackToList = () => {
-    setCurrentView(_ => LessonList)
+    Router.push(LessonList)
   }
 
   let handleBackToHome = () => {
-    setCurrentView(_ => Home)
+    setDynamicLesson(_ => None) // Clear dynamic lesson
+    Router.push(Home)
   }
 
   let handleUpdateProgress = (lessonId: int, accuracy: float, speed: float, completed: bool) => {
@@ -108,41 +103,50 @@ let make = () => {
       </div>
 
     | Loaded(_) =>
-      {switch currentView {
-      | Home =>
-        <HomeView
-          onStartLearning={() => setCurrentView(_ => LessonList)}
-          onPlacementTest={() => setCurrentView(_ => LessonView(100))}
-          onDictionary={() => setCurrentView(_ => Dictionary)}
-          onLessonGenerator={() => setCurrentView(_ => LessonGenerator)}
-          userProgress={userProgress}
-        />
-      | LessonList =>
-        <LessonListView
-          onLessonSelect={handleLessonSelect}
-          onBack={handleBackToHome}
-          userProgress={userProgress}
-        />
-      | LessonView(lessonId) =>
-        <LessonView
-          lessonId={lessonId}
-          onBack={handleBackToList}
-          onUpdateProgress={handleUpdateProgress}
-        />
-      | DynamicLessonView(lesson) =>
+      {switch dynamicLesson {
+      | Some(lesson) =>
         <DynamicLessonView
           lesson={lesson}
           onBack={handleBackToHome}
           onUpdateProgress={handleUpdateProgress}
         />
-      | Dictionary =>
-        <DictionaryView onBack={handleBackToHome} database={getDatabase()} />
-      | LessonGenerator =>
-        <LessonGeneratorView
-          onBack={handleBackToHome}
-          onStartLesson={handleStartDynamicLesson}
-          database={getDatabase()}
-        />
+      | None =>
+        switch currentRoute {
+        | Router.Home =>
+          <HomeView
+            onStartLearning={() => Router.push(LessonList)}
+            onPlacementTest={() => Router.push(Lesson(100))}
+            onDictionary={() => Router.push(Dictionary)}
+            onLessonGenerator={() => Router.push(LessonGenerator)}
+            userProgress={userProgress}
+          />
+        | Router.LessonList =>
+          <LessonListView
+            onLessonSelect={handleLessonSelect}
+            onBack={handleBackToHome}
+            userProgress={userProgress}
+          />
+        | Router.Lesson(lessonId) =>
+          <LessonView
+            lessonId={lessonId}
+            onBack={handleBackToList}
+            onUpdateProgress={handleUpdateProgress}
+          />
+        | Router.Dictionary =>
+          <DictionaryView onBack={handleBackToHome} database={getDatabase()} />
+        | Router.LessonGenerator =>
+          <LessonGeneratorView
+            onBack={handleBackToHome}
+            onStartLesson={handleStartDynamicLesson}
+            database={getDatabase()}
+          />
+        | Router.NotFound =>
+          <div className="error-screen">
+            <h2> {React.string("找不到頁面")} </h2>
+            <p> {React.string("您訪問的頁面不存在")} </p>
+            <button onClick={_ => Router.push(Home)}> {React.string("返回首頁")} </button>
+          </div>
+        }
       }}
     }}
   </div>
