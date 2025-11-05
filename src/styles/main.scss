@@ -512,6 +512,84 @@ p {
   font-size: 0.9rem;
 }
 
+// Sentence Lookup Results
+.sentence-results {
+  .results-header {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: $text-primary;
+    text-align: center;
+  }
+}
+
+.sentence-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .sentence-char-item {
+    padding: 1rem;
+    background: $bg-secondary;
+    border-radius: 8px;
+    border: 2px solid $border-color;
+    text-align: center;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: $primary-color;
+      transform: translateY(-2px);
+      box-shadow: $shadow-sm;
+    }
+
+    .char-display {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: $text-primary;
+      line-height: 1;
+    }
+
+    .char-code {
+      .code-value {
+        color: $primary-color;
+        font-weight: 600;
+        font-size: 1.1rem;
+        font-family: 'Courier New', monospace;
+        display: block;
+        margin-bottom: 0.5rem;
+        letter-spacing: 0.1em;
+      }
+
+      .code-breakdown {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        align-items: center;
+
+        .code-part-small {
+          font-size: 0.7rem;
+          color: $text-secondary;
+          padding: 0.15rem 0.4rem;
+          background: rgba($bg-primary, 0.5);
+          border-radius: 3px;
+          white-space: nowrap;
+        }
+      }
+
+      .code-not-found {
+        color: $text-light;
+        font-size: 0.85rem;
+        font-style: italic;
+      }
+    }
+  }
+}
+
 // Lesson Generator View
 .lesson-generator-view {
   max-width: 1200px;

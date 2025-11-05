@@ -1,54 +1,110 @@
 // Dictionary/Search view component
 
 type searchMode =
-  | ByCharacter
+  | BySentence // Lookup multiple characters
   | ByCode
+
+type charResult = {
+  character: string,
+  code: option<string>,
+}
 
 type searchState =
   | Idle
-  | Searching
-  | Results(array<DatabaseLoader.dbEntry>)
+  | Results(array<charResult>) // For sentence mode
+  | CodeResults(array<DatabaseLoader.dbEntry>) // For code search mode
   | NoResults
   | Error(string)
 
+// Check if a character is Chinese (CJK Unified Ideographs)
+let isChineseChar = (char: string): bool => {
+  if Js.String2.length(char) != 1 {
+    false
+  } else {
+    let code = Js.String2.charCodeAt(char, 0)->Belt.Int.fromFloat
+    // CJK Unified Ideographs: U+4E00–U+9FFF
+    // CJK Extension A: U+3400–U+4DBF
+    // CJK Extension B-F: U+20000–U+2EBEF
+    (code >= 0x4E00 && code <= 0x9FFF) ||
+    (code >= 0x3400 && code <= 0x4DBF) ||
+    (code >= 0xF900 && code <= 0xFAFF) // CJK Compatibility Ideographs
+  }
+}
+
+// Lookup a single character in the database
+let lookupCharacter = (database: array<DatabaseLoader.dbEntry>, char: string): option<string> => {
+  let results = DatabaseLoader.searchByCharacter(database, char)
+  switch results->Belt.Array.get(0) {
+  | Some(entry) => Some(entry.code)
+  | None => None
+  }
+}
+
+// Process sentence into character results
+let processSentence = (database: array<DatabaseLoader.dbEntry>, text: string): array<charResult> => {
+  text
+  ->Js.String2.split("")
+  ->Js.Array2.filter(isChineseChar)
+  ->Js.Array2.map(char => {
+    {
+      character: char,
+      code: lookupCharacter(database, char),
+    }
+  })
+}
+
 @react.component
 let make = (~onBack: unit => unit, ~database: array<DatabaseLoader.dbEntry>) => {
-  let (searchMode, setSearchMode) = React.useState(() => ByCharacter)
+  let (searchMode, setSearchMode) = React.useState(() => BySentence)
   let (searchQuery, setSearchQuery) = React.useState(() => "")
   let (searchState, setSearchState) = React.useState(() => Idle)
 
-  let handleSearch = () => {
+  // Real-time lookup for sentence mode
+  let handleInputChange = (value: string) => {
+    setSearchQuery(_ => value)
+
+    if value->Js.String2.trim == "" {
+      setSearchState(_ => Idle)
+    } else {
+      switch searchMode {
+      | BySentence => {
+          let results = processSentence(database, value)
+          if results->Js.Array2.length > 0 {
+            setSearchState(_ => Results(results))
+          } else {
+            setSearchState(_ => Idle)
+          }
+        }
+      | ByCode => () // Don't auto-search for code mode
+      }
+    }
+  }
+
+  let handleCodeSearch = () => {
     if searchQuery->Js.String2.trim == "" {
       setSearchState(_ => Idle)
     } else {
-      setSearchState(_ => Searching)
-
-      let results = switch searchMode {
-      | ByCharacter => DatabaseLoader.searchByCharacter(database, searchQuery->Js.String2.trim)
-      | ByCode => {
-          let exact = DatabaseLoader.searchByCode(database, searchQuery->Js.String2.trim)
-          if exact->Js.Array2.length > 0 {
-            exact
-          } else {
-            // Try prefix search if exact match fails
-            DatabaseLoader.searchByCodePrefix(database, searchQuery->Js.String2.trim)
-              ->Js.Array2.slice(~start=0, ~end_=50) // Limit results
-          }
-        }
+      let exact = DatabaseLoader.searchByCode(database, searchQuery->Js.String2.trim)
+      let results = if exact->Js.Array2.length > 0 {
+        exact
+      } else {
+        // Try prefix search if exact match fails
+        DatabaseLoader.searchByCodePrefix(database, searchQuery->Js.String2.trim)
+          ->Js.Array2.slice(~start=0, ~end_=50) // Limit results
       }
 
       if results->Js.Array2.length > 0 {
-        setSearchState(_ => Results(results))
+        setSearchState(_ => CodeResults(results))
       } else {
         setSearchState(_ => NoResults)
       }
     }
   }
 
-  // Search on Enter key
+  // Search on Enter key (for code search)
   let handleKeyPress = (event: ReactEvent.Keyboard.t) => {
-    if ReactEvent.Keyboard.key(event) == "Enter" {
-      handleSearch()
+    if ReactEvent.Keyboard.key(event) == "Enter" && searchMode == ByCode {
+      handleCodeSearch()
     }
   }
 
@@ -64,13 +120,13 @@ let make = (~onBack: unit => unit, ~database: array<DatabaseLoader.dbEntry>) => 
       <div className="search-controls">
         <div className="search-mode-selector">
           <button
-            className={`btn ${searchMode == ByCharacter ? "btn-primary" : "btn-secondary"}`}
+            className={`btn ${searchMode == BySentence ? "btn-primary" : "btn-secondary"}`}
             onClick={_ => {
-              setSearchMode(_ => ByCharacter)
+              setSearchMode(_ => BySentence)
               setSearchState(_ => Idle)
               setSearchQuery(_ => "")
             }}>
-            {React.string("查字")}
+            {React.string("查句")}
           </button>
           <button
             className={`btn ${searchMode == ByCode ? "btn-primary" : "btn-secondary"}`}
@@ -88,24 +144,26 @@ let make = (~onBack: unit => unit, ~database: array<DatabaseLoader.dbEntry>) => 
             type_="text"
             className="search-input"
             placeholder={switch searchMode {
-            | ByCharacter => "輸入漢字，例如：中"
+            | BySentence => "輸入句子或多個漢字，例如：學習倉頡輸入法"
             | ByCode => "輸入倉頡碼，例如：L 或 WLMC"
             }}
             value={searchQuery}
             onChange={e => {
               let value = ReactEvent.Form.target(e)["value"]
-              setSearchQuery(_ => value)
+              handleInputChange(value)
             }}
             onKeyPress={handleKeyPress}
           />
-          <button className="btn btn-primary" onClick={_ => handleSearch()}>
-            {React.string("搜尋")}
-          </button>
+          {searchMode == ByCode
+            ? <button className="btn btn-primary" onClick={_ => handleCodeSearch()}>
+                {React.string("搜尋")}
+              </button>
+            : React.null}
         </div>
 
         <div className="search-hint">
           {switch searchMode {
-          | ByCharacter => React.string("輸入一個漢字來查詢其倉頡碼")
+          | BySentence => React.string("輸入句子或多個漢字，即時顯示每個字的倉頡碼（自動忽略非中文字符）")
           | ByCode =>
             React.string(
               "輸入倉頡碼（A-Z）來查詢對應的漢字。支援完整碼和前綴搜尋。",
@@ -119,7 +177,7 @@ let make = (~onBack: unit => unit, ~database: array<DatabaseLoader.dbEntry>) => 
         | Idle =>
           <div className="search-idle">
             <h3> {React.string("開始搜尋")} </h3>
-            <p> {React.string("使用上方搜尋框來查詢漢字或倉頡碼")} </p>
+            <p> {React.string("使用上方搜尋框來查詢句子、漢字或倉頡碼")} </p>
             <div className="quick-examples">
               <h4> {React.string("常用字根對照：")} </h4>
               <div className="radicals-reference">
@@ -147,17 +205,10 @@ let make = (~onBack: unit => unit, ~database: array<DatabaseLoader.dbEntry>) => 
             </div>
           </div>
 
-        | Searching => <div className="search-loading"> {React.string("搜尋中...")} </div>
-
         | NoResults =>
           <div className="search-no-results">
             <h3> {React.string("找不到結果")} </h3>
-            <p>
-              {React.string(switch searchMode {
-              | ByCharacter => `找不到「${searchQuery}」的倉頡碼`
-              | ByCode => `找不到倉頡碼「${searchQuery}」對應的漢字`
-              })}
-            </p>
+            <p> {React.string(`找不到倉頡碼「${searchQuery}」對應的漢字`)} </p>
           </div>
 
         | Error(message) =>
@@ -166,7 +217,48 @@ let make = (~onBack: unit => unit, ~database: array<DatabaseLoader.dbEntry>) => 
             <p> {React.string(message)} </p>
           </div>
 
-        | Results(results) =>
+        | Results(charResults) =>
+          <div className="sentence-results">
+            <div className="results-header">
+              {React.string(`共 ${Belt.Int.toString(charResults->Js.Array2.length)} 個漢字`)}
+            </div>
+            <div className="sentence-grid">
+              {charResults
+              ->Js.Array2.mapi((result, idx) => {
+                <div key={`${result.character}-${Belt.Int.toString(idx)}`} className="sentence-char-item">
+                  <div className="char-display"> {React.string(result.character)} </div>
+                  <div className="char-code">
+                    {switch result.code {
+                    | Some(code) =>
+                      <>
+                        <span className="code-value"> {React.string(code->Js.String2.toUpperCase)} </span>
+                        <div className="code-breakdown">
+                          {code
+                          ->Js.String2.toUpperCase
+                          ->Js.String2.split("")
+                          ->Js.Array2.map(key => {
+                            switch CangjieUtils.stringToKey(key) {
+                            | Some(k) =>
+                              <span key={key} className="code-part-small">
+                                {React.string(`${key}(${CangjieUtils.keyToRadicalName(k)})`)}
+                              </span>
+                            | None => React.null
+                            }
+                          })
+                          ->React.array}
+                        </div>
+                      </>
+                    | None =>
+                      <span className="code-not-found"> {React.string("未找到")} </span>
+                    }}
+                  </div>
+                </div>
+              })
+              ->React.array}
+            </div>
+          </div>
+
+        | CodeResults(results) =>
           <div className="search-results-list">
             <div className="results-header">
               {React.string(
