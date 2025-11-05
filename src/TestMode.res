@@ -98,6 +98,21 @@ let make = (
     Js.Date.now() -. inputState.stats.startTime,
   )
 
+  // Calculate next expected key for keyboard highlighting
+  let nextExpectedKey = switch currentChar {
+  | None => None
+  | Some(charInfo) => {
+      let expectedCode = CangjieUtils.keysToCode(charInfo.cangjieCode)
+      let currentLength = inputState.currentInput->Js.String2.length
+      if currentLength < expectedCode->Js.String2.length {
+        let nextChar = expectedCode->Js.String2.charAt(currentLength)
+        Some(nextChar)
+      } else {
+        None
+      }
+    }
+  }
+
   <div className="test-mode">
     <div className="test-header">
       <div className="progress-bar">
@@ -165,5 +180,7 @@ let make = (
         <p> {React.string("輸入倉頡碼後按 Enter 或點擊提交按鈕")} </p>
       </div>
     </div>
+
+    <CangjieKeyboard nextKey={nextExpectedKey} showRadicals={true} />
   </div>
 }

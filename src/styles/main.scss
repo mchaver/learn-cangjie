@@ -1358,6 +1358,119 @@ p {
   51%, 100% { opacity: 0; }
 }
 
+// Cangjie Keyboard Overlay
+.cangjie-keyboard {
+  max-width: 800px;
+  margin: 2rem auto 0;
+  padding: 1.5rem;
+  background: $bg-secondary;
+  border-radius: 12px;
+  box-shadow: $shadow-sm;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+    margin-top: 1.5rem;
+  }
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    gap: 0.3rem;
+    margin-bottom: 0.3rem;
+  }
+}
+
+.keyboard-key {
+  min-width: 60px;
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: $bg-primary;
+  border: 2px solid $border-color;
+  border-radius: 8px;
+  padding: 0.5rem;
+  cursor: default;
+  transition: all 0.2s ease;
+  position: relative;
+
+  @media (max-width: 768px) {
+    min-width: 45px;
+    height: 55px;
+    padding: 0.3rem;
+    border-radius: 6px;
+  }
+
+  .key-letter {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $text-secondary;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 0.25rem;
+
+    @media (max-width: 768px) {
+      font-size: 0.9rem;
+      margin-bottom: 0.15rem;
+    }
+  }
+
+  .key-radical {
+    font-size: 1.3rem;
+    color: $text-primary;
+    font-weight: 500;
+
+    @media (max-width: 768px) {
+      font-size: 1.1rem;
+    }
+  }
+
+  &.keyboard-key-highlight {
+    background: $primary-color;
+    border-color: color.adjust($primary-color, $lightness: -10%);
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.3),
+                0 4px 12px rgba($primary-color, 0.4);
+    transform: scale(1.1);
+    z-index: 10;
+
+    .key-letter {
+      color: white;
+      font-weight: 700;
+    }
+
+    .key-radical {
+      color: white;
+      font-weight: 600;
+    }
+  }
+}
+
+// Row-specific spacing adjustments
+.keyboard-row-2 {
+  padding-left: 30px;
+
+  @media (max-width: 768px) {
+    padding-left: 20px;
+  }
+}
+
+.keyboard-row-3 {
+  padding-left: 60px;
+
+  @media (max-width: 768px) {
+    padding-left: 40px;
+  }
+}
+
 .character-hint {
   position: absolute;
   top: 100%;
