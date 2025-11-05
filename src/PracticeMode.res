@@ -156,12 +156,17 @@ let make = (
     </div>
 
     <div className="practice-input-area">
+      {inputState.currentInput != ""
+        ? <div className="cangjie-display">
+            {displayInput->React.string}
+          </div>
+        : React.null}
       <div className="input-container">
         <input
           ref={ReactDOM.Ref.domRef(inputRef)}
           type_="text"
           className="cangjie-input"
-          value={displayInput}
+          value={inputState.currentInput}
           onChange={handleInputChange}
           onKeyPress={handleKeyPress}
           autoFocus={true}
