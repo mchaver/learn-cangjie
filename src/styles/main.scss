@@ -1,4 +1,5 @@
 // Main styles for Cangjie learning app
+@use "sass:color";
 
 // Variables
 $primary-color: #4a90e2;
@@ -77,7 +78,7 @@ p {
     color: white;
 
     &:hover {
-      background-color: darken($primary-color, 5%);
+      background-color: color.adjust($primary-color, $lightness: -5%);
     }
   }
 
@@ -87,7 +88,7 @@ p {
     border: 1px solid $border-color;
 
     &:hover {
-      background-color: darken($bg-secondary, 3%);
+      background-color: color.adjust($bg-secondary, $lightness: -3%);
     }
   }
 
@@ -497,7 +498,7 @@ p {
         font-size: 0.85rem;
         color: $text-secondary;
         padding: 0.25rem 0.5rem;
-        background: lighten($bg-secondary, 3%);
+        background: color.adjust($bg-secondary, $lightness: 3%);
         border-radius: 4px;
       }
     }
@@ -620,7 +621,7 @@ p {
 .difficulty-info {
   margin-top: 1.5rem;
   padding: 1rem;
-  background: lighten($primary-color, 45%);
+  background: color.adjust($primary-color, $lightness: 45%);
   border-radius: 8px;
 
   h4 {
@@ -760,8 +761,8 @@ p {
   color: $text-secondary;
 
   &.completed {
-    background: lighten($success-color, 40%);
-    color: darken($success-color, 10%);
+    background: color.adjust($success-color, $lightness: 40%);
+    color: color.adjust($success-color, $lightness: -10%);
   }
 }
 
@@ -791,8 +792,8 @@ p {
 
 .key-badge {
   padding: 0.25rem 0.75rem;
-  background: lighten($primary-color, 40%);
-  color: darken($primary-color, 10%);
+  background: color.adjust($primary-color, $lightness: 40%);
+  color: color.adjust($primary-color, $lightness: -10%);
   border-radius: 6px;
   font-size: 0.85rem;
   font-weight: 500;
@@ -1020,7 +1021,7 @@ p {
 }
 
 .ready-instructions {
-  background: lighten($primary-color, 45%);
+  background: color.adjust($primary-color, $lightness: 45%);
   border-left: 4px solid $primary-color;
   padding: 1.5rem;
   border-radius: 8px;
@@ -1165,13 +1166,13 @@ p {
       border-radius: 4px;
 
       &.correct {
-        background: lighten($success-color, 40%);
-        color: darken($success-color, 10%);
+        background: color.adjust($success-color, $lightness: 40%);
+        color: color.adjust($success-color, $lightness: -10%);
       }
 
       &.incorrect {
-        background: lighten($error-color, 35%);
-        color: darken($error-color, 10%);
+        background: color.adjust($error-color, $lightness: 35%);
+        color: color.adjust($error-color, $lightness: -10%);
       }
     }
 
@@ -1375,13 +1376,13 @@ p {
 }
 
 .completion-errors {
-  background: lighten($warning-color, 40%);
+  background: color.adjust($warning-color, $lightness: 40%);
   border-radius: 8px;
   padding: 1.5rem;
   margin-bottom: 2rem;
 
   h3 {
-    color: darken($warning-color, 20%);
+    color: color.adjust($warning-color, $lightness: -20%);
     margin-bottom: 1rem;
   }
 
