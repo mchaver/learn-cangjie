@@ -918,7 +918,7 @@ p {
 .introduction-mode {
   background: $bg-primary;
   border-radius: 12px;
-  padding: 2rem;
+  padding: 1.5rem;
   box-shadow: $shadow-md;
 
   @media (max-width: 768px) {
@@ -930,32 +930,34 @@ p {
   h2 {
     color: $primary-color;
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
   }
 
   .intro-description {
     text-align: center;
     color: $text-secondary;
-    margin-bottom: 2rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.95rem;
   }
 }
 
 .radicals-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 
   @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 0.75rem;
   }
 }
 
 .radical-card {
   background: $bg-secondary;
-  border-radius: 12px;
-  padding: 1.5rem;
+  border-radius: 8px;
+  padding: 1rem;
   text-align: center;
   transition: all 0.3s ease;
 
@@ -965,36 +967,37 @@ p {
   }
 
   .radical-key {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 600;
     color: $primary-color;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
   }
 
   .radical-char {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
+    font-size: 2.25rem;
+    margin-bottom: 0.25rem;
   }
 
   .radical-description {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: $text-secondary;
   }
 }
 
 .example-characters {
-  margin-top: 3rem;
+  margin-top: 1.5rem;
 
   h3 {
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
   }
 }
 
 .characters-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -1004,12 +1007,12 @@ p {
 .character-example {
   background: $bg-secondary;
   border-radius: 8px;
-  padding: 1rem;
+  padding: 0.75rem;
   text-align: center;
 
   .character-display {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
+    font-size: 2.5rem;
+    margin-bottom: 0.4rem;
   }
 
   .character-code {
