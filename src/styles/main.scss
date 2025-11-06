@@ -942,15 +942,15 @@ p {
   }
 }
 
-// Introduction Mode
+// Introduction Mode - Compact
 .introduction-mode {
   background: $bg-primary;
-  border-radius: 12px;
-  padding: 1.5rem;
+  border-radius: 8px;
+  padding: 1rem;
   box-shadow: $shadow-md;
 
   @media (max-width: 768px) {
-    padding: 1rem;
+    padding: 0.75rem;
   }
 }
 
@@ -959,44 +959,38 @@ p {
     color: $primary-color;
     text-align: center;
     margin-bottom: 0.75rem;
-    font-size: 1.5rem;
-  }
-
-  .intro-description {
-    text-align: center;
-    color: $text-secondary;
-    margin-bottom: 1.25rem;
-    font-size: 0.95rem;
+    font-size: 1.25rem;
   }
 
   h3 {
     text-align: center;
     color: $text-primary;
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
   }
 }
 
-// Intro keyboard highlight section
+// Intro keyboard highlight section - compact
 .intro-keyboard-section {
-  margin-bottom: 2rem;
-  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  padding: 0.75rem;
   background: color.adjust($primary-color, $lightness: 48%);
-  border-radius: 12px;
-  border: 3px solid $primary-color;
+  border-radius: 8px;
+  border: 2px solid $primary-color;
 
   h3 {
     text-align: center;
     color: $primary-color;
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
     font-weight: 600;
   }
 }
 
 .intro-keyboard-wrapper {
   display: flex;
-  gap: 1.5rem;
+  gap: 0.75rem;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -1006,31 +1000,41 @@ p {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 0.75rem;
   background: $bg-primary;
-  border: 4px solid $primary-color;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba($primary-color, 0.3);
-  min-width: 100px;
-  transition: all 0.3s ease;
+  border: 2px solid $primary-color;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba($primary-color, 0.2);
+  min-width: 80px;
+  transition: all 0.2s ease;
 
   &:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 16px rgba($primary-color, 0.4);
+    transform: scale(1.05);
+    box-shadow: 0 3px 8px rgba($primary-color, 0.3);
   }
 
   .intro-key-letter {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: $primary-color;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
     font-family: 'Courier New', monospace;
+    line-height: 1;
   }
 
   .intro-key-radical {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: $text-primary;
     font-weight: 500;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .intro-key-description {
+    font-size: 0.7rem;
+    color: $text-secondary;
+    text-align: center;
+    line-height: 1.2;
   }
 }
 
