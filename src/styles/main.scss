@@ -1327,7 +1327,7 @@ p {
   border-radius: 8px;
   background: $bg-secondary;
   border: 2px solid transparent;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   min-width: 60px;
 
   @media (max-width: 768px) {
@@ -1346,28 +1346,31 @@ p {
     }
   }
 
-  .char-input-display {
-    font-size: 1rem;
-    font-weight: 600;
-    color: $primary-color;
-    font-family: 'Courier New', monospace;
-    letter-spacing: 0.1em;
-    min-height: 1.2rem;
+  // Box-based input display for multi-character codes
+  .char-input-boxes {
+    display: flex;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
 
-    @media (max-width: 768px) {
-      font-size: 0.9rem;
-    }
-  }
+    .input-box {
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid $primary-color;
+      border-radius: 4px;
+      background: $bg-primary;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: 'Courier New', monospace;
+      color: $primary-color;
 
-  .char-code-hint {
-    font-size: 0.75rem;
-    color: $text-light;
-    font-family: 'Courier New', monospace;
-    letter-spacing: 0.05em;
-    opacity: 0.6;
-
-    @media (max-width: 768px) {
-      font-size: 0.7rem;
+      @media (max-width: 768px) {
+        width: 1.75rem;
+        height: 1.75rem;
+        font-size: 0.9rem;
+      }
     }
   }
 
@@ -1375,7 +1378,6 @@ p {
     background: color.adjust($primary-color, $lightness: 47%);
     border-color: $primary-color;
     border-width: 3px;
-    transform: scale(1.1);
     box-shadow: 0 4px 12px rgba($primary-color, 0.3);
 
     .char-main {
@@ -1383,6 +1385,30 @@ p {
       font-weight: 400;
     }
   }
+
+  &.completed-char {
+    opacity: 0.5;
+
+    .char-main {
+      color: $success-color;
+    }
+  }
+
+  &.error-char {
+    background: color.adjust($error-color, $lightness: 40%);
+    border-color: $error-color;
+    animation: shake 0.3s ease;
+
+    .char-main {
+      color: $error-color;
+    }
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
 }
 
 .practice-input-area,
@@ -1971,57 +1997,76 @@ p {
 }
 
 .animated-key {
-  min-width: 50px;
-  height: 55px;
+  width: 60px;
+  height: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background: $bg-primary;
   border: 2px solid $border-color;
-  border-radius: 8px;
-  padding: 0.4rem;
+  border-radius: 6px;
+  padding: 0.3rem;
   cursor: default;
-  transition: all 0.15s ease;
+  transition: background 0.15s ease, border-color 0.15s ease;
   position: relative;
 
   @media (max-width: 768px) {
-    min-width: 42px;
+    width: 50px;
     height: 50px;
-    padding: 0.25rem;
-    border-radius: 6px;
+    padding: 0.2rem;
+    border-radius: 4px;
   }
 
   .key-letter {
-    font-size: 1.1rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: $text-secondary;
     font-family: 'Courier New', monospace;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
 
     @media (max-width: 768px) {
-      font-size: 0.9rem;
-      margin-bottom: 0.15rem;
+      font-size: 0.75rem;
+      margin-bottom: 0.1rem;
     }
   }
 
   .key-radical {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: $text-primary;
     font-weight: 500;
 
     @media (max-width: 768px) {
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
   }
 
-  // Next key to press - highlighted and pulsating
+  // Next key to press - highlighted with pulsating circle behind
   &.key-next {
     background: $primary-color;
     border-color: $primary-color;
-    border-width: 3px;
-    animation: pulsate 1.5s ease-in-out infinite;
     z-index: 10;
+
+    // Pulsating circle behind the key
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba($primary-color, 0.3), transparent 70%);
+      animation: pulseCircle 1.5s ease-in-out infinite;
+      z-index: -1;
+      pointer-events: none;
+
+      @media (max-width: 768px) {
+        width: 70px;
+        height: 70px;
+      }
+    }
 
     .key-letter {
       color: white;
@@ -2044,51 +2089,6 @@ p {
       color: $success-color;
     }
   }
-
-  // Finger color coding (subtle background tints)
-  &.finger-left-pinky { border-left: 3px solid rgba(255, 107, 107, 0.3); }
-  &.finger-left-ring { border-left: 3px solid rgba(255, 184, 77, 0.3); }
-  &.finger-left-middle { border-left: 3px solid rgba(255, 234, 167, 0.3); }
-  &.finger-left-index { border-left: 3px solid rgba(162, 255, 178, 0.3); }
-  &.finger-right-index { border-right: 3px solid rgba(162, 255, 178, 0.3); }
-  &.finger-right-middle { border-right: 3px solid rgba(136, 234, 255, 0.3); }
-  &.finger-right-ring { border-right: 3px solid rgba(158, 158, 255, 0.3); }
-  &.finger-right-pinky { border-right: 3px solid rgba(255, 158, 255, 0.3); }
-}
-
-// Hand guides below keyboard
-.hand-guides {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 0.5rem;
-  padding: 0 2rem;
-  opacity: 0.7;
-
-  @media (max-width: 768px) {
-    padding: 0 1rem;
-  }
-
-  .hand-guide {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    color: $text-secondary;
-
-    .hand-label {
-      font-weight: 600;
-    }
-
-    &.left-hand::before {
-      content: "👈";
-      font-size: 1.5rem;
-    }
-
-    &.right-hand::after {
-      content: "👉";
-      font-size: 1.5rem;
-    }
-  }
 }
 
 // Animations
@@ -2104,16 +2104,14 @@ p {
   }
 }
 
-@keyframes pulsate {
+@keyframes pulseCircle {
   0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 3px rgba($primary-color, 0.3),
-                0 4px 12px rgba($primary-color, 0.4);
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.4;
   }
   50% {
-    transform: scale(1.08);
-    box-shadow: 0 0 0 6px rgba($primary-color, 0.5),
-                0 6px 16px rgba($primary-color, 0.6);
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.6;
   }
 }
 
