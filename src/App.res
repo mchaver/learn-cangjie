@@ -35,6 +35,20 @@ let make = () => {
     Router.push(Home) // Stay on home but show dynamic lesson
   }
 
+  let handleStartReview = () => {
+    switch CangjieData.createReviewLesson(userProgress.completedLessons, 20) {
+    | Some(lesson) => handleStartDynamicLesson(lesson)
+    | None => ()
+    }
+  }
+
+  let handleStartTimedChallenge = () => {
+    switch CangjieData.createTimedChallenge(userProgress.completedLessons, 60) {
+    | Some(lesson) => handleStartDynamicLesson(lesson)
+    | None => ()
+    }
+  }
+
   let handleBackToList = () => {
     Router.push(LessonList)
   }
@@ -118,6 +132,8 @@ let make = () => {
             onPlacementTest={() => Router.push(Lesson(100))}
             onDictionary={() => Router.push(Dictionary)}
             onLessonGenerator={() => Router.push(LessonGenerator)}
+            onReview={handleStartReview}
+            onTimedChallenge={handleStartTimedChallenge}
             userProgress={userProgress}
           />
         | Router.LessonList =>

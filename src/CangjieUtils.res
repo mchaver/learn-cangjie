@@ -85,3 +85,21 @@ let calculateCPM = (characters: int, milliseconds: float): float => {
     float_of_int(characters) /. minutes
   }
 }
+
+// Shuffle an array using Fisher-Yates algorithm
+let shuffleArray = (arr: array<'a>): array<'a> => {
+  let shuffled = arr->Js.Array2.copy
+  let length = shuffled->Js.Array2.length
+
+  for i in 0 to length - 1 {
+    // Generate random index from i to end of array
+    let j = i + Js.Math.floor(Js.Math.random() *. float_of_int(length - i))
+
+    // Swap elements
+    let temp = shuffled[i]
+    shuffled[i] = shuffled[j]
+    shuffled[j] = temp
+  }
+
+  shuffled
+}

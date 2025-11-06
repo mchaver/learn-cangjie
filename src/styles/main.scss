@@ -1180,7 +1180,18 @@ p {
   .stat {
     color: $text-secondary;
     font-size: 0.95rem;
+
+    &.timer-warning {
+      color: $error-color;
+      font-weight: 600;
+      animation: pulse 1s infinite;
+    }
   }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 .practice-area,
@@ -1207,14 +1218,14 @@ p {
 }
 
 .cangjie-display {
-  font-size: 2.5rem;
+  font-size: 1.75rem;
   font-weight: 500;
   color: $primary-color;
   text-align: center;
-  padding: 0.75rem 1.5rem;
+  padding: 0.5rem 1rem;
   background: color.adjust($primary-color, $lightness: 45%);
-  border-radius: 8px;
-  min-height: 4rem;
+  border-radius: 6px;
+  min-height: 2.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1222,9 +1233,9 @@ p {
   border: 2px solid color.adjust($primary-color, $lightness: 30%);
 
   @media (max-width: 768px) {
-    font-size: 2rem;
-    padding: 0.5rem 1rem;
-    min-height: 3rem;
+    font-size: 1.5rem;
+    padding: 0.4rem 0.75rem;
+    min-height: 2rem;
   }
 }
 
@@ -1333,13 +1344,13 @@ p {
 
 .character-main {
   .character-char {
-    font-size: 8rem;
+    font-size: 6rem;
     font-weight: 300;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     user-select: none;
 
     @media (max-width: 768px) {
-      font-size: 5rem;
+      font-size: 4rem;
     }
   }
 

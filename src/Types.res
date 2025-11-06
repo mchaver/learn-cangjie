@@ -23,10 +23,12 @@ type lessonCategory =
 
 // Lesson type
 type lessonType =
-  | Introduction  // Learn new radicals
-  | Practice      // Practice with hints
-  | Test          // Timed test without hints
-  | PlacementTest // Determine user's level
+  | Introduction   // Learn new radicals
+  | Practice       // Practice with hints
+  | Test           // Timed test without hints
+  | Review         // Review previous lessons with randomization
+  | TimedChallenge // Type as many as possible in time limit
+  | PlacementTest  // Determine user's level
 
 // A single lesson
 type lesson = {
