@@ -2,10 +2,6 @@
 
 open Types
 
-type lessonState =
-  | Active
-  | Completed
-
 @react.component
 let make = (
   ~lessonId: int,
@@ -13,7 +9,6 @@ let make = (
   ~onUpdateProgress: (int, float, float, bool) => unit,
 ) => {
   let lesson = CangjieData.getLessonById(lessonId)
-  let (state, setState) = React.useState(() => Active)
   let (inputState, setInputState) = React.useState(() => (
     {
       currentIndex: 0,
@@ -30,8 +25,6 @@ let make = (
   ))
 
   let handleComplete = () => {
-    setState(_ => Completed)
-
     // Calculate final stats
     let endTime = Js.Date.now()
     let duration = endTime -. inputState.stats.startTime
@@ -47,26 +40,14 @@ let make = (
     | None => false
     }
 
+    // Update progress
     onUpdateProgress(lessonId, accuracy, speed, isCompleted)
+
+    // Save completion stats and navigate to completion page
+    LocalStorage.saveCompletionStats(lessonId, inputState)
+    Router.push(LessonComplete(lessonId))
   }
 
-  let handleRestart = () => {
-    setState(_ => Active)
-    setInputState(_ => {
-      {
-        currentIndex: 0,
-        currentInput: "",
-        stats: {
-          totalCharacters: 0,
-          correctCharacters: 0,
-          incorrectCharacters: 0,
-          startTime: Js.Date.now(),
-          endTime: None,
-        },
-        errors: [],
-      }
-    })
-  }
 
   switch lesson {
   | None =>
@@ -84,42 +65,28 @@ let make = (
         <h1 className="lesson-title"> {React.string(lesson.title)} </h1>
       </div>
 
-      {switch (lesson.lessonType, state) {
-      | (Types.Practice, Active) | (Types.Review, Active) | (Types.Introduction, Active) =>
+      {switch lesson.lessonType {
+      | Types.Practice | Types.Review | Types.Introduction =>
         <PracticeMode
           lesson={lesson}
           inputState={inputState}
           setInputState={setInputState}
           onComplete={handleComplete}
         />
-      | (Types.Test, Active) =>
+      | Types.Test | Types.PlacementTest =>
         <TestMode
           lesson={lesson}
           inputState={inputState}
           setInputState={setInputState}
           onComplete={handleComplete}
         />
-      | (Types.TimedChallenge, Active) =>
+      | Types.TimedChallenge =>
         <TimedChallengeMode
           lesson={lesson}
           inputState={inputState}
           setInputState={setInputState}
           onComplete={handleComplete}
           durationSeconds={60}
-        />
-      | (_, Active) =>
-        <PracticeMode
-          lesson={lesson}
-          inputState={inputState}
-          setInputState={setInputState}
-          onComplete={handleComplete}
-        />
-      | (_, Completed) =>
-        <CompletionScreen
-          lesson={lesson}
-          inputState={inputState}
-          onRestart={handleRestart}
-          onBack={onBack}
         />
       }}
     </div>
