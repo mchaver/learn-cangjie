@@ -18,6 +18,9 @@ let make = (
   // Track if showing error state
   let (showError, setShowError) = React.useState(() => false)
 
+  // Track just completed multi-char for fade-out animation
+  let (justCompleted, setJustCompleted) = React.useState(() => None)
+
   let currentChar = lesson.characters->Belt.Array.get(inputState.currentIndex)
 
   let handleKeyDown = (event: {..}) => {
@@ -49,6 +52,15 @@ let make = (
               // Check if we've completed this character
               if newInput == expectedCode {
                 let isLast = inputState.currentIndex == lesson.characters->Js.Array2.length - 1
+
+                // For multi-char codes, trigger fade-out animation
+                if expectedCode->Js.String2.length > 1 {
+                  setJustCompleted(_ => Some(newInput))
+                  let _ = Js.Global.setTimeout(() => {
+                    setJustCompleted(_ => None)
+                  }, 600)
+                  ()
+                }
 
                 // Move to next character
                 setInputState(prev => {
@@ -168,36 +180,72 @@ let make = (
           ->Js.Array2.mapi((charInfo, idx) => {
             let isCurrentChar = idx == relativeCurrentIndex
             let isCompleted = idx < relativeCurrentIndex
+            let isPrevCompleted = idx == relativeCurrentIndex - 1
             let expectedCode = CangjieUtils.keysToCode(charInfo.cangjieCode)
+            let shouldShowFadeOut = isPrevCompleted && justCompleted->Belt.Option.isSome
 
-            <div
-              key={Belt.Int.toString(batchStartIndex + idx)}
-              className={`char-item ${isCurrentChar ? "current-char" : ""} ${isCompleted ? "completed-char" : ""} ${isCurrentChar && showError ? "error-char" : ""}`}
-            >
-              <div className="char-main"> {React.string(charInfo.character)} </div>
+            <div key={Belt.Int.toString(batchStartIndex + idx)} className="char-wrapper">
               {isCompleted
-                ? <div className="char-checkmark"> {React.string("✓")} </div>
+                ? <div className="char-checkmark-above"> {React.string("✓")} </div>
                 : React.null}
-              {isCurrentChar && expectedCode->Js.String2.length > 1
-                ? <div className="char-input-boxes">
-                    {Belt.Array.range(0, expectedCode->Js.String2.length - 1)
-                    ->Js.Array2.map(i => {
-                      let inputChar = if i < inputState.currentInput->Js.String2.length {
-                        Some(inputState.currentInput->Js.String2.charAt(i))
-                      } else {
-                        None
-                      }
+              <div
+                className={`char-item ${isCurrentChar ? "current-char" : ""} ${isCompleted ? "completed-char" : ""} ${isCurrentChar && showError ? "error-char" : ""}`}
+              >
+                <div className="char-main"> {React.string(charInfo.character)} </div>
+                {isCurrentChar && expectedCode->Js.String2.length > 1
+                  ? <div className="char-input-boxes">
+                      {Belt.Array.range(0, expectedCode->Js.String2.length - 1)
+                      ->Js.Array2.map(i => {
+                        let inputChar = if i < inputState.currentInput->Js.String2.length {
+                          Some(inputState.currentInput->Js.String2.charAt(i))
+                        } else {
+                          None
+                        }
 
-                      <div key={Belt.Int.toString(i)} className="input-box">
-                        {switch inputChar {
-                        | Some(c) => React.string(c)
-                        | None => React.null
-                        }}
-                      </div>
-                    })
-                    ->React.array}
-                  </div>
-                : React.null}
+                        <div key={Belt.Int.toString(i)} className="input-box">
+                          {switch inputChar {
+                          | Some(c) => {
+                              // Convert roman letter to Cangjie radical
+                              let radical = CangjieUtils.stringToKey(c)
+                                ->Belt.Option.map(CangjieUtils.keyToRadicalName)
+                                ->Belt.Option.getWithDefault(c)
+                              React.string(radical)
+                            }
+                          | None => React.null
+                          }}
+                        </div>
+                      })
+                      ->React.array}
+                    </div>
+                  : React.null}
+                {shouldShowFadeOut && expectedCode->Js.String2.length > 1
+                  ? <div className="char-input-boxes fade-out">
+                      {Belt.Array.range(0, expectedCode->Js.String2.length - 1)
+                      ->Js.Array2.map(i => {
+                        let completedInput = justCompleted->Belt.Option.getWithDefault("")
+                        let inputChar = if i < completedInput->Js.String2.length {
+                          Some(completedInput->Js.String2.charAt(i))
+                        } else {
+                          None
+                        }
+
+                        <div key={Belt.Int.toString(i)} className="input-box">
+                          {switch inputChar {
+                          | Some(c) => {
+                              // Convert roman letter to Cangjie radical
+                              let radical = CangjieUtils.stringToKey(c)
+                                ->Belt.Option.map(CangjieUtils.keyToRadicalName)
+                                ->Belt.Option.getWithDefault(c)
+                              React.string(radical)
+                            }
+                          | None => React.null
+                          }}
+                        </div>
+                      })
+                      ->React.array}
+                    </div>
+                  : React.null}
+              </div>
             </div>
           })
           ->React.array}
