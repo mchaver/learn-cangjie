@@ -31,6 +31,9 @@ let make = (
       | None => ()
       | Some(charInfo) => {
           let expectedCode = CangjieUtils.keysToCode(charInfo.cangjieCode)
+          // Debug logging
+          Js.Console.log(`Key pressed: ${key}, Expected: ${expectedCode}, Current char: ${charInfo.character}, Index: ${Belt.Int.toString(inputState.currentIndex)}`)
+
           let currentLength = inputState.currentInput->Js.String2.length
 
           if currentLength < expectedCode->Js.String2.length {
@@ -172,7 +175,10 @@ let make = (
               className={`char-item ${isCurrentChar ? "current-char" : ""} ${isCompleted ? "completed-char" : ""} ${isCurrentChar && showError ? "error-char" : ""}`}
             >
               <div className="char-main"> {React.string(charInfo.character)} </div>
-              {isCurrentChar && inputState.currentInput != "" && expectedCode->Js.String2.length > 1
+              {isCompleted
+                ? <div className="char-checkmark"> {React.string("✓")} </div>
+                : React.null}
+              {isCurrentChar && expectedCode->Js.String2.length > 1
                 ? <div className="char-input-boxes">
                     {Belt.Array.range(0, expectedCode->Js.String2.length - 1)
                     ->Js.Array2.map(i => {

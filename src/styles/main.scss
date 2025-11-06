@@ -1375,23 +1375,31 @@ p {
   }
 
   &.current-char {
-    background: color.adjust($primary-color, $lightness: 47%);
-    border-color: $primary-color;
-    border-width: 3px;
-    box-shadow: 0 4px 12px rgba($primary-color, 0.3);
+    background: transparent;
+    border-bottom: 4px solid $primary-color;
+    border-radius: 0;
 
     .char-main {
-      color: $primary-color;
+      color: $text-primary;
       font-weight: 400;
     }
   }
 
   &.completed-char {
-    opacity: 0.5;
+    border: 2px solid color.adjust($success-color, $lightness: -20%);
+    position: relative;
 
     .char-main {
       color: $success-color;
     }
+  }
+
+  .char-checkmark {
+    position: absolute;
+    top: -1.2rem;
+    font-size: 1.5rem;
+    color: $success-color;
+    font-weight: bold;
   }
 
   &.error-char {
