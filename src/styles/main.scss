@@ -1864,3 +1864,190 @@ p {
   color: $error-color;
   font-size: 1.25rem;
 }
+
+// Animated Keyboard with Hand Visualization
+.animated-keyboard {
+  max-width: 800px;
+  margin: 1rem auto 0;
+  padding: 1rem;
+  background: $bg-secondary;
+  border-radius: 12px;
+  box-shadow: $shadow-sm;
+
+  @media (max-width: 768px) {
+    padding: 0.75rem;
+    margin-top: 0.75rem;
+  }
+}
+
+.keyboard-hands-container {
+  position: relative;
+}
+
+.keyboard-visual {
+  position: relative;
+  z-index: 2;
+}
+
+.animated-key {
+  min-width: 50px;
+  height: 55px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: $bg-primary;
+  border: 2px solid $border-color;
+  border-radius: 8px;
+  padding: 0.4rem;
+  cursor: default;
+  transition: all 0.15s ease;
+  position: relative;
+
+  @media (max-width: 768px) {
+    min-width: 42px;
+    height: 50px;
+    padding: 0.25rem;
+    border-radius: 6px;
+  }
+
+  .key-letter {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $text-secondary;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 0.25rem;
+
+    @media (max-width: 768px) {
+      font-size: 0.9rem;
+      margin-bottom: 0.15rem;
+    }
+  }
+
+  .key-radical {
+    font-size: 1.3rem;
+    color: $text-primary;
+    font-weight: 500;
+
+    @media (max-width: 768px) {
+      font-size: 1.1rem;
+    }
+  }
+
+  // Finger indicator (appears above the next key)
+  .finger-indicator {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bounce 0.6s ease-in-out infinite;
+
+    .finger-dot {
+      width: 12px;
+      height: 12px;
+      background: $primary-color;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba($primary-color, 0.4);
+    }
+  }
+
+  // Next key to press - highlighted
+  &.key-next {
+    background: color.adjust($primary-color, $lightness: 45%);
+    border-color: $primary-color;
+    border-width: 3px;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.2),
+                0 4px 12px rgba($primary-color, 0.3);
+    transform: scale(1.05);
+    z-index: 10;
+
+    .key-letter {
+      color: $primary-color;
+      font-weight: 700;
+    }
+
+    .key-radical {
+      color: $primary-color;
+      font-weight: 600;
+    }
+  }
+
+  // Key being pressed - animation
+  &.key-pressed {
+    animation: keyPress 0.15s ease-out;
+    background: color.adjust($success-color, $lightness: 40%);
+    border-color: $success-color;
+
+    .key-letter, .key-radical {
+      color: $success-color;
+    }
+  }
+
+  // Finger color coding (subtle background tints)
+  &.finger-left-pinky { border-left: 3px solid rgba(255, 107, 107, 0.3); }
+  &.finger-left-ring { border-left: 3px solid rgba(255, 184, 77, 0.3); }
+  &.finger-left-middle { border-left: 3px solid rgba(255, 234, 167, 0.3); }
+  &.finger-left-index { border-left: 3px solid rgba(162, 255, 178, 0.3); }
+  &.finger-right-index { border-right: 3px solid rgba(162, 255, 178, 0.3); }
+  &.finger-right-middle { border-right: 3px solid rgba(136, 234, 255, 0.3); }
+  &.finger-right-ring { border-right: 3px solid rgba(158, 158, 255, 0.3); }
+  &.finger-right-pinky { border-right: 3px solid rgba(255, 158, 255, 0.3); }
+}
+
+// Hand guides below keyboard
+.hand-guides {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  padding: 0 2rem;
+  opacity: 0.7;
+
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+  }
+
+  .hand-guide {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: $text-secondary;
+
+    .hand-label {
+      font-weight: 600;
+    }
+
+    &.left-hand::before {
+      content: "👈";
+      font-size: 1.5rem;
+    }
+
+    &.right-hand::after {
+      content: "👉";
+      font-size: 1.5rem;
+    }
+  }
+}
+
+// Animations
+@keyframes keyPress {
+  0% {
+    transform: scale(1.05) translateY(0);
+  }
+  50% {
+    transform: scale(0.95) translateY(3px);
+  }
+  100% {
+    transform: scale(1.05) translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-8px);
+  }
+}
+
