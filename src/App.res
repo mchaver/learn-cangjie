@@ -167,6 +167,8 @@ let make = () => {
             onBack={handleBackToList}
             onUpdateProgress={handleUpdateProgress}
           />
+        | Router.LessonComplete(lessonId) =>
+          <CompletionView lessonId={lessonId} onBack={handleBackToList} />
         | Router.Dictionary =>
           <DictionaryView onBack={handleBackToHome} database={getDatabase()} />
         | Router.LessonGenerator =>

@@ -217,3 +217,85 @@ let updateLessonProgress = (
 let getLessonProgress = (progress: userProgress, lessonId: int): option<lessonProgress> => {
   progress.lessonProgress->Js.Array2.find(lp => lp.lessonId == lessonId)
 }
+
+// Temporary storage for completion stats
+let completionStatsKey = "cangjie_completion_stats"
+
+// Save completion stats temporarily for the completion screen
+let saveCompletionStats = (lessonId: int, inputState: inputState): unit => {
+  let json = Js.Dict.fromArray([
+    ("lessonId", Js.Json.number(float_of_int(lessonId))),
+    ("currentIndex", Js.Json.number(float_of_int(inputState.currentIndex))),
+    ("currentInput", Js.Json.string(inputState.currentInput)),
+    ("totalCharacters", Js.Json.number(float_of_int(inputState.stats.totalCharacters))),
+    ("correctCharacters", Js.Json.number(float_of_int(inputState.stats.correctCharacters))),
+    ("incorrectCharacters", Js.Json.number(float_of_int(inputState.stats.incorrectCharacters))),
+    ("startTime", Js.Json.number(inputState.stats.startTime)),
+    ("errors", Js.Json.array(inputState.errors->Js.Array2.map(((idx, input)) => {
+      Js.Dict.fromArray([
+        ("index", Js.Json.number(float_of_int(idx))),
+        ("input", Js.Json.string(input)),
+      ])->Js.Json.object_
+    }))),
+  ])->Js.Json.object_
+
+  setItem(completionStatsKey, Js.Json.stringify(json))
+}
+
+// Load completion stats from temporary storage
+let loadCompletionStats = (): option<(int, inputState)> => {
+  switch getItem(completionStatsKey)->Js.Nullable.toOption {
+  | None => None
+  | Some(str) =>
+    try {
+      let json = Js.Json.parseExn(str)
+      json->Js.Json.decodeObject->Belt.Option.flatMap(dict => {
+        let lessonId = dict->Js.Dict.get("lessonId")->Belt.Option.flatMap(Js.Json.decodeNumber)->Belt.Option.map(int_of_float)
+        let currentIndex = dict->Js.Dict.get("currentIndex")->Belt.Option.flatMap(Js.Json.decodeNumber)->Belt.Option.map(int_of_float)
+        let currentInput = dict->Js.Dict.get("currentInput")->Belt.Option.flatMap(Js.Json.decodeString)
+        let totalCharacters = dict->Js.Dict.get("totalCharacters")->Belt.Option.flatMap(Js.Json.decodeNumber)->Belt.Option.map(int_of_float)
+        let correctCharacters = dict->Js.Dict.get("correctCharacters")->Belt.Option.flatMap(Js.Json.decodeNumber)->Belt.Option.map(int_of_float)
+        let incorrectCharacters = dict->Js.Dict.get("incorrectCharacters")->Belt.Option.flatMap(Js.Json.decodeNumber)->Belt.Option.map(int_of_float)
+        let startTime = dict->Js.Dict.get("startTime")->Belt.Option.flatMap(Js.Json.decodeNumber)
+        let errors = dict->Js.Dict.get("errors")->Belt.Option.flatMap(Js.Json.decodeArray)->Belt.Option.map(arr =>
+          arr->Js.Array2.map(e => {
+            e->Js.Json.decodeObject->Belt.Option.flatMap(d => {
+              let idx = d->Js.Dict.get("index")->Belt.Option.flatMap(Js.Json.decodeNumber)->Belt.Option.map(int_of_float)
+              let input = d->Js.Dict.get("input")->Belt.Option.flatMap(Js.Json.decodeString)
+              switch (idx, input) {
+              | (Some(i), Some(inp)) => Some((i, inp))
+              | _ => None
+              }
+            })
+          })
+          ->Js.Array2.filter(Belt.Option.isSome)
+          ->Js.Array2.map(Belt.Option.getExn)
+        )
+
+        switch (lessonId, currentIndex, currentInput, totalCharacters, correctCharacters, incorrectCharacters, startTime, errors) {
+        | (Some(lid), Some(ci), Some(cin), Some(tc), Some(cc), Some(ic), Some(st), Some(errs)) =>
+          Some((lid, {
+            currentIndex: ci,
+            currentInput: cin,
+            stats: {
+              totalCharacters: tc,
+              correctCharacters: cc,
+              incorrectCharacters: ic,
+              startTime: st,
+              endTime: None,
+            },
+            errors: errs,
+          }))
+        | _ => None
+        }
+      })
+    } catch {
+    | _ => None
+    }
+  }
+}
+
+// Clear completion stats after they've been used
+let clearCompletionStats = (): unit => {
+  setItem(completionStatsKey, "")
+}

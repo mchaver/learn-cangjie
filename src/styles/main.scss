@@ -1689,15 +1689,15 @@ p {
   }
 }
 
-// Completion Screen
+// Completion Screen - Compact
 .completion-screen {
   background: $bg-primary;
   border-radius: 12px;
-  padding: 2rem;
+  padding: 1rem;
   box-shadow: $shadow-md;
 
   @media (max-width: 768px) {
-    padding: 1rem;
+    padding: 0.75rem;
   }
 }
 
@@ -1708,16 +1708,17 @@ p {
 
 .completion-status {
   text-align: center;
-  padding: 2rem;
-  margin-bottom: 2rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
 
   .status-icon {
-    font-size: 4rem;
-    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
   }
 
   h2 {
     margin: 0;
+    font-size: 1.5rem;
   }
 
   &.passed {
@@ -1743,29 +1744,30 @@ p {
 
 .completion-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
   }
 }
 
 .stat-card {
   background: $bg-secondary;
   border-radius: 8px;
-  padding: 1.5rem 1rem;
+  padding: 0.75rem 0.5rem;
   text-align: center;
 
   .stat-label {
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     color: $text-secondary;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.3rem;
   }
 
   .stat-value {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 600;
     color: $primary-color;
 
@@ -1779,77 +1781,79 @@ p {
   }
 
   .stat-unit {
-    font-size: 0.85rem;
+    font-size: 0.7rem;
     color: $text-secondary;
   }
 
   .stat-target {
-    font-size: 0.85rem;
+    font-size: 0.7rem;
     color: $text-light;
-    margin-top: 0.25rem;
+    margin-top: 0.2rem;
   }
 }
 
 .completion-errors {
   background: color.adjust($warning-color, $lightness: 40%);
   border-radius: 8px;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
 
   h3 {
     color: color.adjust($warning-color, $lightness: -20%);
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
   }
 
   .errors-list {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.5rem;
   }
 
   .error-item {
     background: $bg-primary;
-    padding: 0.75rem;
+    padding: 0.5rem;
     border-radius: 6px;
     display: flex;
-    gap: 1rem;
+    gap: 0.75rem;
     align-items: center;
     flex-wrap: wrap;
 
     @media (max-width: 768px) {
       flex-direction: column;
       align-items: flex-start;
-      gap: 0.5rem;
+      gap: 0.3rem;
     }
 
     .error-char {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: 600;
     }
 
     .error-input,
     .error-correct {
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       color: $text-secondary;
     }
   }
 
   .errors-more {
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     color: $text-secondary;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 }
 
 .completion-actions {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  margin-top: 2rem;
+  gap: 0.75rem;
+  margin-top: 1rem;
 
   @media (max-width: 768px) {
     flex-direction: column;
+    gap: 0.5rem;
   }
 }
 
