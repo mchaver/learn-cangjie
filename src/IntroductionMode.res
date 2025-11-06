@@ -4,10 +4,33 @@ open Types
 
 @react.component
 let make = (~lesson: lesson, ~onContinue: unit => unit) => {
+  // Create a set of keys being introduced for highlighting
+  let introducedKeyStrings = lesson.introducedKeys->Js.Array2.map(CangjieUtils.keyToString)
+
   <div className="introduction-mode">
     <div className="intro-content">
       <h2> {React.string("新字根介紹")} </h2>
       <p className="intro-description"> {React.string(lesson.description)} </p>
+
+      // Show keyboard with new keys highlighted
+      <div className="intro-keyboard-section">
+        <h3> {React.string("本課學習的按鍵")} </h3>
+        <div className="intro-keyboard-wrapper">
+          {introducedKeyStrings->Js.Array2.map(key => {
+            <div key={key} className="intro-key-highlight">
+              <div className="intro-key-letter"> {React.string(key)} </div>
+              <div className="intro-key-radical">
+                {React.string(
+                  switch CangjieUtils.stringToKey(key) {
+                  | Some(k) => CangjieUtils.keyToRadicalName(k)
+                  | None => ""
+                  }
+                )}
+              </div>
+            </div>
+          })->React.array}
+        </div>
+      </div>
 
       <div className="radicals-grid">
         {lesson.introducedKeys

@@ -762,9 +762,9 @@ p {
   margin-top: 2rem;
 }
 
-// Lesson List View
+// Lesson List View - TypingClub style grid
 .lesson-list-view {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 2rem;
 
@@ -781,113 +781,141 @@ p {
 
   h1 {
     margin: 0;
+    font-size: 2rem;
   }
 }
 
-.lesson-list {
+// Grid of lesson tiles
+.lessons-grid {
   display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: 1rem;
+  max-width: 1200px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 0.75rem;
+  }
 }
 
-.lesson-item {
+// Individual lesson tile
+.lesson-tile {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
   background: $bg-primary;
+  border: 3px solid $border-color;
   border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: $shadow-sm;
   cursor: pointer;
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
+  transition: all 0.2s ease;
+  position: relative;
+  box-shadow: $shadow-sm;
+  gap: 0.25rem;
 
   &:hover {
-    transform: translateY(-4px);
+    transform: translateY(-4px) scale(1.05);
     box-shadow: $shadow-md;
     border-color: $primary-color;
   }
 
+  &:active {
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  // Completed lessons
   &.completed {
-    border-left: 4px solid $success-color;
+    background: color.adjust($success-color, $lightness: 45%);
+    border-color: $success-color;
+
+    .lesson-tile-number {
+      color: color.adjust($success-color, $lightness: -20%);
+    }
+  }
+
+  // Introduction lessons - special color
+  &.introduction {
+    background: color.adjust($primary-color, $lightness: 45%);
+    border-color: $primary-color;
+
+    &.completed {
+      background: color.adjust($success-color, $lightness: 42%);
+    }
   }
 }
 
-.lesson-item-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.75rem;
-}
-
-.lesson-type {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  .lesson-type-icon {
-    font-size: 1.5rem;
-  }
-
-  .lesson-type-label {
-    font-size: 0.9rem;
-    color: $text-secondary;
-  }
-}
-
-.lesson-status-badge {
-  padding: 0.25rem 0.75rem;
-  border-radius: 12px;
-  font-size: 0.85rem;
-  background: $bg-secondary;
-  color: $text-secondary;
-
-  &.completed {
-    background: color.adjust($success-color, $lightness: 40%);
-    color: color.adjust($success-color, $lightness: -10%);
-  }
-}
-
-.lesson-title {
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-  color: $text-primary;
-}
-
-.lesson-description {
-  color: $text-secondary;
-  margin-bottom: 1rem;
-}
-
-.lesson-keys {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  align-items: center;
-
-  .lesson-keys-label {
-    font-size: 0.9rem;
-    color: $text-secondary;
-  }
-}
-
-.key-badge {
-  padding: 0.25rem 0.75rem;
-  background: color.adjust($primary-color, $lightness: 40%);
-  color: color.adjust($primary-color, $lightness: -10%);
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 500;
-}
-
-.lesson-stats {
-  display: flex;
-  gap: 1.5rem;
-  font-size: 0.9rem;
-  color: $text-secondary;
-  padding-top: 1rem;
-  border-top: 1px solid $border-color;
+.lesson-tile-number {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: $primary-color;
+  line-height: 1;
 
   @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 0.5rem;
+    font-size: 1.5rem;
+  }
+}
+
+.lesson-tile-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+
+  @media (max-width: 768px) {
+    font-size: 1.25rem;
+  }
+}
+
+.lesson-tile-keys {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 0.75rem;
+  line-height: 1;
+  margin-top: 0.25rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.65rem;
+  }
+}
+
+.key-indicator {
+  color: $text-secondary;
+  font-weight: 600;
+}
+
+.lesson-tile-title {
+  font-size: 0.7rem;
+  color: $text-secondary;
+  text-align: center;
+  line-height: 1.2;
+  margin-top: 0.25rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.6rem;
+  }
+}
+
+.lesson-tile-stars {
+  display: flex;
+  gap: 0.1rem;
+  font-size: 0.9rem;
+  line-height: 1;
+
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+  }
+}
+
+.lesson-tile-status {
+  font-size: 0.7rem;
+  color: $text-secondary;
+  font-weight: 600;
+  margin-top: 0.25rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.6rem;
   }
 }
 
@@ -939,6 +967,70 @@ p {
     color: $text-secondary;
     margin-bottom: 1.25rem;
     font-size: 0.95rem;
+  }
+
+  h3 {
+    text-align: center;
+    color: $text-primary;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+}
+
+// Intro keyboard highlight section
+.intro-keyboard-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: color.adjust($primary-color, $lightness: 48%);
+  border-radius: 12px;
+  border: 3px solid $primary-color;
+
+  h3 {
+    text-align: center;
+    color: $primary-color;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+}
+
+.intro-keyboard-wrapper {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.intro-key-highlight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: $bg-primary;
+  border: 4px solid $primary-color;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba($primary-color, 0.3);
+  min-width: 100px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba($primary-color, 0.4);
+  }
+
+  .intro-key-letter {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: $primary-color;
+    margin-bottom: 0.5rem;
+    font-family: 'Courier New', monospace;
+  }
+
+  .intro-key-radical {
+    font-size: 2rem;
+    color: $text-primary;
+    font-weight: 500;
   }
 }
 

@@ -1,4 +1,4 @@
-// Lesson list view component
+// Lesson list view component - TypingClub style grid layout
 
 open Types
 
@@ -6,14 +6,26 @@ open Types
 let make = (~onLessonSelect: int => unit, ~onBack: unit => unit, ~userProgress: userProgress) => {
   let lessons = CangjieData.getAllLessons()
 
-  let getLessonTypeLabel = (lessonType: lessonType): string => {
+  let getLessonTypeIcon = (lessonType: lessonType): string => {
     switch lessonType {
-    | Introduction => "介紹"
-    | Practice => "練習"
-    | Test => "測驗"
-    | Review => "複習"
-    | TimedChallenge => "限時挑戰"
-    | PlacementTest => "程度測驗"
+    | Introduction => "📚"
+    | Practice => "✏️"
+    | Test => "📝"
+    | Review => "🔄"
+    | TimedChallenge => "⏱️"
+    | PlacementTest => "🎯"
+    }
+  }
+
+  let getCompletionStars = (accuracy: float): int => {
+    if accuracy >= 0.95 {
+      3
+    } else if accuracy >= 0.85 {
+      2
+    } else if accuracy >= 0.75 {
+      1
+    } else {
+      0
     }
   }
 
@@ -22,61 +34,59 @@ let make = (~onLessonSelect: int => unit, ~onBack: unit => unit, ~userProgress: 
       <button className="btn btn-back" onClick={_ => onBack()}>
         {React.string("← 返回")}
       </button>
-      <h1> {React.string("課程列表")} </h1>
+      <h1> {React.string("選擇課程")} </h1>
     </div>
 
-    <div className="lesson-list">
+    <div className="lessons-grid">
       {lessons
       ->Js.Array2.map(lesson => {
         let progress = LocalStorage.getLessonProgress(userProgress, lesson.id)
         let isCompleted = progress->Belt.Option.map(p => p.completed)->Belt.Option.getWithDefault(false)
         let bestAccuracy = progress->Belt.Option.map(p => p.bestAccuracy)->Belt.Option.getWithDefault(0.0)
-        let bestSpeed = progress->Belt.Option.map(p => p.bestSpeed)->Belt.Option.getWithDefault(0.0)
+        let stars = getCompletionStars(bestAccuracy)
 
-        <div
+        <button
           key={Belt.Int.toString(lesson.id)}
-          className={`lesson-item ${isCompleted ? "completed" : ""}`}
+          className={`lesson-tile ${isCompleted ? "completed" : ""} ${lesson.lessonType == Introduction ? "introduction" : ""}`}
           onClick={_ => onLessonSelect(lesson.id)}>
-          <div className="lesson-item-header">
-            <div className="lesson-type">
-              <span className="lesson-type-label">
-                {React.string(getLessonTypeLabel(lesson.lessonType))}
-              </span>
-            </div>
-            {isCompleted
-              ? <span className="lesson-status-badge completed"> {React.string("已完成")} </span>
-              : <span className="lesson-status-badge"> {React.string("未完成")} </span>}
+
+          <div className="lesson-tile-number">
+            {React.string(Belt.Int.toString(lesson.id))}
           </div>
 
-          <h3 className="lesson-title"> {React.string(lesson.title)} </h3>
-          <p className="lesson-description"> {React.string(lesson.description)} </p>
+          <div className="lesson-tile-icon">
+            {React.string(getLessonTypeIcon(lesson.lessonType))}
+          </div>
 
           {lesson.introducedKeys->Js.Array2.length > 0
-            ? <div className="lesson-keys">
-                <span className="lesson-keys-label"> {React.string("新字根：")} </span>
+            ? <div className="lesson-tile-keys">
                 {lesson.introducedKeys
+                ->Js.Array2.slice(~start=0, ~end_=5)
                 ->Js.Array2.map(key => {
-                  <span key={CangjieUtils.keyToString(key)} className="key-badge">
-                    {React.string(
-                      `${CangjieUtils.keyToString(key)} (${CangjieUtils.keyToRadicalName(key)})`,
-                    )}
+                  <span key={CangjieUtils.keyToString(key)} className="key-indicator">
+                    {React.string(CangjieUtils.keyToRadicalName(key))}
                   </span>
                 })
                 ->React.array}
               </div>
-            : React.null}
+            : <div className="lesson-tile-title">
+                {React.string(lesson.title->Js.String2.slice(~from=0, ~to_=8))}
+              </div>}
 
-          {progress->Belt.Option.isSome
-            ? <div className="lesson-stats">
-                <span className="lesson-stat">
-                  {React.string(`準確率: ${Js.Float.toFixedWithPrecision(bestAccuracy *. 100.0, ~digits=1)}%`)}
-                </span>
-                <span className="lesson-stat">
-                  {React.string(`速度: ${Js.Float.toFixedWithPrecision(bestSpeed, ~digits=1)} 字/分鐘`)}
-                </span>
+          {isCompleted
+            ? <div className="lesson-tile-stars">
+                {Belt.Array.range(0, stars - 1)
+                ->Js.Array2.map(i => {
+                  <span key={Belt.Int.toString(i)} className="star">
+                    {React.string("⭐")}
+                  </span>
+                })
+                ->React.array}
               </div>
-            : React.null}
-        </div>
+            : <div className="lesson-tile-status">
+                {React.string("開始")}
+              </div>}
+        </button>
       })
       ->React.array}
     </div>
