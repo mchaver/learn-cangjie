@@ -46,14 +46,6 @@ let make = (~lesson: lesson, ~onContinue: unit => unit, ~onBack: unit => unit) =
                     }
                   )}
                 </div>
-                <div className="intro-key-description">
-                  {React.string(
-                    switch CangjieUtils.stringToKey(key) {
-                    | Some(k) => CangjieUtils.keyToDescription(k)
-                    | None => ""
-                    }
-                  )}
-                </div>
               </div>
             })->React.array}
           </div>

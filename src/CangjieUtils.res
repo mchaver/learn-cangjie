@@ -26,19 +26,6 @@ let keyToRadicalName = (key: cangjieKey): string => {
   }
 }
 
-// Get the full Cangjie radical description in Traditional Chinese
-let keyToDescription = (key: cangjieKey): string => {
-  switch key {
-  | A => "日 (太陽)" | B => "月 (月亮)" | C => "金 (金)" | D => "木 (木)"
-  | E => "水 (水)" | F => "火 (火)" | G => "土 (土)" | H => "竹 (竹)"
-  | I => "戈 (戈)" | J => "十 (十)" | K => "大 (大)" | L => "中 (中)"
-  | M => "一 (一)" | N => "弓 (弓)" | O => "人 (人)" | P => "心 (心)"
-  | Q => "手 (手)" | R => "口 (口)" | S => "尸 (尸)" | T => "廿 (廿)"
-  | U => "山 (山)" | V => "女 (女)" | W => "田 (田)" | X => "難 (難)"
-  | Y => "卜 (卜)" | Z => "Z"
-  }
-}
-
 // Parse string to cangjie key
 let stringToKey = (str: string): option<cangjieKey> => {
   switch str->Js.String2.toUpperCase {
