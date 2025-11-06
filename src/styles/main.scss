@@ -1327,7 +1327,7 @@ p {
 
 .char-checkmark-above {
   position: absolute;
-  top: -1.5rem;
+  top: -2.5rem;
   font-size: 1.5rem;
   color: $success-color;
   font-weight: bold;
@@ -1424,7 +1424,7 @@ p {
 
   &.completed-char {
     background: $bg-primary;
-    border: 2px solid color.adjust($success-color, $lightness: -20%);
+    border: 1px solid $success-color;
 
     .char-main {
       color: $success-color;
