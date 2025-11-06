@@ -1,9 +1,9 @@
-// Practice mode - typing practice with hints available
+// Practice mode - typing practice with direct keyboard input
 
 open Types
 
-type htmlElement
-@send external focus: htmlElement => unit = "focus"
+@val @scope("document") external addEventListener: (string, 'a => unit) => unit = "addEventListener"
+@val @scope("document") external removeEventListener: (string, 'a => unit) => unit = "removeEventListener"
 
 @react.component
 let make = (
@@ -12,107 +12,98 @@ let make = (
   ~setInputState: (inputState => inputState) => unit,
   ~onComplete: unit => unit,
 ) => {
-  let inputRef = React.useRef(Js.Nullable.null)
-
   // Track last key pressed for animation (key, isCorrect)
   let (lastKeyPressed, setLastKeyPressed) = React.useState(() => None)
 
-  // Focus input on mount
-  React.useEffect0(() => {
-    inputRef.current
-    ->Js.Nullable.toOption
-    ->Belt.Option.forEach(elem => focus(elem->ReactDOM.domElementToObj->Obj.magic))
-    None
-  })
+  // Track if showing error state
+  let (showError, setShowError) = React.useState(() => false)
 
   let currentChar = lesson.characters->Belt.Array.get(inputState.currentIndex)
 
-  let handleSubmit = () => {
-    switch currentChar {
-    | None => ()
-    | Some(charInfo) => {
-        let expectedCode = CangjieUtils.keysToCode(charInfo.cangjieCode)
-        let isCorrect = inputState.currentInput == expectedCode
-        let isLast = inputState.currentIndex == lesson.characters->Js.Array2.length - 1
+  let handleKeyDown = (event: {..}) => {
+    let key = event["key"]->Js.String2.toUpperCase
 
-        if isCorrect {
-          // Correct answer
-          setInputState(prev => {
-            {
-              currentIndex: prev.currentIndex + 1,
-              currentInput: "",
-              stats: {
-                ...prev.stats,
-                totalCharacters: prev.stats.totalCharacters + 1,
-                correctCharacters: prev.stats.correctCharacters + 1,
-              },
-              errors: prev.errors,
-            }
-          })
+    // Only handle letter keys A-Z
+    if key->Js.String2.length == 1 && Js.Re.test_(%re("/^[A-Z]$/"), key) {
+      event["preventDefault"]()
 
-          if isLast {
-            onComplete()
-          }
-        } else {
-          // Incorrect answer - record error and reset input
-          setInputState(prev => {
-            {
-              ...prev,
-              currentInput: "",
-              stats: {
-                ...prev.stats,
-                totalCharacters: prev.stats.totalCharacters + 1,
-                incorrectCharacters: prev.stats.incorrectCharacters + 1,
-              },
-              errors: prev.errors->Js.Array2.concat([(prev.currentIndex, inputState.currentInput)]),
-            }
-          })
-        }
-      }
-    }
-  }
-
-  let handleKeyPress = (event: ReactEvent.Keyboard.t) => {
-    let key = ReactEvent.Keyboard.key(event)
-
-    // Submit on Enter key
-    if key == "Enter" {
-      ReactEvent.Keyboard.preventDefault(event)
-      handleSubmit()
-    }
-  }
-
-  let handleInputChange = (event: ReactEvent.Form.t) => {
-    let value = ReactEvent.Form.target(event)["value"]
-    let upperValue = value->Js.String2.toUpperCase
-
-    // Check if a new character was added (not deleted)
-    if upperValue->Js.String2.length > inputState.currentInput->Js.String2.length {
-      let lastChar = upperValue->Js.String2.charAt(upperValue->Js.String2.length - 1)
-
-      // Check if the key pressed is correct
-      let isCorrect = switch currentChar {
-      | None => false
+      switch currentChar {
+      | None => ()
       | Some(charInfo) => {
           let expectedCode = CangjieUtils.keysToCode(charInfo.cangjieCode)
           let currentLength = inputState.currentInput->Js.String2.length
+
           if currentLength < expectedCode->Js.String2.length {
             let expectedChar = expectedCode->Js.String2.charAt(currentLength)
-            lastChar == expectedChar
-          } else {
-            false
+            let isCorrect = key == expectedChar
+
+            // Trigger animation and sound
+            setLastKeyPressed(_ => Some((key, isCorrect)))
+
+            if isCorrect {
+              let newInput = inputState.currentInput ++ key
+
+              // Check if we've completed this character
+              if newInput == expectedCode {
+                let isLast = inputState.currentIndex == lesson.characters->Js.Array2.length - 1
+
+                // Move to next character
+                setInputState(prev => {
+                  {
+                    currentIndex: prev.currentIndex + 1,
+                    currentInput: "",
+                    stats: {
+                      ...prev.stats,
+                      totalCharacters: prev.stats.totalCharacters + 1,
+                      correctCharacters: prev.stats.correctCharacters + 1,
+                    },
+                    errors: prev.errors,
+                  }
+                })
+
+                if isLast {
+                  onComplete()
+                }
+              } else {
+                // Add correct key to input
+                setInputState(prev => {
+                  {...prev, currentInput: newInput}
+                })
+              }
+            } else {
+              // Wrong key - for single character codes, flash error
+              if expectedCode->Js.String2.length == 1 {
+                setShowError(_ => true)
+                let _ = Js.Global.setTimeout(() => {
+                  setShowError(_ => false)
+                }, 300)
+                ()
+
+                setInputState(prev => {
+                  {
+                    ...prev,
+                    stats: {
+                      ...prev.stats,
+                      totalCharacters: prev.stats.totalCharacters + 1,
+                      incorrectCharacters: prev.stats.incorrectCharacters + 1,
+                    },
+                    errors: prev.errors->Js.Array2.concat([(prev.currentIndex, key)]),
+                  }
+                })
+              }
+              // For multi-character, just don't add the key (ignore wrong input)
+            }
           }
         }
       }
-
-      // Trigger animation and sound
-      setLastKeyPressed(_ => Some((lastChar, isCorrect)))
     }
-
-    setInputState(prev => {
-      {...prev, currentInput: upperValue}
-    })
   }
+
+  // Add keyboard event listener
+  React.useEffect0(() => {
+    addEventListener("keydown", handleKeyDown)
+    Some(() => removeEventListener("keydown", handleKeyDown))
+  })
 
   let progress = Belt.Float.fromInt(inputState.currentIndex) /. Belt.Float.fromInt(
     lesson.characters->Js.Array2.length,
@@ -132,6 +123,13 @@ let make = (
       }
     }
   }
+
+  // Calculate which batch of 8 characters we're showing
+  let batchIndex = inputState.currentIndex / 8
+  let batchStartIndex = batchIndex * 8
+  let batchEndIndex = Js.Math.min_int(batchStartIndex + 8, lesson.characters->Js.Array2.length)
+  let visibleChars = lesson.characters->Js.Array2.slice(~start=batchStartIndex, ~end_=batchEndIndex)
+  let relativeCurrentIndex = inputState.currentIndex - batchStartIndex
 
   <div className="practice-mode">
     <div className="practice-header">
@@ -162,58 +160,43 @@ let make = (
       {switch currentChar {
       | None => <div className="practice-complete"> {React.string("練習完成！")} </div>
       | Some(_) =>
-        // Show 8 characters at a time, with current character highlighted
-        let startIndex = inputState.currentIndex
-        let endIndex = Js.Math.min_int(startIndex + 8, lesson.characters->Js.Array2.length)
-        let visibleChars = lesson.characters->Js.Array2.slice(~start=startIndex, ~end_=endIndex)
-
         <div className="characters-row">
           {visibleChars
           ->Js.Array2.mapi((charInfo, idx) => {
-            let isCurrentChar = idx == 0
+            let isCurrentChar = idx == relativeCurrentIndex
+            let isCompleted = idx < relativeCurrentIndex
             let expectedCode = CangjieUtils.keysToCode(charInfo.cangjieCode)
 
             <div
-              key={Belt.Int.toString(startIndex + idx)}
-              className={`char-item ${isCurrentChar ? "current-char" : ""}`}
+              key={Belt.Int.toString(batchStartIndex + idx)}
+              className={`char-item ${isCurrentChar ? "current-char" : ""} ${isCompleted ? "completed-char" : ""} ${isCurrentChar && showError ? "error-char" : ""}`}
             >
               <div className="char-main"> {React.string(charInfo.character)} </div>
-              {isCurrentChar && inputState.currentInput != ""
-                ? <div className="char-input-display"> {React.string(inputState.currentInput)} </div>
-                : React.null}
-              {!isCurrentChar
-                ? <div className="char-code-hint"> {React.string(expectedCode)} </div>
+              {isCurrentChar && inputState.currentInput != "" && expectedCode->Js.String2.length > 1
+                ? <div className="char-input-boxes">
+                    {Belt.Array.range(0, expectedCode->Js.String2.length - 1)
+                    ->Js.Array2.map(i => {
+                      let inputChar = if i < inputState.currentInput->Js.String2.length {
+                        Some(inputState.currentInput->Js.String2.charAt(i))
+                      } else {
+                        None
+                      }
+
+                      <div key={Belt.Int.toString(i)} className="input-box">
+                        {switch inputChar {
+                        | Some(c) => React.string(c)
+                        | None => React.null
+                        }}
+                      </div>
+                    })
+                    ->React.array}
+                  </div>
                 : React.null}
             </div>
           })
           ->React.array}
         </div>
       }}
-    </div>
-
-    <div className="practice-input-area">
-      <div className="input-container">
-        <input
-          ref={ReactDOM.Ref.domRef(inputRef)}
-          type_="text"
-          className="cangjie-input"
-          value={inputState.currentInput}
-          onChange={handleInputChange}
-          onKeyPress={handleKeyPress}
-          autoFocus={true}
-          placeholder="輸入倉頡碼..."
-        />
-        <button
-          className="submit-button"
-          onClick={_ => handleSubmit()}
-          disabled={inputState.currentInput == ""}
-        >
-          {React.string("提交")}
-        </button>
-      </div>
-      <div className="practice-instructions">
-        <p> {React.string("輸入倉頡碼後按 Enter 提交")} </p>
-      </div>
     </div>
 
     <AnimatedKeyboard nextKey={nextExpectedKey} lastKeyPressed={lastKeyPressed} showRadicals={true} />

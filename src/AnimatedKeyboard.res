@@ -148,26 +148,15 @@ let make = (~nextKey: option<string>, ~lastKeyPressed: option<(string, bool)>, ~
   }
 
   <div className="animated-keyboard">
-    <div className="keyboard-hands-container">
-      <div className="keyboard-visual">
-        <div className="keyboard-row keyboard-row-1">
-          {row1Keys->Js.Array2.map(renderKey)->React.array}
-        </div>
-        <div className="keyboard-row keyboard-row-2">
-          {row2Keys->Js.Array2.map(renderKey)->React.array}
-        </div>
-        <div className="keyboard-row keyboard-row-3">
-          {row3Keys->Js.Array2.map(renderKey)->React.array}
-        </div>
+    <div className="keyboard-visual">
+      <div className="keyboard-row keyboard-row-1">
+        {row1Keys->Js.Array2.map(renderKey)->React.array}
       </div>
-
-      <div className="hand-guides">
-        <div className="hand-guide left-hand">
-          <span className="hand-label"> {React.string("左手")} </span>
-        </div>
-        <div className="hand-guide right-hand">
-          <span className="hand-label"> {React.string("右手")} </span>
-        </div>
+      <div className="keyboard-row keyboard-row-2">
+        {row2Keys->Js.Array2.map(renderKey)->React.array}
+      </div>
+      <div className="keyboard-row keyboard-row-3">
+        {row3Keys->Js.Array2.map(renderKey)->React.array}
       </div>
     </div>
   </div>
