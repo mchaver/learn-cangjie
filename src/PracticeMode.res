@@ -18,6 +18,9 @@ let make = (
   // Track if showing error state
   let (showError, setShowError) = React.useState(() => false)
 
+  // Track wrong input box index for multi-char error flash
+  let (wrongBoxIndex, setWrongBoxIndex) = React.useState(() => None)
+
   // Track just completed multi-char for fade-out animation
   let (justCompleted, setJustCompleted) = React.useState(() => None)
 
@@ -34,9 +37,6 @@ let make = (
       | None => ()
       | Some(charInfo) => {
           let expectedCode = CangjieUtils.keysToCode(charInfo.cangjieCode)
-          // Debug logging
-          Js.Console.log(`Key pressed: ${key}, Expected: ${expectedCode}, Current char: ${charInfo.character}, Index: ${Belt.Int.toString(inputState.currentIndex)}`)
-
           let currentLength = inputState.currentInput->Js.String2.length
 
           if currentLength < expectedCode->Js.String2.length {
@@ -86,27 +86,34 @@ let make = (
                 })
               }
             } else {
-              // Wrong key - for single character codes, flash error
+              // Wrong key - flash error
               if expectedCode->Js.String2.length == 1 {
+                // For single character, flash the whole character
                 setShowError(_ => true)
                 let _ = Js.Global.setTimeout(() => {
                   setShowError(_ => false)
                 }, 300)
                 ()
-
-                setInputState(prev => {
-                  {
-                    ...prev,
-                    stats: {
-                      ...prev.stats,
-                      totalCharacters: prev.stats.totalCharacters + 1,
-                      incorrectCharacters: prev.stats.incorrectCharacters + 1,
-                    },
-                    errors: prev.errors->Js.Array2.concat([(prev.currentIndex, key)]),
-                  }
-                })
+              } else {
+                // For multi-character, flash the specific input box
+                setWrongBoxIndex(_ => Some(currentLength))
+                let _ = Js.Global.setTimeout(() => {
+                  setWrongBoxIndex(_ => None)
+                }, 300)
+                ()
               }
-              // For multi-character, just don't add the key (ignore wrong input)
+
+              setInputState(prev => {
+                {
+                  ...prev,
+                  stats: {
+                    ...prev.stats,
+                    totalCharacters: prev.stats.totalCharacters + 1,
+                    incorrectCharacters: prev.stats.incorrectCharacters + 1,
+                  },
+                  errors: prev.errors->Js.Array2.concat([(prev.currentIndex, key)]),
+                }
+              })
             }
           }
         }
@@ -201,8 +208,12 @@ let make = (
                         } else {
                           None
                         }
+                        let isWrongBox = switch wrongBoxIndex {
+                        | Some(idx) => idx == i
+                        | None => false
+                        }
 
-                        <div key={Belt.Int.toString(i)} className="input-box">
+                        <div key={Belt.Int.toString(i)} className={`input-box ${isWrongBox ? "input-box-error" : ""}`}>
                           {switch inputChar {
                           | Some(c) => {
                               // Convert roman letter to Cangjie radical

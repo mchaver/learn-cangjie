@@ -1341,8 +1341,8 @@ p {
   gap: 0.5rem;
   padding: 0.75rem;
   border-radius: 8px;
-  background: $bg-secondary;
-  border: 2px solid transparent;
+  background: $bg-primary;
+  border: 2px solid $border-color;
   transition: all 0.3s ease;
   min-width: 60px;
   position: relative;
@@ -1391,21 +1391,39 @@ p {
         height: 1.75rem;
         font-size: 1rem;
       }
+
+      &.input-box-error {
+        background: color.adjust($error-color, $lightness: 40%);
+        border-color: $error-color;
+        animation: shake 0.3s ease;
+      }
     }
   }
 
   &.current-char {
-    background: transparent;
-    border-bottom: 4px solid $primary-color;
-    border-radius: 0;
+    border-color: transparent;
 
     .char-main {
       color: $text-primary;
       font-weight: 400;
     }
+
+    // Complete underline below the box
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 4px;
+      background: $primary-color;
+      border-radius: 2px;
+    }
   }
 
   &.completed-char {
+    background: $bg-primary;
     border: 2px solid color.adjust($success-color, $lightness: -20%);
 
     .char-main {
