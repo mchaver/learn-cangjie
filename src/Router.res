@@ -4,7 +4,8 @@
 type route =
   | Home
   | LessonList
-  | Lesson(int) // /lesson/:id
+  | LessonIntro(int) // /lesson/:id/intro
+  | LessonPractice(int) // /lesson/:id/practice
   | Dictionary
   | LessonGenerator
   | NotFound
@@ -14,9 +15,14 @@ let urlToRoute = (url: RescriptReactRouter.url): route => {
   switch url.path {
   | list{} => Home
   | list{"lessons"} => LessonList
-  | list{"lesson", id} =>
+  | list{"lesson", id, "intro"} =>
     switch Belt.Int.fromString(id) {
-    | Some(lessonId) => Lesson(lessonId)
+    | Some(lessonId) => LessonIntro(lessonId)
+    | None => NotFound
+    }
+  | list{"lesson", id, "practice"} =>
+    switch Belt.Int.fromString(id) {
+    | Some(lessonId) => LessonPractice(lessonId)
     | None => NotFound
     }
   | list{"dictionary"} => Dictionary
@@ -30,7 +36,8 @@ let routeToUrl = (route: route): string => {
   switch route {
   | Home => "/"
   | LessonList => "/lessons"
-  | Lesson(id) => `/lesson/${Belt.Int.toString(id)}`
+  | LessonIntro(id) => `/lesson/${Belt.Int.toString(id)}/intro`
+  | LessonPractice(id) => `/lesson/${Belt.Int.toString(id)}/practice`
   | Dictionary => "/dictionary"
   | LessonGenerator => "/generator"
   | NotFound => "/404"

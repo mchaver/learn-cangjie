@@ -27,7 +27,17 @@ let make = () => {
   }, [userProgress])
 
   let handleLessonSelect = (lessonId: int) => {
-    Router.push(Lesson(lessonId))
+    // Always go to intro first for introduction lessons
+    let lesson = CangjieData.getLessonById(lessonId)
+    switch lesson {
+    | Some(l) =>
+      if l.lessonType == Types.Introduction {
+        Router.push(LessonIntro(lessonId))
+      } else {
+        Router.push(LessonPractice(lessonId))
+      }
+    | None => Router.push(LessonIntro(lessonId)) // Default to intro
+    }
   }
 
   let handleStartDynamicLesson = (lesson: lesson) => {
@@ -129,7 +139,7 @@ let make = () => {
         | Router.Home =>
           <HomeView
             onStartLearning={() => Router.push(LessonList)}
-            onPlacementTest={() => Router.push(Lesson(100))}
+            onPlacementTest={() => Router.push(LessonPractice(100))}
             onDictionary={() => Router.push(Dictionary)}
             onLessonGenerator={() => Router.push(LessonGenerator)}
             onReview={handleStartReview}
@@ -142,7 +152,16 @@ let make = () => {
             onBack={handleBackToHome}
             userProgress={userProgress}
           />
-        | Router.Lesson(lessonId) =>
+        | Router.LessonIntro(lessonId) =>
+          <IntroductionMode
+            lesson={switch CangjieData.getLessonById(lessonId) {
+            | Some(l) => l
+            | None => CangjieData.getLessonById(1)->Belt.Option.getExn // Fallback
+            }}
+            onContinue={() => Router.push(LessonPractice(lessonId))}
+            onBack={handleBackToList}
+          />
+        | Router.LessonPractice(lessonId) =>
           <LessonView
             lessonId={lessonId}
             onBack={handleBackToList}
