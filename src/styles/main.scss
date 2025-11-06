@@ -1318,6 +1318,22 @@ p {
   }
 }
 
+.char-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.char-checkmark-above {
+  position: absolute;
+  top: -1.5rem;
+  font-size: 1.5rem;
+  color: $success-color;
+  font-weight: bold;
+  z-index: 10;
+}
+
 .char-item {
   display: flex;
   flex-direction: column;
@@ -1329,6 +1345,7 @@ p {
   border: 2px solid transparent;
   transition: all 0.3s ease;
   min-width: 60px;
+  position: relative;
 
   @media (max-width: 768px) {
     padding: 0.5rem;
@@ -1352,6 +1369,10 @@ p {
     gap: 0.25rem;
     margin-top: 0.5rem;
 
+    &.fade-out {
+      animation: fadeOut 0.6s ease forwards;
+    }
+
     .input-box {
       width: 2rem;
       height: 2rem;
@@ -1361,33 +1382,31 @@ p {
       border: 2px solid $primary-color;
       border-radius: 4px;
       background: $bg-primary;
-      font-size: 1rem;
-      font-weight: 600;
-      font-family: 'Courier New', monospace;
-      color: $primary-color;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: $text-primary;
 
       @media (max-width: 768px) {
         width: 1.75rem;
         height: 1.75rem;
-        font-size: 0.9rem;
+        font-size: 1rem;
       }
     }
   }
 
   &.current-char {
-    background: color.adjust($primary-color, $lightness: 47%);
-    border-color: $primary-color;
-    border-width: 3px;
-    box-shadow: 0 4px 12px rgba($primary-color, 0.3);
+    background: transparent;
+    border-bottom: 4px solid $primary-color;
+    border-radius: 0;
 
     .char-main {
-      color: $primary-color;
+      color: $text-primary;
       font-weight: 400;
     }
   }
 
   &.completed-char {
-    opacity: 0.5;
+    border: 2px solid color.adjust($success-color, $lightness: -20%);
 
     .char-main {
       color: $success-color;
@@ -1409,6 +1428,17 @@ p {
   0%, 100% { transform: translateX(0); }
   25% { transform: translateX(-8px); }
   75% { transform: translateX(8px); }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
 }
 
 .practice-input-area,
