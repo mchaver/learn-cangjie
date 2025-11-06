@@ -385,3 +385,80 @@ let getNextLesson = (currentId: int): option<lesson> => {
 let getPlacementTest = (): option<lesson> => {
   getLessonById(100)
 }
+
+// Create a randomized review lesson from completed lessons
+let createReviewLesson = (completedLessonIds: array<int>, characterCount: int): option<lesson> => {
+  // Collect all characters from completed lessons
+  let allChars = completedLessonIds
+    ->Js.Array2.map(id => getLessonById(id))
+    ->Js.Array2.filter(Belt.Option.isSome)
+    ->Js.Array2.map(Belt.Option.getExn)
+    ->Js.Array2.reduce((acc, lesson) => {
+      Js.Array2.concat(acc, lesson.characters)
+    }, [])
+
+  if allChars->Js.Array2.length == 0 {
+    None
+  } else {
+    // Shuffle and take requested number of characters
+    let shuffled = CangjieUtils.shuffleArray(allChars)
+    let selected = shuffled->Js.Array2.slice(~start=0, ~end_=Js.Math.min_int(characterCount, shuffled->Js.Array2.length))
+
+    Some({
+      id: 9000, // Special ID for review lessons
+      title: "隨機複習",
+      description: `複習 ${Belt.Int.toString(selected->Js.Array2.length)} 個已學過的字`,
+      category: Custom,
+      lessonType: Review,
+      introducedKeys: [],
+      characters: selected,
+      targetAccuracy: 0.85,
+      targetSpeed: Some(25.0),
+    })
+  }
+}
+
+// Create a timed challenge lesson
+let createTimedChallenge = (completedLessonIds: array<int>, durationSeconds: int): option<lesson> => {
+  // Collect all characters from completed lessons
+  let allChars = completedLessonIds
+    ->Js.Array2.map(id => getLessonById(id))
+    ->Js.Array2.filter(Belt.Option.isSome)
+    ->Js.Array2.map(Belt.Option.getExn)
+    ->Js.Array2.reduce((acc, lesson) => {
+      Js.Array2.concat(acc, lesson.characters)
+    }, [])
+
+  if allChars->Js.Array2.length == 0 {
+    None
+  } else {
+    // Create a large pool of characters (shuffle and repeat)
+    let poolSize = 100
+
+    // Repeat characters to create a larger pool
+    let rec buildPool = (pool: array<characterInfo>, remaining: int): array<characterInfo> => {
+      if remaining <= 0 {
+        pool
+      } else {
+        let newChars = CangjieUtils.shuffleArray(allChars)
+        let needed = Js.Math.min_int(remaining, newChars->Js.Array2.length)
+        let toAdd = newChars->Js.Array2.slice(~start=0, ~end_=needed)
+        buildPool(Js.Array2.concat(pool, toAdd), remaining - needed)
+      }
+    }
+
+    let challengeChars = buildPool([], poolSize)
+
+    Some({
+      id: 9001, // Special ID for timed challenges
+      title: `限時挑戰 (${Belt.Int.toString(durationSeconds)}秒)`,
+      description: `在 ${Belt.Int.toString(durationSeconds)} 秒內盡可能打出更多字`,
+      category: Custom,
+      lessonType: TimedChallenge,
+      introducedKeys: [],
+      characters: challengeChars,
+      targetAccuracy: 0.80,
+      targetSpeed: Some(30.0),
+    })
+  }
+}

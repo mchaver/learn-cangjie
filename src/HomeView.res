@@ -8,10 +8,13 @@ let make = (
   ~onPlacementTest: unit => unit,
   ~onDictionary: unit => unit,
   ~onLessonGenerator: unit => unit,
+  ~onReview: unit => unit,
+  ~onTimedChallenge: unit => unit,
   ~userProgress: userProgress,
 ) => {
   let completedCount = userProgress.completedLessons->Js.Array2.length
   let totalLessons = CangjieData.getAllLessons()->Js.Array2.length
+  let hasCompletedLessons = completedCount > 0
 
   <div className="home-view">
     <div className="home-content">
@@ -63,12 +66,24 @@ let make = (
       <div className="home-tools">
         <h2> {React.string("工具與功能")} </h2>
         <div className="tools-grid">
+          {hasCompletedLessons
+            ? <>
+                <button className="tool-card" onClick={_ => onReview()}>
+                  <h3> {React.string("🔄 隨機複習")} </h3>
+                  <p> {React.string("複習已學過的字根和字符，隨機排序")} </p>
+                </button>
+                <button className="tool-card" onClick={_ => onTimedChallenge()}>
+                  <h3> {React.string("⏱️ 限時挑戰")} </h3>
+                  <p> {React.string("60秒內盡可能打出更多字")} </p>
+                </button>
+              </>
+            : React.null}
           <button className="tool-card" onClick={_ => onDictionary()}>
-            <h3> {React.string("倉頡字典")} </h3>
+            <h3> {React.string("📖 倉頡字典")} </h3>
             <p> {React.string("查詢漢字的倉頡碼或根據倉頡碼查字")} </p>
           </button>
           <button className="tool-card" onClick={_ => onLessonGenerator()}>
-            <h3> {React.string("自訂練習")} </h3>
+            <h3> {React.string("✏️ 自訂練習")} </h3>
             <p> {React.string("輸入任何文字或按難度生成練習課程")} </p>
           </button>
         </div>

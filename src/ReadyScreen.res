@@ -8,6 +8,8 @@ let make = (~lesson: lesson, ~onStart: unit => unit) => {
   | Introduction => "學習"
   | Practice => "練習"
   | Test => "測驗"
+  | Review => "複習"
+  | TimedChallenge => "限時挑戰"
   | PlacementTest => "程度測驗"
   }
 
@@ -63,6 +65,24 @@ let make = (~lesson: lesson, ~onStart: unit => unit) => {
               <li> {React.string("將記錄您的打字速度和準確率")} </li>
               <li> {React.string("沒有提示，測試您的記憶能力")} </li>
               <li> {React.string("達到目標準確率即可通過測驗")} </li>
+            </ul>
+          </>
+        | Review =>
+          <>
+            <h3> {React.string("複習模式說明")} </h3>
+            <ul>
+              <li> {React.string("隨機複習已學過的字符")} </li>
+              <li> {React.string("可以懸停查看提示")} </li>
+              <li> {React.string("鞏固您的記憶")} </li>
+            </ul>
+          </>
+        | TimedChallenge =>
+          <>
+            <h3> {React.string("限時挑戰說明")} </h3>
+            <ul>
+              <li> {React.string("在限定時間內盡可能打出更多字")} </li>
+              <li> {React.string("錯誤答案不會中斷，但會影響準確率")} </li>
+              <li> {React.string("挑戰您的速度極限！")} </li>
             </ul>
           </>
         | _ => React.null

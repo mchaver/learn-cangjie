@@ -11,6 +11,8 @@ let make = (~onLessonSelect: int => unit, ~onBack: unit => unit, ~userProgress: 
     | Introduction => "介紹"
     | Practice => "練習"
     | Test => "測驗"
+    | Review => "複習"
+    | TimedChallenge => "限時挑戰"
     | PlacementTest => "程度測驗"
     }
   }

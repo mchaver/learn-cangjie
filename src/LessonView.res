@@ -107,7 +107,7 @@ let make = (
         <IntroductionMode lesson={lesson} onContinue={handleStart} />
       | (_, Introduction) | (_, Ready) =>
         <ReadyScreen lesson={lesson} onStart={handleStart} />
-      | (Types.Practice, Active) =>
+      | (Types.Practice, Active) | (Types.Review, Active) =>
         <PracticeMode
           lesson={lesson}
           inputState={inputState}
@@ -120,6 +120,14 @@ let make = (
           inputState={inputState}
           setInputState={setInputState}
           onComplete={handleComplete}
+        />
+      | (Types.TimedChallenge, Active) =>
+        <TimedChallengeMode
+          lesson={lesson}
+          inputState={inputState}
+          setInputState={setInputState}
+          onComplete={handleComplete}
+          durationSeconds={60}
         />
       | (_, Active) =>
         <PracticeMode
