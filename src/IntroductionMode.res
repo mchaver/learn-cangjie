@@ -3,14 +3,20 @@
 open Types
 
 @react.component
-let make = (~lesson: lesson, ~onContinue: unit => unit) => {
+let make = (~lesson: lesson, ~onContinue: unit => unit, ~onBack: unit => unit) => {
   // Create a set of keys being introduced for highlighting
   let introducedKeyStrings = lesson.introducedKeys->Js.Array2.map(CangjieUtils.keyToString)
 
-  <div className="introduction-mode">
-    <div className="intro-content">
-      <h2> {React.string("新字根介紹")} </h2>
-      <p className="intro-description"> {React.string(lesson.description)} </p>
+  <div className="lesson-view">
+    <div className="lesson-header">
+      <button className="btn btn-back" onClick={_ => onBack()}> {React.string("← 返回")} </button>
+      <h1 className="lesson-title"> {React.string(lesson.title)} </h1>
+    </div>
+
+    <div className="introduction-mode">
+      <div className="intro-content">
+        <h2> {React.string("新字根介紹")} </h2>
+        <p className="intro-description"> {React.string(lesson.description)} </p>
 
       // Show keyboard with new keys highlighted
       <div className="intro-keyboard-section">
@@ -79,5 +85,6 @@ let make = (~lesson: lesson, ~onContinue: unit => unit) => {
         </button>
       </div>
     </div>
+  </div>
   </div>
 }

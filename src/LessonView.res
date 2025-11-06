@@ -1,10 +1,8 @@
-// Main lesson view component - handles intro, practice, and test modes
+// Main lesson view component - handles practice and test modes
 
 open Types
 
 type lessonState =
-  | Introduction
-  | Ready
   | Active
   | Completed
 
@@ -15,7 +13,7 @@ let make = (
   ~onUpdateProgress: (int, float, float, bool) => unit,
 ) => {
   let lesson = CangjieData.getLessonById(lessonId)
-  let (state, setState) = React.useState(() => Introduction)
+  let (state, setState) = React.useState(() => Active)
   let (inputState, setInputState) = React.useState(() => (
     {
       currentIndex: 0,
@@ -30,36 +28,6 @@ let make = (
       errors: [],
     }: inputState
   ))
-
-  // Skip ready screen for non-Introduction lessons
-  React.useEffect1(() => {
-    switch lesson {
-    | Some(l) =>
-      if l.lessonType != Types.Introduction && state == Introduction {
-        setState(_ => Active)
-      }
-    | None => ()
-    }
-    None
-  }, [state])
-
-  let handleStart = () => {
-    setInputState(_ => {
-      {
-        currentIndex: 0,
-        currentInput: "",
-        stats: {
-          totalCharacters: 0,
-          correctCharacters: 0,
-          incorrectCharacters: 0,
-          startTime: Js.Date.now(),
-          endTime: None,
-        },
-        errors: [],
-      }
-    })
-    setState(_ => Active)
-  }
 
   let handleComplete = () => {
     setState(_ => Completed)
@@ -83,7 +51,21 @@ let make = (
   }
 
   let handleRestart = () => {
-    setState(_ => Ready)
+    setState(_ => Active)
+    setInputState(_ => {
+      {
+        currentIndex: 0,
+        currentInput: "",
+        stats: {
+          totalCharacters: 0,
+          correctCharacters: 0,
+          incorrectCharacters: 0,
+          startTime: Js.Date.now(),
+          endTime: None,
+        },
+        errors: [],
+      }
+    })
   }
 
   switch lesson {
@@ -103,11 +85,7 @@ let make = (
       </div>
 
       {switch (lesson.lessonType, state) {
-      | (Types.Introduction, Introduction) =>
-        <IntroductionMode lesson={lesson} onContinue={handleStart} />
-      | (_, Introduction) | (_, Ready) =>
-        <ReadyScreen lesson={lesson} onStart={handleStart} />
-      | (Types.Practice, Active) | (Types.Review, Active) =>
+      | (Types.Practice, Active) | (Types.Review, Active) | (Types.Introduction, Active) =>
         <PracticeMode
           lesson={lesson}
           inputState={inputState}
