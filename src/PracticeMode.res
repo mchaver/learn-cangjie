@@ -102,11 +102,11 @@ let make = (
     }
   }
 
-  // Add keyboard event listener
-  React.useEffect0(() => {
+  // Add keyboard event listener - re-register when state changes to avoid stale closures
+  React.useEffect2(() => {
     addEventListener("keydown", handleKeyDown)
     Some(() => removeEventListener("keydown", handleKeyDown))
-  })
+  }, (inputState.currentIndex, inputState.currentInput))
 
   let progress = Belt.Float.fromInt(inputState.currentIndex) /. Belt.Float.fromInt(
     lesson.characters->Js.Array2.length,
