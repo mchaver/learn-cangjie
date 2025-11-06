@@ -1304,6 +1304,87 @@ p {
   }
 }
 
+// Characters row - showing multiple characters at once
+.characters-row {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
+
+  @media (max-width: 768px) {
+    gap: 0.75rem;
+  }
+}
+
+.char-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: $bg-secondary;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+  min-width: 60px;
+
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+    min-width: 50px;
+  }
+
+  .char-main {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: $text-primary;
+    line-height: 1;
+
+    @media (max-width: 768px) {
+      font-size: 2rem;
+    }
+  }
+
+  .char-input-display {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $primary-color;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.1em;
+    min-height: 1.2rem;
+
+    @media (max-width: 768px) {
+      font-size: 0.9rem;
+    }
+  }
+
+  .char-code-hint {
+    font-size: 0.75rem;
+    color: $text-light;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.05em;
+    opacity: 0.6;
+
+    @media (max-width: 768px) {
+      font-size: 0.7rem;
+    }
+  }
+
+  &.current-char {
+    background: color.adjust($primary-color, $lightness: 47%);
+    border-color: $primary-color;
+    border-width: 3px;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba($primary-color, 0.3);
+
+    .char-main {
+      color: $primary-color;
+      font-weight: 400;
+    }
+  }
+}
+
 .practice-input-area,
 .test-input-area {
   margin-top: 1rem;
@@ -1934,40 +2015,21 @@ p {
     }
   }
 
-  // Finger indicator (appears above the next key)
-  .finger-indicator {
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: bounce 0.6s ease-in-out infinite;
-
-    .finger-dot {
-      width: 12px;
-      height: 12px;
-      background: $primary-color;
-      border-radius: 50%;
-      box-shadow: 0 2px 8px rgba($primary-color, 0.4);
-    }
-  }
-
-  // Next key to press - highlighted
+  // Next key to press - highlighted and pulsating
   &.key-next {
-    background: color.adjust($primary-color, $lightness: 45%);
+    background: $primary-color;
     border-color: $primary-color;
     border-width: 3px;
-    box-shadow: 0 0 0 3px rgba($primary-color, 0.2),
-                0 4px 12px rgba($primary-color, 0.3);
-    transform: scale(1.05);
+    animation: pulsate 1.5s ease-in-out infinite;
     z-index: 10;
 
     .key-letter {
-      color: $primary-color;
+      color: white;
       font-weight: 700;
     }
 
     .key-radical {
-      color: $primary-color;
+      color: white;
       font-weight: 600;
     }
   }
@@ -2032,22 +2094,26 @@ p {
 // Animations
 @keyframes keyPress {
   0% {
-    transform: scale(1.05) translateY(0);
+    transform: scale(1) translateY(0);
   }
   50% {
     transform: scale(0.95) translateY(3px);
   }
   100% {
-    transform: scale(1.05) translateY(0);
+    transform: scale(1) translateY(0);
   }
 }
 
-@keyframes bounce {
+@keyframes pulsate {
   0%, 100% {
-    transform: translateX(-50%) translateY(0);
+    transform: scale(1);
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.3),
+                0 4px 12px rgba($primary-color, 0.4);
   }
   50% {
-    transform: translateX(-50%) translateY(-8px);
+    transform: scale(1.08);
+    box-shadow: 0 0 0 6px rgba($primary-color, 0.5),
+                0 6px 16px rgba($primary-color, 0.6);
   }
 }
 
