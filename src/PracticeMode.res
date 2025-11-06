@@ -14,6 +14,9 @@ let make = (
 ) => {
   let inputRef = React.useRef(Js.Nullable.null)
 
+  // Track last key pressed for animation (key, isCorrect)
+  let (lastKeyPressed, setLastKeyPressed) = React.useState(() => None)
+
   // Focus input on mount
   React.useEffect0(() => {
     inputRef.current
@@ -82,6 +85,29 @@ let make = (
   let handleInputChange = (event: ReactEvent.Form.t) => {
     let value = ReactEvent.Form.target(event)["value"]
     let upperValue = value->Js.String2.toUpperCase
+
+    // Check if a new character was added (not deleted)
+    if upperValue->Js.String2.length > inputState.currentInput->Js.String2.length {
+      let lastChar = upperValue->Js.String2.charAt(upperValue->Js.String2.length - 1)
+
+      // Check if the key pressed is correct
+      let isCorrect = switch currentChar {
+      | None => false
+      | Some(charInfo) => {
+          let expectedCode = CangjieUtils.keysToCode(charInfo.cangjieCode)
+          let currentLength = inputState.currentInput->Js.String2.length
+          if currentLength < expectedCode->Js.String2.length {
+            let expectedChar = expectedCode->Js.String2.charAt(currentLength)
+            lastChar == expectedChar
+          } else {
+            false
+          }
+        }
+      }
+
+      // Trigger animation and sound
+      setLastKeyPressed(_ => Some((lastChar, isCorrect)))
+    }
 
     setInputState(prev => {
       {...prev, currentInput: upperValue}
@@ -185,6 +211,6 @@ let make = (
       </div>
     </div>
 
-    <CangjieKeyboard nextKey={nextExpectedKey} showRadicals={true} />
+    <AnimatedKeyboard nextKey={nextExpectedKey} lastKeyPressed={lastKeyPressed} showRadicals={true} />
   </div>
 }
