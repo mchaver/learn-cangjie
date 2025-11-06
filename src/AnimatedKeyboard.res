@@ -74,8 +74,8 @@ let playKeystrokeSound = (isCorrect: bool) => {
         let gainNode = context["createGain"]()
 
         // Connect nodes
-        oscillator["connect"](gainNode)
-        gainNode["connect"](context["destination"])
+        let _ = oscillator["connect"](gainNode)
+        let _ = gainNode["connect"](context["destination"])
 
         // Set frequency based on correct/incorrect
         oscillator["frequency"]["value"] = if isCorrect { 800.0 } else { 400.0 }
@@ -85,8 +85,9 @@ let playKeystrokeSound = (isCorrect: bool) => {
         gainNode["gain"]["value"] = 0.1
 
         // Play short beep
-        oscillator["start"](0.0)
-        oscillator["stop"](context["currentTime"] +. 0.05)
+        let _ = oscillator["start"](0.0)
+        let _ = oscillator["stop"](context["currentTime"] +. 0.05)
+        ()
       } catch {
       | _ => () // Silently fail if audio doesn't work
       }
@@ -141,11 +142,6 @@ let make = (~nextKey: option<string>, ~lastKeyPressed: option<(string, bool)>, ~
       {showRadicals && radical->Belt.Option.isSome
         ? <div className="key-radical">
             {React.string(radical->Belt.Option.getWithDefault(""))}
-          </div>
-        : React.null}
-      {isHighlighted
-        ? <div className="finger-indicator">
-            <div className="finger-dot" />
           </div>
         : React.null}
     </div>

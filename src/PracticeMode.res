@@ -133,17 +133,6 @@ let make = (
     }
   }
 
-  // Convert Roman letters to Cangjie radicals for display
-  let displayInput = inputState.currentInput
-    ->Js.String2.split("")
-    ->Js.Array2.map(char => {
-      switch CangjieUtils.stringToKey(char) {
-      | Some(key) => CangjieUtils.keyToRadicalName(key)
-      | None => char
-      }
-    })
-    ->Js.Array2.joinWith("")
-
   <div className="practice-mode">
     <div className="practice-header">
       <div className="progress-bar">
@@ -172,21 +161,37 @@ let make = (
     <div className="practice-area">
       {switch currentChar {
       | None => <div className="practice-complete"> {React.string("練習完成！")} </div>
-      | Some(charInfo) =>
-        <CharacterDisplay
-          characterInfo={charInfo}
-          showHint={true}
-          currentInput={inputState.currentInput}
-        />
+      | Some(_) =>
+        // Show 8 characters at a time, with current character highlighted
+        let startIndex = inputState.currentIndex
+        let endIndex = Js.Math.min_int(startIndex + 8, lesson.characters->Js.Array2.length)
+        let visibleChars = lesson.characters->Js.Array2.slice(~start=startIndex, ~end_=endIndex)
+
+        <div className="characters-row">
+          {visibleChars
+          ->Js.Array2.mapi((charInfo, idx) => {
+            let isCurrentChar = idx == 0
+            let expectedCode = CangjieUtils.keysToCode(charInfo.cangjieCode)
+
+            <div
+              key={Belt.Int.toString(startIndex + idx)}
+              className={`char-item ${isCurrentChar ? "current-char" : ""}`}
+            >
+              <div className="char-main"> {React.string(charInfo.character)} </div>
+              {isCurrentChar && inputState.currentInput != ""
+                ? <div className="char-input-display"> {React.string(inputState.currentInput)} </div>
+                : React.null}
+              {!isCurrentChar
+                ? <div className="char-code-hint"> {React.string(expectedCode)} </div>
+                : React.null}
+            </div>
+          })
+          ->React.array}
+        </div>
       }}
     </div>
 
     <div className="practice-input-area">
-      {inputState.currentInput != ""
-        ? <div className="cangjie-display">
-            {displayInput->React.string}
-          </div>
-        : React.null}
       <div className="input-container">
         <input
           ref={ReactDOM.Ref.domRef(inputRef)}
@@ -207,7 +212,7 @@ let make = (
         </button>
       </div>
       <div className="practice-instructions">
-        <p> {React.string("輸入倉頡碼後按 Enter 或點擊提交按鈕。將鼠標懸停在字符上查看提示。")} </p>
+        <p> {React.string("輸入倉頡碼後按 Enter 提交")} </p>
       </div>
     </div>
 
