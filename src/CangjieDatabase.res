@@ -42,6 +42,8 @@ let dbEntryToCharacterInfo = (entry: dbEntry): characterInfo => {
     character: entry.character,
     cangjieCode: codeStringToKeys(entry.code),
     radicals: None, // We don't have radical decomposition from this database
+    hskLevel: None,
+    frequencyRank: None,
   }
 }
 

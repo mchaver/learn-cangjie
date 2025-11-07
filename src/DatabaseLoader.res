@@ -78,6 +78,8 @@ let dbEntryToCharacterInfo = (entry: dbEntry): characterInfo => {
     character: entry.character,
     cangjieCode: CangjieUtils.codeToKeys(entry.code->Js.String2.toUpperCase),
     radicals: None,
+    hskLevel: None,
+    frequencyRank: None,
   }
 }
 
@@ -158,6 +160,10 @@ let generateLessonFromText = (
       characters: characters,
       targetAccuracy: 0.85,
       targetSpeed: Some(20.0),
+      showCode: false,
+      allowHints: true,
+      allowGiveUp: true,
+      reviewsLessons: [],
     })
   } else {
     None
@@ -193,6 +199,10 @@ let generateLessonByDifficulty = (
       characters: characters,
       targetAccuracy: 0.85,
       targetSpeed: Some(25.0),
+      showCode: false,
+      allowHints: true,
+      allowGiveUp: true,
+      reviewsLessons: [],
     })
   } else {
     None
