@@ -10,6 +10,8 @@ type characterInfo = {
   character: string,
   cangjieCode: array<cangjieKey>,
   radicals: option<array<string>>, // Visual breakdown of radicals
+  hskLevel: option<int>, // HSK 1-6 or None
+  frequencyRank: option<int>, // Frequency ranking (1 = most common)
 }
 
 // Lesson category
@@ -41,6 +43,10 @@ type lesson = {
   characters: array<characterInfo>,
   targetAccuracy: float, // e.g., 0.90 for 90%
   targetSpeed: option<float>, // characters per minute
+  showCode: bool, // Whether to show Cangjie code during practice
+  allowHints: bool, // Whether "Show Hint" button is available
+  allowGiveUp: bool, // Whether "Give Up" button is available
+  reviewsLessons: array<int>, // Which lesson IDs this reviews (empty for new content)
 }
 
 // User's progress for a lesson
@@ -85,4 +91,23 @@ type inputState = {
   currentInput: string,
   stats: typingStats,
   errors: array<(int, string)>, // (characterIndex, incorrectInput)
+}
+
+// Character mastery state
+type masteryState =
+  | New           // Never seen
+  | Introduced    // Seen with code visible
+  | Learning      // Practiced without code
+  | Weak          // User clicked "Show Hint" or gave up
+  | Mastered      // Typed correctly multiple times
+
+// Individual character progress tracking
+type characterProgress = {
+  character: string,
+  state: masteryState,
+  correctCount: int,
+  incorrectCount: int,
+  lastPracticed: float, // timestamp
+  timesHintUsed: int,
+  timesGivenUp: int,
 }
