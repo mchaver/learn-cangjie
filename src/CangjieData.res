@@ -354,90 +354,90 @@ let lesson11Characters = [
 
 // After Review 1 (日月木一大): Use A B D M K
 let application1Characters = [
-  makeChar("明", "AB", Some(["日", "月"]), ()),
-  makeChar("天", "MK", Some(["一", "大"]), ()),
+  makeChar("明", "AB", Some(["日", "月"]), ()), // bright/tomorrow
+  makeChar("天", "MK", Some(["一", "大"]), ()), // sky/day
+  makeChar("林", "DD", Some(["木", "木"]), ()), // forest
   makeChar("明", "AB", Some(["日", "月"]), ()),
   makeChar("天", "MK", Some(["一", "大"]), ()),
   makeChar("林", "DD", Some(["木", "木"]), ()),
-  makeChar("木", "D", Some(["木"]), ()),
-  makeChar("林", "DD", Some(["木", "木"]), ()),
-  makeChar("木", "D", Some(["木"]), ()),
-  makeChar("大", "K", Some(["大"]), ()),
-  makeChar("木", "D", Some(["木"]), ()),
-  makeChar("大", "K", Some(["大"]), ()),
-  makeChar("木", "D", Some(["木"]), ()),
-  makeChar("一", "M", Some(["一"]), ()),
-  makeChar("天", "MK", Some(["一", "大"]), ()),
-  makeChar("一", "M", Some(["一"]), ()),
-  makeChar("天", "MK", Some(["一", "大"]), ()),
+  makeChar("朋", "BB", Some(["月", "月"]), ()), // friend
+  makeChar("旦", "AM", Some(["日", "一"]), ()), // dawn/morning
+  makeChar("朋", "BB", Some(["月", "月"]), ()),
+  makeChar("旦", "AM", Some(["日", "一"]), ()),
   makeChar("明", "AB", Some(["日", "月"]), ()),
-  makeChar("日", "A", Some(["日"]), ()),
+  makeChar("天", "MK", Some(["一", "大"]), ()),
+  makeChar("林", "DD", Some(["木", "木"]), ()),
+  makeChar("朋", "BB", Some(["月", "月"]), ()),
+  makeChar("旦", "AM", Some(["日", "一"]), ()),
+  makeChar("明", "AB", Some(["日", "月"]), ()),
+  makeChar("天", "MK", Some(["一", "大"]), ()),
+  makeChar("林", "DD", Some(["木", "木"]), ()),
 ]
 
 // After Review 2 (人中口): Use A B D M K O L R
 let application2Characters = [
-  makeChar("大", "K", Some(["大"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-  makeChar("大", "K", Some(["大"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-  makeChar("中", "L", Some(["中"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-  makeChar("中", "L", Some(["中"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-  makeChar("日", "A", Some(["日"]), ()),
-  makeChar("中", "L", Some(["中"]), ()),
-  makeChar("日", "A", Some(["日"]), ()),
-  makeChar("中", "L", Some(["中"]), ()),
-  makeChar("明", "AB", Some(["日", "月"]), ()),
-  makeChar("日", "A", Some(["日"]), ()),
-  makeChar("明", "AB", Some(["日", "月"]), ()),
-  makeChar("日", "A", Some(["日"]), ()),
-  makeChar("口", "R", Some(["口"]), ()),
-  makeChar("中", "L", Some(["中"]), ()),
+  makeChar("同", "BMR", Some(["月", "一", "口"]), ()), // same
+  makeChar("右", "KR", Some(["大", "口"]), ()), // right
+  makeChar("石", "MR", Some(["一", "口"]), ()), // stone
+  makeChar("同", "BMR", Some(["月", "一", "口"]), ()),
+  makeChar("右", "KR", Some(["大", "口"]), ()),
+  makeChar("石", "MR", Some(["一", "口"]), ()),
+  makeChar("呆", "RD", Some(["口", "木"]), ()), // dull/stay
+  makeChar("个", "OL", Some(["人", "中"]), ()), // MW/individual
+  makeChar("呆", "RD", Some(["口", "木"]), ()),
+  makeChar("个", "OL", Some(["人", "中"]), ()),
+  makeChar("同", "BMR", Some(["月", "一", "口"]), ()),
+  makeChar("右", "KR", Some(["大", "口"]), ()),
+  makeChar("石", "MR", Some(["一", "口"]), ()),
+  makeChar("呆", "RD", Some(["口", "木"]), ()),
+  makeChar("个", "OL", Some(["人", "中"]), ()),
+  makeChar("同", "BMR", Some(["月", "一", "口"]), ()),
+  makeChar("右", "KR", Some(["大", "口"]), ()),
+  makeChar("石", "MR", Some(["一", "口"]), ()),
 ]
 
 // After Review 3 (十田火水): Use A B D M K O L R J W F E
 let application3Characters = [
-  makeChar("田", "W", Some(["田"]), ()),
-  makeChar("中", "L", Some(["中"]), ()),
-  makeChar("田", "W", Some(["田"]), ()),
-  makeChar("中", "L", Some(["中"]), ()),
-  makeChar("十", "J", Some(["十"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-  makeChar("十", "J", Some(["十"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-  makeChar("火", "F", Some(["火"]), ()),
-  makeChar("中", "L", Some(["中"]), ()),
-  makeChar("火", "F", Some(["火"]), ()),
-  makeChar("中", "L", Some(["中"]), ()),
-  makeChar("水", "E", Some(["水"]), ()),
-  makeChar("田", "W", Some(["田"]), ()),
-  makeChar("水", "E", Some(["水"]), ()),
-  makeChar("田", "W", Some(["田"]), ()),
-  makeChar("大", "K", Some(["大"]), ()),
-  makeChar("火", "F", Some(["火"]), ()),
+  makeChar("早", "AJ", Some(["日", "十"]), ()), // early/morning
+  makeChar("東", "DW", Some(["木", "田"]), ()), // east
+  makeChar("末", "DJ", Some(["木", "十"]), ()), // end
+  makeChar("早", "AJ", Some(["日", "十"]), ()),
+  makeChar("東", "DW", Some(["木", "田"]), ()),
+  makeChar("末", "DJ", Some(["木", "十"]), ()),
+  makeChar("友", "KE", Some(["大", "水"]), ()), // friend
+  makeChar("炎", "FF", Some(["火", "火"]), ()), // flame/inflammation
+  makeChar("友", "KE", Some(["大", "水"]), ()),
+  makeChar("炎", "FF", Some(["火", "火"]), ()),
+  makeChar("杰", "DF", Some(["木", "火"]), ()), // outstanding/hero
+  makeChar("汉", "EE", Some(["水", "水"]), ()), // Han Chinese
+  makeChar("灰", "KF", Some(["大", "火"]), ()), // ash/grey
+  makeChar("杰", "DF", Some(["木", "火"]), ()),
+  makeChar("汉", "EE", Some(["水", "水"]), ()),
+  makeChar("灰", "KF", Some(["大", "火"]), ()),
+  makeChar("由", "LW", Some(["中", "田"]), ()), // by/from/reason
+  makeChar("支", "JE", Some(["十", "水"]), ()), // support/branch
 ]
 
 // After Review 4 (金土竹戈): Use A B D M K O L R J W F E C G H I
 let application4Characters = [
-  makeChar("金", "C", Some(["金"]), ()),
-  makeChar("木", "D", Some(["木"]), ()),
-  makeChar("水", "E", Some(["水"]), ()),
-  makeChar("火", "F", Some(["火"]), ()),
-  makeChar("土", "G", Some(["土"]), ()),
-  makeChar("金", "C", Some(["金"]), ()),
-  makeChar("木", "D", Some(["木"]), ()),
-  makeChar("水", "E", Some(["水"]), ()),
-  makeChar("火", "F", Some(["火"]), ()),
-  makeChar("土", "G", Some(["土"]), ()),
-  makeChar("竹", "H", Some(["竹"]), ()),
-  makeChar("林", "DD", Some(["木", "木"]), ()),
-  makeChar("竹", "H", Some(["竹"]), ()),
-  makeChar("林", "DD", Some(["木", "木"]), ()),
-  makeChar("成", "IJ", Some(["戈", "十"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-  makeChar("成", "IJ", Some(["戈", "十"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
+  makeChar("去", "GI", Some(["土", "戈"]), ()), // go
+  makeChar("公", "CI", Some(["金", "戈"]), ()), // public/male
+  makeChar("才", "DH", Some(["木", "竹"]), ()), // talent
+  makeChar("去", "GI", Some(["土", "戈"]), ()),
+  makeChar("公", "CI", Some(["金", "戈"]), ()),
+  makeChar("才", "DH", Some(["木", "竹"]), ()),
+  makeChar("白", "HA", Some(["竹", "日"]), ()), // white
+  makeChar("千", "HJ", Some(["竹", "十"]), ()), // thousand
+  makeChar("八", "HO", Some(["竹", "人"]), ()), // eight
+  makeChar("白", "HA", Some(["竹", "日"]), ()),
+  makeChar("千", "HJ", Some(["竹", "十"]), ()),
+  makeChar("八", "HO", Some(["竹", "人"]), ()),
+  makeChar("禾", "HD", Some(["竹", "木"]), ()), // grain/rice
+  makeChar("少", "FH", Some(["火", "竹"]), ()), // few/little
+  makeChar("寸", "DI", Some(["木", "戈"]), ()), // inch/small
+  makeChar("禾", "HD", Some(["竹", "木"]), ()),
+  makeChar("少", "FH", Some(["火", "竹"]), ()),
+  makeChar("寸", "DI", Some(["木", "戈"]), ()),
 ]
 
 // Common word lessons data
