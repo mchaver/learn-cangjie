@@ -28,7 +28,8 @@ type lessonType =
   | Introduction   // Learn new radicals
   | Practice       // Practice with hints
   | Test           // Timed test without hints
-  | Review         // Review previous lessons with randomization
+  | Review         // Review previous lessons (content only)
+  | MixedReview    // Review including application characters
   | TimedChallenge // Type as many as possible in time limit
   | PlacementTest  // Determine user's level
 
