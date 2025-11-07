@@ -12,8 +12,9 @@ let make = (~onLessonSelect: int => unit, ~onBack: unit => unit, ~userProgress: 
     | Practice => "✏️"
     | Test => "📝"
     | Review => "🔄"
+    | MixedReview => "🎯"
     | TimedChallenge => "⏱️"
-    | PlacementTest => "🎯"
+    | PlacementTest => "🏆"
     }
   }
 

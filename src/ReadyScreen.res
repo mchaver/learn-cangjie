@@ -9,6 +9,7 @@ let make = (~lesson: lesson, ~onStart: unit => unit) => {
   | Practice => "練習"
   | Test => "測驗"
   | Review => "複習"
+  | MixedReview => "綜合練習"
   | TimedChallenge => "限時挑戰"
   | PlacementTest => "程度測驗"
   }
@@ -74,6 +75,15 @@ let make = (~lesson: lesson, ~onStart: unit => unit) => {
               <li> {React.string("隨機複習已學過的字符")} </li>
               <li> {React.string("可以懸停查看提示")} </li>
               <li> {React.string("鞏固您的記憶")} </li>
+            </ul>
+          </>
+        | MixedReview =>
+          <>
+            <h3> {React.string("綜合練習說明")} </h3>
+            <ul>
+              <li> {React.string("綜合測試：基礎字符 + 應用詞彙")} </li>
+              <li> {React.string("隨機順序，全面檢驗學習成果")} </li>
+              <li> {React.string("無提示模式，挑戰記憶能力")} </li>
             </ul>
           </>
         | TimedChallenge =>

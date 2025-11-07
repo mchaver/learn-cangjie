@@ -66,7 +66,7 @@ let make = (
       </div>
 
       {switch lesson.lessonType {
-      | Types.Practice | Types.Review | Types.Introduction =>
+      | Types.Practice | Types.Review | Types.MixedReview | Types.Introduction =>
         <PracticeMode
           lesson={lesson}
           inputState={inputState}
