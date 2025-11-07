@@ -299,3 +299,235 @@ let loadCompletionStats = (): option<(int, inputState)> => {
 let clearCompletionStats = (): unit => {
   setItem(completionStatsKey, "")
 }
+
+// Character progress tracking
+let characterProgressKey = "cangjie_character_progress"
+
+// Encode mastery state to string
+let encodeMasteryState = (state: masteryState): string => {
+  switch state {
+  | New => "new"
+  | Introduced => "introduced"
+  | Learning => "learning"
+  | Weak => "weak"
+  | Mastered => "mastered"
+  }
+}
+
+// Decode mastery state from string
+let decodeMasteryState = (str: string): masteryState => {
+  switch str {
+  | "introduced" => Introduced
+  | "learning" => Learning
+  | "weak" => Weak
+  | "mastered" => Mastered
+  | _ => New
+  }
+}
+
+// Encode character progress to JSON
+let encodeCharacterProgress = (cp: characterProgress): Js.Json.t => {
+  Js.Dict.fromArray([
+    ("character", Js.Json.string(cp.character)),
+    ("state", Js.Json.string(encodeMasteryState(cp.state))),
+    ("correctCount", Js.Json.number(float_of_int(cp.correctCount))),
+    ("incorrectCount", Js.Json.number(float_of_int(cp.incorrectCount))),
+    ("lastPracticed", Js.Json.number(cp.lastPracticed)),
+    ("timesHintUsed", Js.Json.number(float_of_int(cp.timesHintUsed))),
+    ("timesGivenUp", Js.Json.number(float_of_int(cp.timesGivenUp))),
+  ])->Js.Json.object_
+}
+
+// Decode character progress from JSON
+let decodeCharacterProgress = (json: Js.Json.t): option<characterProgress> => {
+  json->Js.Json.decodeObject->Belt.Option.flatMap(dict => {
+    let character = dict->Js.Dict.get("character")->Belt.Option.flatMap(Js.Json.decodeString)
+    let state = dict->Js.Dict.get("state")->Belt.Option.flatMap(Js.Json.decodeString)->Belt.Option.map(decodeMasteryState)
+    let correctCount = dict->Js.Dict.get("correctCount")->Belt.Option.flatMap(Js.Json.decodeNumber)->Belt.Option.map(int_of_float)
+    let incorrectCount = dict->Js.Dict.get("incorrectCount")->Belt.Option.flatMap(Js.Json.decodeNumber)->Belt.Option.map(int_of_float)
+    let lastPracticed = dict->Js.Dict.get("lastPracticed")->Belt.Option.flatMap(Js.Json.decodeNumber)
+    let timesHintUsed = dict->Js.Dict.get("timesHintUsed")->Belt.Option.flatMap(Js.Json.decodeNumber)->Belt.Option.map(int_of_float)
+    let timesGivenUp = dict->Js.Dict.get("timesGivenUp")->Belt.Option.flatMap(Js.Json.decodeNumber)->Belt.Option.map(int_of_float)
+
+    switch (character, state, correctCount, incorrectCount, lastPracticed, timesHintUsed, timesGivenUp) {
+    | (Some(c), Some(s), Some(cc), Some(ic), Some(lp), Some(thu), Some(tgu)) =>
+      Some({
+        character: c,
+        state: s,
+        correctCount: cc,
+        incorrectCount: ic,
+        lastPracticed: lp,
+        timesHintUsed: thu,
+        timesGivenUp: tgu,
+      })
+    | _ => None
+    }
+  })
+}
+
+// Load all character progress
+let loadCharacterProgress = (): Js.Dict.t<characterProgress> => {
+  switch getItem(characterProgressKey)->Js.Nullable.toOption {
+  | None => Js.Dict.empty()
+  | Some(str) =>
+    try {
+      let json = Js.Json.parseExn(str)
+      json->Js.Json.decodeObject->Belt.Option.map(dict => {
+        let progressDict = Js.Dict.empty()
+        dict->Js.Dict.entries->Js.Array2.forEach(((char, charJson)) => {
+          decodeCharacterProgress(charJson)->Belt.Option.forEach(cp => {
+            Js.Dict.set(progressDict, char, cp)
+          })
+        })
+        progressDict
+      })->Belt.Option.getWithDefault(Js.Dict.empty())
+    } catch {
+    | _ => Js.Dict.empty()
+    }
+  }
+}
+
+// Save all character progress
+let saveCharacterProgress = (progressDict: Js.Dict.t<characterProgress>): unit => {
+  let jsonDict = Js.Dict.empty()
+  progressDict->Js.Dict.entries->Js.Array2.forEach(((char, cp)) => {
+    Js.Dict.set(jsonDict, char, encodeCharacterProgress(cp))
+  })
+  let json = Js.Json.object_(jsonDict)
+  setItem(characterProgressKey, Js.Json.stringify(json))
+}
+
+// Get progress for a specific character
+let getCharacterProgress = (character: string): option<characterProgress> => {
+  let allProgress = loadCharacterProgress()
+  Js.Dict.get(allProgress, character)
+}
+
+// Update progress for a specific character
+let updateCharacterProgress = (cp: characterProgress): unit => {
+  let allProgress = loadCharacterProgress()
+  Js.Dict.set(allProgress, cp.character, cp)
+  saveCharacterProgress(allProgress)
+}
+
+// Initialize character progress if it doesn't exist
+let initCharacterProgress = (character: string): characterProgress => {
+  switch getCharacterProgress(character) {
+  | Some(cp) => cp
+  | None => {
+      character: character,
+      state: New,
+      correctCount: 0,
+      incorrectCount: 0,
+      lastPracticed: Js.Date.now(),
+      timesHintUsed: 0,
+      timesGivenUp: 0,
+    }
+  }
+}
+
+// Record a correct attempt
+let recordCorrectAttempt = (character: string, showCodeWasVisible: bool): unit => {
+  let cp = initCharacterProgress(character)
+
+  let newState = switch (cp.state, showCodeWasVisible) {
+  | (New, true) => Introduced
+  | (New, false) => Learning
+  | (Introduced, false) => Learning
+  | (Learning, false) =>
+    // Transition to Mastered after 3 correct attempts
+    if cp.correctCount + 1 >= 3 {
+      Mastered
+    } else {
+      Learning
+    }
+  | (Weak, false) =>
+    // Transition back to Learning after 2 correct attempts
+    if cp.correctCount + 1 >= 2 {
+      Learning
+    } else {
+      Weak
+    }
+  | (state, _) => state
+  }
+
+  updateCharacterProgress({
+    ...cp,
+    state: newState,
+    correctCount: cp.correctCount + 1,
+    lastPracticed: Js.Date.now(),
+  })
+}
+
+// Record an incorrect attempt
+let recordIncorrectAttempt = (character: string): unit => {
+  let cp = initCharacterProgress(character)
+  updateCharacterProgress({
+    ...cp,
+    incorrectCount: cp.incorrectCount + 1,
+    lastPracticed: Js.Date.now(),
+  })
+}
+
+// Record hint usage
+let recordHintUsed = (character: string, isReviewMode: bool): unit => {
+  let cp = initCharacterProgress(character)
+
+  // In review mode, mark as Weak when hint is used
+  let newState = if isReviewMode && cp.state != New && cp.state != Introduced {
+    Weak
+  } else {
+    cp.state
+  }
+
+  updateCharacterProgress({
+    ...cp,
+    state: newState,
+    timesHintUsed: cp.timesHintUsed + 1,
+    lastPracticed: Js.Date.now(),
+  })
+}
+
+// Record give up (counts as error in review mode)
+let recordGiveUp = (character: string, isReviewMode: bool): unit => {
+  let cp = initCharacterProgress(character)
+
+  // In review mode, mark as Weak and count as incorrect
+  let (newState, newIncorrectCount) = if isReviewMode && cp.state != New && cp.state != Introduced {
+    (Weak, cp.incorrectCount + 1)
+  } else {
+    (cp.state, cp.incorrectCount)
+  }
+
+  updateCharacterProgress({
+    ...cp,
+    state: newState,
+    incorrectCount: newIncorrectCount,
+    timesGivenUp: cp.timesGivenUp + 1,
+    lastPracticed: Js.Date.now(),
+  })
+}
+
+// Get all weak characters (for priority review)
+let getWeakCharacters = (): array<string> => {
+  let allProgress = loadCharacterProgress()
+  allProgress->Js.Dict.entries
+    ->Js.Array2.filter(((_, cp)) => cp.state == Weak)
+    ->Js.Array2.map(((char, _)) => char)
+}
+
+// Get all characters in a specific state
+let getCharactersByState = (state: masteryState): array<string> => {
+  let allProgress = loadCharacterProgress()
+  allProgress->Js.Dict.entries
+    ->Js.Array2.filter(((_, cp)) => cp.state == state)
+    ->Js.Array2.map(((char, _)) => char)
+}
+
+// Get characters that need review (not mastered)
+let getCharactersNeedingReview = (): array<string> => {
+  let allProgress = loadCharacterProgress()
+  allProgress->Js.Dict.entries
+    ->Js.Array2.filter(((_, cp)) => cp.state != New && cp.state != Mastered)
+    ->Js.Array2.map(((char, _)) => char)
+}

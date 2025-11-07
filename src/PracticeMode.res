@@ -24,7 +24,57 @@ let make = (
   // Track just completed multi-char for fade-out animation
   let (justCompleted, setJustCompleted) = React.useState(() => None)
 
+  // Track hint visibility
+  let (showHint, setShowHint) = React.useState(() => false)
+
   let currentChar = lesson.characters->Belt.Array.get(inputState.currentIndex)
+
+  // Determine if we're in review mode
+  let isReviewMode = lesson.lessonType == Review
+
+  // Handle hint button click
+  let handleShowHint = () => {
+    setShowHint(_ => true)
+    // Record hint usage
+    switch currentChar {
+    | Some(charInfo) => LocalStorage.recordHintUsed(charInfo.character, isReviewMode)
+    | None => ()
+    }
+  }
+
+  // Handle give up button click
+  let handleGiveUp = () => {
+    switch currentChar {
+    | Some(charInfo) => {
+        // Record give up
+        LocalStorage.recordGiveUp(charInfo.character, isReviewMode)
+
+        // Move to next character
+        let isLast = inputState.currentIndex == lesson.characters->Js.Array2.length - 1
+
+        setInputState(prev => {
+          {
+            currentIndex: prev.currentIndex + 1,
+            currentInput: "",
+            stats: {
+              ...prev.stats,
+              totalCharacters: prev.stats.totalCharacters + 1,
+              incorrectCharacters: prev.stats.incorrectCharacters + 1,
+            },
+            errors: prev.errors->Js.Array2.concat([(prev.currentIndex, "GIVE_UP")]),
+          }
+        })
+
+        // Hide hint for next character
+        setShowHint(_ => false)
+
+        if isLast {
+          onComplete()
+        }
+      }
+    | None => ()
+    }
+  }
 
   let handleKeyDown = (event: {..}) => {
     let key = event["key"]->Js.String2.toUpperCase
@@ -53,6 +103,9 @@ let make = (
               if newInput == expectedCode {
                 let isLast = inputState.currentIndex == lesson.characters->Js.Array2.length - 1
 
+                // Record correct attempt in character progress
+                LocalStorage.recordCorrectAttempt(charInfo.character, lesson.showCode || showHint)
+
                 // For multi-char codes, trigger fade-out animation
                 if expectedCode->Js.String2.length > 1 {
                   setJustCompleted(_ => Some(newInput))
@@ -61,6 +114,9 @@ let make = (
                   }, 600)
                   ()
                 }
+
+                // Hide hint for next character
+                setShowHint(_ => false)
 
                 // Move to next character
                 setInputState(prev => {
@@ -87,6 +143,9 @@ let make = (
               }
             } else {
               // Wrong key - flash error
+              // Record incorrect attempt in character progress
+              LocalStorage.recordIncorrectAttempt(charInfo.character)
+
               if expectedCode->Js.String2.length == 1 {
                 // For single character, flash the whole character
                 setShowError(_ => true)
@@ -199,6 +258,17 @@ let make = (
                 className={`char-item ${isCurrentChar ? "current-char" : ""} ${isCompleted ? "completed-char" : ""} ${isCurrentChar && showError ? "error-char" : ""}`}
               >
                 <div className="char-main"> {React.string(charInfo.character)} </div>
+                {isCurrentChar && (lesson.showCode || showHint)
+                  ? <div className="char-code-hint">
+                      {React.string(expectedCode)}
+                      {React.string(" → ")}
+                      {React.string(
+                        charInfo.cangjieCode
+                        ->Js.Array2.map(CangjieUtils.keyToRadicalName)
+                        ->Js.Array2.joinWith("")
+                      )}
+                    </div>
+                  : React.null}
                 {isCurrentChar && expectedCode->Js.String2.length > 1
                   ? <div className="char-input-boxes">
                       {Belt.Array.range(0, expectedCode->Js.String2.length - 1)
@@ -263,6 +333,23 @@ let make = (
         </div>
       }}
     </div>
+
+    {switch currentChar {
+    | None => React.null
+    | Some(_) =>
+      <div className="practice-controls">
+        {lesson.allowHints && !showHint
+          ? <button className="hint-button" onClick={_ => handleShowHint()}>
+              {React.string("顯示提示")}
+            </button>
+          : React.null}
+        {lesson.allowGiveUp
+          ? <button className="give-up-button" onClick={_ => handleGiveUp()}>
+              {React.string("跳過")}
+            </button>
+          : React.null}
+      </div>
+    }}
 
     <AnimatedKeyboard nextKey={nextExpectedKey} lastKeyPressed={lastKeyPressed} showRadicals={true} />
   </div>
