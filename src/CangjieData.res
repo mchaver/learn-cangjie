@@ -403,100 +403,184 @@ let placementTestChars = [
 // Generate all lessons
 let getAllLessons = (): array<lesson> => {
   let basicRadicalLessons = [
-    // Lesson 1: Start with A (日) and B (月) only
-    makeLesson(1, "第一課：日月", "學習 A(日) 和 B(月)",
-      Radicals, Introduction, [A, B], lesson1Characters, ()),
+    // Lesson 1: Introduction 日月 (with code visible)
+    makeLesson(1, "第一課（介紹）：日月", "認識 A(日) 和 B(月)",
+      Radicals, Introduction, [A, B], lesson1Characters, ~showCode=true, ~allowHints=false, ()),
 
-    // Lesson 2: Add D (木)
-    makeLesson(2, "第二課：木", "學習 D(木) 並複習日月",
-      Radicals, Introduction, [D], lesson2Characters, ()),
+    // Lesson 2: Practice 日月 (code hidden, test recall)
+    makeLesson(2, "第一課（練習）：日月", "練習 A(日) 和 B(月)",
+      Radicals, Practice, [A, B], lesson1Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 3: Add M (一)
-    makeLesson(3, "第三課：一", "學習 M(一) 並複習",
-      Radicals, Introduction, [M], lesson3Characters, ()),
+    // Lesson 3: Introduction 木 (with code visible)
+    makeLesson(3, "第二課（介紹）：木", "認識 D(木)",
+      Radicals, Introduction, [D], lesson2Characters, ~showCode=true, ~allowHints=false, ()),
 
-    // Lesson 4: Add K (大)
-    makeLesson(4, "第四課：大", "學習 K(大) 並複習",
-      Radicals, Introduction, [K], lesson4Characters, ()),
+    // Lesson 4: Practice 木 (code hidden, test recall)
+    makeLesson(4, "第二課（練習）：木", "練習 D(木)",
+      Radicals, Practice, [D], lesson2Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 5: Add O (人)
-    makeLesson(5, "第五課：人", "學習 O(人) 並複習",
-      Radicals, Introduction, [O], lesson5Characters, ()),
+    // Lesson 5: Review 日月木 (every 2 lessons)
+    makeLesson(5, "複習：日月木", "複習已學字符",
+      Radicals, Review, [A, B, D],
+      Js.Array2.concat(lesson1Characters, lesson2Characters),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 3, 4], ()),
 
-    // Lesson 6: Add L (中) and R (口)
-    makeLesson(6, "第六課：中口", "學習 L(中) 和 R(口)",
-      Radicals, Introduction, [L, R], lesson6Characters, ()),
+    // Lesson 6: Introduction 一 (with code visible)
+    makeLesson(6, "第三課（介紹）：一", "認識 M(一)",
+      Radicals, Introduction, [M], lesson3Characters, ~showCode=true, ~allowHints=false, ()),
 
-    // Lesson 7: Add J (十) and W (田)
-    makeLesson(7, "第七課：十田", "學習 J(十) 和 W(田)",
-      Radicals, Introduction, [J, W], lesson7Characters, ()),
+    // Lesson 7: Practice 一 (code hidden, test recall)
+    makeLesson(7, "第三課（練習）：一", "練習 M(一)",
+      Radicals, Practice, [M], lesson3Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 8: Add F (火) and E (水)
-    makeLesson(8, "第八課：火水", "學習 F(火) 和 E(水)",
-      Radicals, Introduction, [F, E], lesson8Characters, ()),
+    // Lesson 8: Introduction 大 (with code visible)
+    makeLesson(8, "第四課（介紹）：大", "認識 K(大)",
+      Radicals, Introduction, [K], lesson4Characters, ~showCode=true, ~allowHints=false, ()),
 
-    // Lesson 9: Add C (金) and G (土)
-    makeLesson(9, "第九課：金土", "學習 C(金) 和 G(土)",
-      Radicals, Introduction, [C, G], lesson9Characters, ()),
+    // Lesson 9: Practice 大 (code hidden, test recall)
+    makeLesson(9, "第四課（練習）：大", "練習 K(大)",
+      Radicals, Practice, [K], lesson4Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 10: Add H (竹) and I (戈)
-    makeLesson(10, "第十課：竹戈", "學習 H(竹) 和 I(戈)",
-      Radicals, Introduction, [H, I], lesson10Characters, ()),
+    // Lesson 10: Review 一大 (every 2 lessons)
+    makeLesson(10, "複習：一大", "複習已學字符",
+      Radicals, Review, [M, K],
+      Js.Array2.concat(lesson3Characters, lesson4Characters),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[6, 7, 8, 9], ()),
 
-    // Lesson 11: Add P (心) and Q (手)
-    makeLesson(11, "第十一課：心手", "學習 P(心) 和 Q(手)",
-      Radicals, Introduction, [P, Q], lesson11Characters, ()),
+    // Lesson 11: Introduction 人 (with code visible)
+    makeLesson(11, "第五課（介紹）：人", "認識 O(人)",
+      Radicals, Introduction, [O], lesson5Characters, ~showCode=true, ~allowHints=false, ()),
 
-    // Lesson 12: Add U (山) and V (女)
-    makeLesson(12, "第十二課：山女", "學習 U(山) 和 V(女)",
-      Radicals, Introduction, [U, V], lesson12Characters, ()),
+    // Lesson 12: Practice 人 (code hidden, test recall)
+    makeLesson(12, "第五課（練習）：人", "練習 O(人)",
+      Radicals, Practice, [O], lesson5Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 13: Introduction 中口 (with code visible)
+    makeLesson(13, "第六課（介紹）：中口", "認識 L(中) 和 R(口)",
+      Radicals, Introduction, [L, R], lesson6Characters, ~showCode=true, ~allowHints=false, ()),
+
+    // Lesson 14: Practice 中口 (code hidden, test recall)
+    makeLesson(14, "第六課（練習）：中口", "練習 L(中) 和 R(口)",
+      Radicals, Practice, [L, R], lesson6Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 15: Review 人中口 (every 2 lessons)
+    makeLesson(15, "複習：人中口", "複習已學字符",
+      Radicals, Review, [O, L, R],
+      Js.Array2.concat(lesson5Characters, lesson6Characters),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[11, 12, 13, 14], ()),
+
+    // Lesson 16: Introduction 十田 (with code visible)
+    makeLesson(16, "第七課（介紹）：十田", "認識 J(十) 和 W(田)",
+      Radicals, Introduction, [J, W], lesson7Characters, ~showCode=true, ~allowHints=false, ()),
+
+    // Lesson 17: Practice 十田 (code hidden, test recall)
+    makeLesson(17, "第七課（練習）：十田", "練習 J(十) 和 W(田)",
+      Radicals, Practice, [J, W], lesson7Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 18: Introduction 火水 (with code visible)
+    makeLesson(18, "第八課（介紹）：火水", "認識 F(火) 和 E(水)",
+      Radicals, Introduction, [F, E], lesson8Characters, ~showCode=true, ~allowHints=false, ()),
+
+    // Lesson 19: Practice 火水 (code hidden, test recall)
+    makeLesson(19, "第八課（練習）：火水", "練習 F(火) 和 E(水)",
+      Radicals, Practice, [F, E], lesson8Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 20: Review 十田火水 (every 2 lessons)
+    makeLesson(20, "複習：十田火水", "複習已學字符",
+      Radicals, Review, [J, W, F, E],
+      Js.Array2.concat(lesson7Characters, lesson8Characters),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[16, 17, 18, 19], ()),
+
+    // Lesson 21: Introduction 金土 (with code visible)
+    makeLesson(21, "第九課（介紹）：金土", "認識 C(金) 和 G(土)",
+      Radicals, Introduction, [C, G], lesson9Characters, ~showCode=true, ~allowHints=false, ()),
+
+    // Lesson 22: Practice 金土 (code hidden, test recall)
+    makeLesson(22, "第九課（練習）：金土", "練習 C(金) 和 G(土)",
+      Radicals, Practice, [C, G], lesson9Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 23: Introduction 竹戈 (with code visible)
+    makeLesson(23, "第十課（介紹）：竹戈", "認識 H(竹) 和 I(戈)",
+      Radicals, Introduction, [H, I], lesson10Characters, ~showCode=true, ~allowHints=false, ()),
+
+    // Lesson 24: Practice 竹戈 (code hidden, test recall)
+    makeLesson(24, "第十課（練習）：竹戈", "練習 H(竹) 和 I(戈)",
+      Radicals, Practice, [H, I], lesson10Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 25: Review 金土竹戈 (every 2 lessons)
+    makeLesson(25, "複習：金土竹戈", "複習已學字符",
+      Radicals, Review, [C, G, H, I],
+      Js.Array2.concat(lesson9Characters, lesson10Characters),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[21, 22, 23, 24], ()),
+
+    // Lesson 26: Introduction 心手 (with code visible)
+    makeLesson(26, "第十一課（介紹）：心手", "認識 P(心) 和 Q(手)",
+      Radicals, Introduction, [P, Q], lesson11Characters, ~showCode=true, ~allowHints=false, ()),
+
+    // Lesson 27: Practice 心手 (code hidden, test recall)
+    makeLesson(27, "第十一課（練習）：心手", "練習 P(心) 和 Q(手)",
+      Radicals, Practice, [P, Q], lesson11Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 28: Introduction 山女 (with code visible)
+    makeLesson(28, "第十二課（介紹）：山女", "認識 U(山) 和 V(女)",
+      Radicals, Introduction, [U, V], lesson12Characters, ~showCode=true, ~allowHints=false, ()),
+
+    // Lesson 29: Practice 山女 (code hidden, test recall)
+    makeLesson(29, "第十二課（練習）：山女", "練習 U(山) 和 V(女)",
+      Radicals, Practice, [U, V], lesson12Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 30: Review 心手山女 (every 2 lessons)
+    makeLesson(30, "複習：心手山女", "複習已學字符",
+      Radicals, Review, [P, Q, U, V],
+      Js.Array2.concat(lesson11Characters, lesson12Characters),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[26, 27, 28, 29], ()),
   ]
 
   let wordLessons = [
     // Common words
-    makeLesson(16, "常用詞語（一）：中國", "練習打「中國」",
+    makeLesson(31, "常用詞語（一）：中國", "練習打「中國」",
       CommonWords, Practice, [], commonWords1, ()),
-    makeLesson(17, "常用詞語（二）：人民", "練習打「人民」",
+    makeLesson(32, "常用詞語（二）：人民", "練習打「人民」",
       CommonWords, Practice, [], commonWords2, ()),
-    makeLesson(18, "常用詞語（三）：時間", "練習打「時間」",
+    makeLesson(33, "常用詞語（三）：時間", "練習打「時間」",
       CommonWords, Practice, [], commonWords3, ()),
-    makeLesson(19, "常用詞語（四）：地方", "練習打「地方」",
+    makeLesson(34, "常用詞語（四）：地方", "練習打「地方」",
       CommonWords, Practice, [], commonWords4, ()),
-    makeLesson(20, "常用詞語（五）：工作", "練習打「工作」",
+    makeLesson(35, "常用詞語（五）：工作", "練習打「工作」",
       CommonWords, Practice, [], commonWords5, ()),
-    makeLesson(21, "常用詞語測驗", "測試常用詞語的掌握程度",
+    makeLesson(36, "常用詞語測驗", "測試常用詞語的掌握程度",
       CommonWords, Test, [],
       Js.Array2.concat(commonWords1, Js.Array2.concat(commonWords2, Js.Array2.concat(commonWords3, Js.Array2.concat(commonWords4, commonWords5)))), ()),
   ]
 
   let chengyuLessons = [
-    makeLesson(22, "成語（一）：一心一意", "練習打成語「一心一意」",
+    makeLesson(37, "成語（一）：一心一意", "練習打成語「一心一意」",
       Chengyu, Practice, [], chengyu1, ()),
-    makeLesson(23, "成語（二）：人山人海", "練習打成語「人山人海」",
+    makeLesson(38, "成語（二）：人山人海", "練習打成語「人山人海」",
       Chengyu, Practice, [], chengyu2, ()),
-    makeLesson(24, "成語（三）：日新月異", "練習打成語「日新月異」",
+    makeLesson(39, "成語（三）：日新月異", "練習打成語「日新月異」",
       Chengyu, Practice, [], chengyu3, ()),
-    makeLesson(25, "成語綜合測驗", "測試成語的掌握程度",
+    makeLesson(40, "成語綜合測驗", "測試成語的掌握程度",
       Chengyu, Test, [],
       Js.Array2.concat(chengyu1, Js.Array2.concat(chengyu2, chengyu3)), ()),
   ]
 
   let sentenceLessons = [
-    makeLesson(26, "句子練習（一）：你好嗎", "練習簡單問候語",
+    makeLesson(41, "句子練習（一）：你好嗎", "練習簡單問候語",
       Sentences, Practice, [], sentence1, ()),
-    makeLesson(27, "句子練習（二）：我很好", "練習簡單回答",
+    makeLesson(42, "句子練習（二）：我很好", "練習簡單回答",
       Sentences, Practice, [], sentence2, ()),
-    makeLesson(28, "句子練習（三）：今天天氣很好", "練習描述天氣",
+    makeLesson(43, "句子練習（三）：今天天氣很好", "練習描述天氣",
       Sentences, Practice, [], sentence3, ()),
-    makeLesson(29, "句子練習（四）：謝謝你", "練習感謝用語",
+    makeLesson(44, "句子練習（四）：謝謝你", "練習感謝用語",
       Sentences, Practice, [], sentence4, ()),
-    makeLesson(30, "句子練習（五）：我喜歡學習中文", "練習表達喜好",
+    makeLesson(45, "句子練習（五）：我喜歡學習中文", "練習表達喜好",
       Sentences, Practice, [], sentence5, ()),
-    makeLesson(31, "句子練習（六）：長句練習", "練習較長的句子",
+    makeLesson(46, "句子練習（六）：長句練習", "練習較長的句子",
       Sentences, Practice, [], sentence6, ()),
-    makeLesson(32, "句子練習（七）：中文語言", "練習描述性長句",
+    makeLesson(47, "句子練習（七）：中文語言", "練習描述性長句",
       Sentences, Practice, [], sentence7, ()),
-    makeLesson(33, "句子綜合測驗", "測試句子打字能力",
+    makeLesson(48, "句子綜合測驗", "測試句子打字能力",
       Sentences, Test, [],
       Js.Array2.concat(
         sentence1,
