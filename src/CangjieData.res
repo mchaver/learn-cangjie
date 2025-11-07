@@ -350,6 +350,96 @@ let lesson11Characters = [
   makeChar("竹", "H", Some(["竹"]), ()),
 ]
 
+// Application lessons - multi-character words using learned radicals
+
+// After Review 1 (日月木一大): Use A B D M K
+let application1Characters = [
+  makeChar("明", "AB", Some(["日", "月"]), ()), // bright/tomorrow
+  makeChar("天", "MK", Some(["一", "大"]), ()), // sky/day
+  makeChar("林", "DD", Some(["木", "木"]), ()), // forest
+  makeChar("明", "AB", Some(["日", "月"]), ()),
+  makeChar("天", "MK", Some(["一", "大"]), ()),
+  makeChar("林", "DD", Some(["木", "木"]), ()),
+  makeChar("朋", "BB", Some(["月", "月"]), ()), // friend
+  makeChar("旦", "AM", Some(["日", "一"]), ()), // dawn/morning
+  makeChar("朋", "BB", Some(["月", "月"]), ()),
+  makeChar("旦", "AM", Some(["日", "一"]), ()),
+  makeChar("明", "AB", Some(["日", "月"]), ()),
+  makeChar("天", "MK", Some(["一", "大"]), ()),
+  makeChar("林", "DD", Some(["木", "木"]), ()),
+  makeChar("朋", "BB", Some(["月", "月"]), ()),
+  makeChar("旦", "AM", Some(["日", "一"]), ()),
+  makeChar("明", "AB", Some(["日", "月"]), ()),
+  makeChar("天", "MK", Some(["一", "大"]), ()),
+  makeChar("林", "DD", Some(["木", "木"]), ()),
+]
+
+// After Review 2 (人中口): Use A B D M K O L R
+let application2Characters = [
+  makeChar("同", "BMR", Some(["月", "一", "口"]), ()), // same
+  makeChar("右", "KR", Some(["大", "口"]), ()), // right
+  makeChar("石", "MR", Some(["一", "口"]), ()), // stone
+  makeChar("同", "BMR", Some(["月", "一", "口"]), ()),
+  makeChar("右", "KR", Some(["大", "口"]), ()),
+  makeChar("石", "MR", Some(["一", "口"]), ()),
+  makeChar("呆", "RD", Some(["口", "木"]), ()), // dull/stay
+  makeChar("个", "OL", Some(["人", "中"]), ()), // MW/individual
+  makeChar("呆", "RD", Some(["口", "木"]), ()),
+  makeChar("个", "OL", Some(["人", "中"]), ()),
+  makeChar("同", "BMR", Some(["月", "一", "口"]), ()),
+  makeChar("右", "KR", Some(["大", "口"]), ()),
+  makeChar("石", "MR", Some(["一", "口"]), ()),
+  makeChar("呆", "RD", Some(["口", "木"]), ()),
+  makeChar("个", "OL", Some(["人", "中"]), ()),
+  makeChar("同", "BMR", Some(["月", "一", "口"]), ()),
+  makeChar("右", "KR", Some(["大", "口"]), ()),
+  makeChar("石", "MR", Some(["一", "口"]), ()),
+]
+
+// After Review 3 (十田火水): Use A B D M K O L R J W F E
+let application3Characters = [
+  makeChar("早", "AJ", Some(["日", "十"]), ()), // early/morning
+  makeChar("東", "DW", Some(["木", "田"]), ()), // east
+  makeChar("末", "DJ", Some(["木", "十"]), ()), // end
+  makeChar("早", "AJ", Some(["日", "十"]), ()),
+  makeChar("東", "DW", Some(["木", "田"]), ()),
+  makeChar("末", "DJ", Some(["木", "十"]), ()),
+  makeChar("友", "KE", Some(["大", "水"]), ()), // friend
+  makeChar("炎", "FF", Some(["火", "火"]), ()), // flame/inflammation
+  makeChar("友", "KE", Some(["大", "水"]), ()),
+  makeChar("炎", "FF", Some(["火", "火"]), ()),
+  makeChar("杰", "DF", Some(["木", "火"]), ()), // outstanding/hero
+  makeChar("汉", "EE", Some(["水", "水"]), ()), // Han Chinese
+  makeChar("灰", "KF", Some(["大", "火"]), ()), // ash/grey
+  makeChar("杰", "DF", Some(["木", "火"]), ()),
+  makeChar("汉", "EE", Some(["水", "水"]), ()),
+  makeChar("灰", "KF", Some(["大", "火"]), ()),
+  makeChar("由", "LW", Some(["中", "田"]), ()), // by/from/reason
+  makeChar("支", "JE", Some(["十", "水"]), ()), // support/branch
+]
+
+// After Review 4 (金土竹戈): Use A B D M K O L R J W F E C G H I
+let application4Characters = [
+  makeChar("去", "GI", Some(["土", "戈"]), ()), // go
+  makeChar("公", "CI", Some(["金", "戈"]), ()), // public/male
+  makeChar("才", "DH", Some(["木", "竹"]), ()), // talent
+  makeChar("去", "GI", Some(["土", "戈"]), ()),
+  makeChar("公", "CI", Some(["金", "戈"]), ()),
+  makeChar("才", "DH", Some(["木", "竹"]), ()),
+  makeChar("白", "HA", Some(["竹", "日"]), ()), // white
+  makeChar("千", "HJ", Some(["竹", "十"]), ()), // thousand
+  makeChar("八", "HO", Some(["竹", "人"]), ()), // eight
+  makeChar("白", "HA", Some(["竹", "日"]), ()),
+  makeChar("千", "HJ", Some(["竹", "十"]), ()),
+  makeChar("八", "HO", Some(["竹", "人"]), ()),
+  makeChar("禾", "HD", Some(["竹", "木"]), ()), // grain/rice
+  makeChar("少", "FH", Some(["火", "竹"]), ()), // few/little
+  makeChar("寸", "DI", Some(["木", "戈"]), ()), // inch/small
+  makeChar("禾", "HD", Some(["竹", "木"]), ()),
+  makeChar("少", "FH", Some(["火", "竹"]), ()),
+  makeChar("寸", "DI", Some(["木", "戈"]), ()),
+]
+
 // Common word lessons data
 let commonWords1 = [
   makeChar("中", "L", None, ()),
@@ -512,108 +602,124 @@ let getAllLessons = (): array<lesson> => {
       Js.Array2.concat(lesson1Characters, Js.Array2.concat(lesson2Characters, lesson3Characters)),
       ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 3], ()),
 
-    // Lesson 5: 人
-    makeLesson(5, "第四課：人", "學習 O(人)",
+    // Lesson 5: Application - practice multi-char combinations
+    makeLesson(5, "應用一：組合練習", "練習字詞組合",
+      Radicals, Practice, [A, B, D, M, K], application1Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 6: 人
+    makeLesson(6, "第四課：人", "學習 O(人)",
       Radicals, Practice, [O], lesson4Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 6: 中口
-    makeLesson(6, "第五課：中口", "學習 L(中) 和 R(口)",
+    // Lesson 7: 中口
+    makeLesson(7, "第五課：中口", "學習 L(中) 和 R(口)",
       Radicals, Practice, [L, R], lesson5Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 7: Review 人中口
-    makeLesson(7, "複習二：人中口", "複習已學字符",
+    // Lesson 8: Review 人中口
+    makeLesson(8, "複習二：人中口", "複習已學字符",
       Radicals, Review, [O, L, R],
       Js.Array2.concat(lesson4Characters, lesson5Characters),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[5, 6], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[6, 7], ()),
 
-    // Lesson 8: 十田
-    makeLesson(8, "第六課：十田", "學習 J(十) 和 W(田)",
+    // Lesson 9: Application - practice multi-char combinations
+    makeLesson(9, "應用二：組合練習", "練習字詞組合",
+      Radicals, Practice, [A, B, D, M, K, O, L, R], application2Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 10: 十田
+    makeLesson(10, "第六課：十田", "學習 J(十) 和 W(田)",
       Radicals, Practice, [J, W], lesson6Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 9: 火水
-    makeLesson(9, "第七課：火水", "學習 F(火) 和 E(水)",
+    // Lesson 11: 火水
+    makeLesson(11, "第七課：火水", "學習 F(火) 和 E(水)",
       Radicals, Practice, [F, E], lesson7Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 10: Review 十田火水
-    makeLesson(10, "複習三：十田火水", "複習已學字符",
+    // Lesson 12: Review 十田火水
+    makeLesson(12, "複習三：十田火水", "複習已學字符",
       Radicals, Review, [J, W, F, E],
       Js.Array2.concat(lesson6Characters, lesson7Characters),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[8, 9], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[10, 11], ()),
 
-    // Lesson 11: 金土
-    makeLesson(11, "第八課：金土", "學習 C(金) 和 G(土)",
+    // Lesson 13: Application - practice multi-char combinations
+    makeLesson(13, "應用三：組合練習", "練習字詞組合",
+      Radicals, Practice, [A, B, D, M, K, O, L, R, J, W, F, E], application3Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 14: 金土
+    makeLesson(14, "第八課：金土", "學習 C(金) 和 G(土)",
       Radicals, Practice, [C, G], lesson8Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 12: 竹戈
-    makeLesson(12, "第九課：竹戈", "學習 H(竹) 和 I(戈)",
+    // Lesson 15: 竹戈
+    makeLesson(15, "第九課：竹戈", "學習 H(竹) 和 I(戈)",
       Radicals, Practice, [H, I], lesson9Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 13: Review 金土竹戈
-    makeLesson(13, "複習四：金土竹戈", "複習已學字符",
+    // Lesson 16: Review 金土竹戈
+    makeLesson(16, "複習四：金土竹戈", "複習已學字符",
       Radicals, Review, [C, G, H, I],
       Js.Array2.concat(lesson8Characters, lesson9Characters),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[11, 12], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[14, 15], ()),
 
-    // Lesson 14: 心手
-    makeLesson(14, "第十課：心手", "學習 P(心) 和 Q(手)",
+    // Lesson 17: Application - practice multi-char combinations
+    makeLesson(17, "應用四：五行練習", "練習五行組合（金木水火土）",
+      Radicals, Practice, [A, B, D, M, K, O, L, R, J, W, F, E, C, G, H, I], application4Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 18: 心手
+    makeLesson(18, "第十課：心手", "學習 P(心) 和 Q(手)",
       Radicals, Practice, [P, Q], lesson10Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 15: 山女
-    makeLesson(15, "第十一課：山女", "學習 U(山) 和 V(女)",
+    // Lesson 19: 山女
+    makeLesson(19, "第十一課：山女", "學習 U(山) 和 V(女)",
       Radicals, Practice, [U, V], lesson11Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 16: Final Review 心手山女
-    makeLesson(16, "複習五：心手山女", "複習已學字符",
+    // Lesson 20: Final Review 心手山女
+    makeLesson(20, "複習五：心手山女", "複習已學字符",
       Radicals, Review, [P, Q, U, V],
       Js.Array2.concat(lesson10Characters, lesson11Characters),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[14, 15], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[18, 19], ()),
   ]
 
   let wordLessons = [
     // Common words
-    makeLesson(17, "常用詞語（一）：中國", "練習打「中國」",
+    makeLesson(21, "常用詞語（一）：中國", "練習打「中國」",
       CommonWords, Practice, [], commonWords1, ()),
-    makeLesson(18, "常用詞語（二）：人民", "練習打「人民」",
+    makeLesson(22, "常用詞語（二）：人民", "練習打「人民」",
       CommonWords, Practice, [], commonWords2, ()),
-    makeLesson(19, "常用詞語（三）：時間", "練習打「時間」",
+    makeLesson(23, "常用詞語（三）：時間", "練習打「時間」",
       CommonWords, Practice, [], commonWords3, ()),
-    makeLesson(20, "常用詞語（四）：地方", "練習打「地方」",
+    makeLesson(24, "常用詞語（四）：地方", "練習打「地方」",
       CommonWords, Practice, [], commonWords4, ()),
-    makeLesson(21, "常用詞語（五）：工作", "練習打「工作」",
+    makeLesson(25, "常用詞語（五）：工作", "練習打「工作」",
       CommonWords, Practice, [], commonWords5, ()),
-    makeLesson(22, "常用詞語測驗", "測試常用詞語的掌握程度",
+    makeLesson(26, "常用詞語測驗", "測試常用詞語的掌握程度",
       CommonWords, Test, [],
       Js.Array2.concat(commonWords1, Js.Array2.concat(commonWords2, Js.Array2.concat(commonWords3, Js.Array2.concat(commonWords4, commonWords5)))), ()),
   ]
 
   let chengyuLessons = [
-    makeLesson(23, "成語（一）：一心一意", "練習打成語「一心一意」",
+    makeLesson(27, "成語（一）：一心一意", "練習打成語「一心一意」",
       Chengyu, Practice, [], chengyu1, ()),
-    makeLesson(24, "成語（二）：人山人海", "練習打成語「人山人海」",
+    makeLesson(28, "成語（二）：人山人海", "練習打成語「人山人海」",
       Chengyu, Practice, [], chengyu2, ()),
-    makeLesson(25, "成語（三）：日新月異", "練習打成語「日新月異」",
+    makeLesson(29, "成語（三）：日新月異", "練習打成語「日新月異」",
       Chengyu, Practice, [], chengyu3, ()),
-    makeLesson(26, "成語綜合測驗", "測試成語的掌握程度",
+    makeLesson(30, "成語綜合測驗", "測試成語的掌握程度",
       Chengyu, Test, [],
       Js.Array2.concat(chengyu1, Js.Array2.concat(chengyu2, chengyu3)), ()),
   ]
 
   let sentenceLessons = [
-    makeLesson(27, "句子練習（一）：你好嗎", "練習簡單問候語",
+    makeLesson(31, "句子練習（一）：你好嗎", "練習簡單問候語",
       Sentences, Practice, [], sentence1, ()),
-    makeLesson(28, "句子練習（二）：我很好", "練習簡單回答",
+    makeLesson(32, "句子練習（二）：我很好", "練習簡單回答",
       Sentences, Practice, [], sentence2, ()),
-    makeLesson(29, "句子練習（三）：今天天氣很好", "練習描述天氣",
+    makeLesson(33, "句子練習（三）：今天天氣很好", "練習描述天氣",
       Sentences, Practice, [], sentence3, ()),
-    makeLesson(30, "句子練習（四）：謝謝你", "練習感謝用語",
+    makeLesson(34, "句子練習（四）：謝謝你", "練習感謝用語",
       Sentences, Practice, [], sentence4, ()),
-    makeLesson(31, "句子練習（五）：我喜歡學習中文", "練習表達喜好",
+    makeLesson(35, "句子練習（五）：我喜歡學習中文", "練習表達喜好",
       Sentences, Practice, [], sentence5, ()),
-    makeLesson(32, "句子練習（六）：長句練習", "練習較長的句子",
+    makeLesson(36, "句子練習（六）：長句練習", "練習較長的句子",
       Sentences, Practice, [], sentence6, ()),
-    makeLesson(33, "句子練習（七）：中文語言", "練習描述性長句",
+    makeLesson(37, "句子練習（七）：中文語言", "練習描述性長句",
       Sentences, Practice, [], sentence7, ()),
-    makeLesson(34, "句子綜合測驗", "測試句子打字能力",
+    makeLesson(38, "句子綜合測驗", "測試句子打字能力",
       Sentences, Test, [],
       Js.Array2.concat(
         sentence1,
