@@ -154,6 +154,7 @@ let generateLessonFromText = (
       id: -1, // Dynamic lessons get negative IDs
       title: title,
       description: description,
+      section: Advanced,
       category: Custom,
       lessonType: lessonType,
       introducedKeys: [],
@@ -193,6 +194,7 @@ let generateLessonByDifficulty = (
       id: -2, // Dynamic lessons get negative IDs
       title: title,
       description: description,
+      section: Advanced,
       category: Custom,
       lessonType: lessonType,
       introducedKeys: [],

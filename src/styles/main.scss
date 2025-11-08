@@ -785,6 +785,38 @@ p {
   }
 }
 
+// Sections container
+.lessons-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  max-width: 1200px;
+  width: 100%;
+}
+
+// Individual lesson section
+.lesson-section {
+  .section-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid color.adjust($primary-color, $alpha: -0.7);
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: $primary-color;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .section-description {
+      font-size: 1.1rem;
+      color: $text-secondary;
+      margin: 0;
+      font-weight: 500;
+    }
+  }
+}
+
 // Grid of lesson tiles
 .lessons-grid {
   display: grid;
