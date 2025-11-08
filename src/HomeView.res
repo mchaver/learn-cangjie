@@ -18,8 +18,8 @@ let make = (
 
   <div className="home-view">
     <div className="home-content">
-      <h1 className="app-title"> {React.string("學習倉頡輸入法")} </h1>
-      <p className="app-subtitle"> {React.string("Learn Cangjie Input Method")} </p>
+      <h1 className="app-title"> {React.string("倉頡鍵客")} </h1>
+      <p className="app-subtitle"> {React.string("Cangjie Typing Master")} </p>
 
       <div className="home-stats">
         <div className="stat-item">
