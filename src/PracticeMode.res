@@ -76,108 +76,118 @@ let make = (
     }
   }
 
+  // Shared key processing logic for both keyboard and click events
+  let processKeyInput = (key: string) => {
+    switch currentChar {
+    | None => ()
+    | Some(charInfo) => {
+        let expectedCode = CangjieUtils.keysToCode(charInfo.cangjieCode)
+        let currentLength = inputState.currentInput->Js.String2.length
+
+        if currentLength < expectedCode->Js.String2.length {
+          let expectedChar = expectedCode->Js.String2.charAt(currentLength)
+          let isCorrect = key == expectedChar
+
+          // Trigger animation and sound
+          setLastKeyPressed(_ => Some((key, isCorrect)))
+
+          if isCorrect {
+            let newInput = inputState.currentInput ++ key
+
+            // Check if we've completed this character
+            if newInput == expectedCode {
+              let isLast = inputState.currentIndex == lesson.characters->Js.Array2.length - 1
+
+              // Record correct attempt in character progress
+              LocalStorage.recordCorrectAttempt(charInfo.character, lesson.showCode || showHint)
+
+              // For multi-char codes, trigger fade-out animation
+              if expectedCode->Js.String2.length > 1 {
+                setJustCompleted(_ => Some(newInput))
+                let _ = Js.Global.setTimeout(() => {
+                  setJustCompleted(_ => None)
+                }, 600)
+                ()
+              }
+
+              // Hide hint for next character
+              setShowHint(_ => false)
+
+              // Move to next character
+              setInputState(prev => {
+                {
+                  currentIndex: prev.currentIndex + 1,
+                  currentInput: "",
+                  stats: {
+                    ...prev.stats,
+                    totalCharacters: prev.stats.totalCharacters + 1,
+                    correctCharacters: prev.stats.correctCharacters + 1,
+                  },
+                  errors: prev.errors,
+                }
+              })
+
+              if isLast {
+                onComplete()
+              }
+            } else {
+              // Add correct key to input
+              setInputState(prev => {
+                {...prev, currentInput: newInput}
+              })
+            }
+          } else {
+            // Wrong key - flash error
+            // Record incorrect attempt in character progress
+            LocalStorage.recordIncorrectAttempt(charInfo.character)
+
+            if expectedCode->Js.String2.length == 1 {
+              // For single character, flash the whole character
+              setShowError(_ => true)
+              let _ = Js.Global.setTimeout(() => {
+                setShowError(_ => false)
+              }, 300)
+              ()
+            } else {
+              // For multi-character, flash the specific input box
+              setWrongBoxIndex(_ => Some(currentLength))
+              let _ = Js.Global.setTimeout(() => {
+                setWrongBoxIndex(_ => None)
+              }, 300)
+              ()
+            }
+
+            setInputState(prev => {
+              {
+                ...prev,
+                stats: {
+                  ...prev.stats,
+                  totalCharacters: prev.stats.totalCharacters + 1,
+                  incorrectCharacters: prev.stats.incorrectCharacters + 1,
+                },
+                errors: prev.errors->Js.Array2.concat([(prev.currentIndex, key)]),
+              }
+            })
+          }
+        }
+      }
+    }
+  }
+
+  // Handle physical keyboard input
   let handleKeyDown = (event: {..}) => {
     let key = event["key"]->Js.String2.toUpperCase
 
     // Only handle letter keys A-Z
     if key->Js.String2.length == 1 && Js.Re.test_(%re("/^[A-Z]$/"), key) {
       event["preventDefault"]()
-
-      switch currentChar {
-      | None => ()
-      | Some(charInfo) => {
-          let expectedCode = CangjieUtils.keysToCode(charInfo.cangjieCode)
-          let currentLength = inputState.currentInput->Js.String2.length
-
-          if currentLength < expectedCode->Js.String2.length {
-            let expectedChar = expectedCode->Js.String2.charAt(currentLength)
-            let isCorrect = key == expectedChar
-
-            // Trigger animation and sound
-            setLastKeyPressed(_ => Some((key, isCorrect)))
-
-            if isCorrect {
-              let newInput = inputState.currentInput ++ key
-
-              // Check if we've completed this character
-              if newInput == expectedCode {
-                let isLast = inputState.currentIndex == lesson.characters->Js.Array2.length - 1
-
-                // Record correct attempt in character progress
-                LocalStorage.recordCorrectAttempt(charInfo.character, lesson.showCode || showHint)
-
-                // For multi-char codes, trigger fade-out animation
-                if expectedCode->Js.String2.length > 1 {
-                  setJustCompleted(_ => Some(newInput))
-                  let _ = Js.Global.setTimeout(() => {
-                    setJustCompleted(_ => None)
-                  }, 600)
-                  ()
-                }
-
-                // Hide hint for next character
-                setShowHint(_ => false)
-
-                // Move to next character
-                setInputState(prev => {
-                  {
-                    currentIndex: prev.currentIndex + 1,
-                    currentInput: "",
-                    stats: {
-                      ...prev.stats,
-                      totalCharacters: prev.stats.totalCharacters + 1,
-                      correctCharacters: prev.stats.correctCharacters + 1,
-                    },
-                    errors: prev.errors,
-                  }
-                })
-
-                if isLast {
-                  onComplete()
-                }
-              } else {
-                // Add correct key to input
-                setInputState(prev => {
-                  {...prev, currentInput: newInput}
-                })
-              }
-            } else {
-              // Wrong key - flash error
-              // Record incorrect attempt in character progress
-              LocalStorage.recordIncorrectAttempt(charInfo.character)
-
-              if expectedCode->Js.String2.length == 1 {
-                // For single character, flash the whole character
-                setShowError(_ => true)
-                let _ = Js.Global.setTimeout(() => {
-                  setShowError(_ => false)
-                }, 300)
-                ()
-              } else {
-                // For multi-character, flash the specific input box
-                setWrongBoxIndex(_ => Some(currentLength))
-                let _ = Js.Global.setTimeout(() => {
-                  setWrongBoxIndex(_ => None)
-                }, 300)
-                ()
-              }
-
-              setInputState(prev => {
-                {
-                  ...prev,
-                  stats: {
-                    ...prev.stats,
-                    totalCharacters: prev.stats.totalCharacters + 1,
-                    incorrectCharacters: prev.stats.incorrectCharacters + 1,
-                  },
-                  errors: prev.errors->Js.Array2.concat([(prev.currentIndex, key)]),
-                }
-              })
-            }
-          }
-        }
-      }
+      processKeyInput(key)
     }
+  }
+
+  // Handle virtual keyboard clicks
+  let handleKeyClick = (key: string) => {
+    processKeyInput(key)
   }
 
   // Add keyboard event listener - re-register when state changes to avoid stale closures
@@ -351,6 +361,6 @@ let make = (
       </div>
     }}
 
-    <AnimatedKeyboard nextKey={nextExpectedKey} lastKeyPressed={lastKeyPressed} showRadicals={true} />
+    <AnimatedKeyboard nextKey={nextExpectedKey} lastKeyPressed={lastKeyPressed} showRadicals={true} onKeyClick={handleKeyClick} />
   </div>
 }

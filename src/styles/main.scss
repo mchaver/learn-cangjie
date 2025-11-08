@@ -1748,6 +1748,8 @@ p {
   cursor: default;
   transition: all 0.2s ease;
   position: relative;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 
   @media (max-width: 768px) {
     min-width: 42px;
@@ -1779,6 +1781,32 @@ p {
     }
   }
 
+  // Clickable keyboard keys (when onKeyClick is provided)
+  &.clickable {
+    cursor: pointer;
+
+    &:hover {
+      background: color.adjust($bg-primary, $lightness: -3%);
+      border-color: color.adjust($border-color, $lightness: -15%);
+      transform: translateY(-2px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+      transform: translateY(0) scale(0.95);
+      background: color.adjust($bg-primary, $lightness: -5%);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) inset;
+    }
+
+    // Touch-friendly feedback for mobile
+    @media (max-width: 768px) {
+      &:active {
+        background: color.adjust($primary-color, $lightness: 30%);
+        border-color: $primary-color;
+      }
+    }
+  }
+
   &.keyboard-key-highlight {
     background: $primary-color;
     border-color: color.adjust($primary-color, $lightness: -10%);
@@ -1795,6 +1823,20 @@ p {
     .key-radical {
       color: white;
       font-weight: 600;
+    }
+
+    // Highlighted clickable keys
+    &.clickable {
+      &:hover {
+        background: color.adjust($primary-color, $lightness: -5%);
+        transform: scale(1.15) translateY(-2px);
+      }
+
+      &:active {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 3px rgba($primary-color, 0.5),
+                    0 2px 6px rgba($primary-color, 0.6);
+      }
     }
   }
 }
@@ -2114,8 +2156,10 @@ p {
   border-radius: 6px;
   padding: 0.3rem;
   cursor: default;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
   position: relative;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 
   @media (max-width: 768px) {
     width: 50px;
@@ -2144,6 +2188,32 @@ p {
 
     @media (max-width: 768px) {
       font-size: 1rem;
+    }
+  }
+
+  // Clickable keyboard keys (when onKeyClick is provided)
+  &.clickable {
+    cursor: pointer;
+
+    &:hover {
+      background: color.adjust($bg-primary, $lightness: -3%);
+      border-color: color.adjust($border-color, $lightness: -15%);
+      transform: translateY(-2px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+      transform: translateY(0) scale(0.95);
+      background: color.adjust($bg-primary, $lightness: -5%);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) inset;
+    }
+
+    // Touch-friendly feedback for mobile
+    @media (max-width: 768px) {
+      &:active {
+        background: color.adjust($primary-color, $lightness: 30%);
+        border-color: $primary-color;
+      }
     }
   }
 
@@ -2182,6 +2252,19 @@ p {
     .key-radical {
       color: white;
       font-weight: 600;
+    }
+
+    // Highlighted clickable keys
+    &.clickable {
+      &:hover {
+        background: color.adjust($primary-color, $lightness: -5%);
+        transform: translateY(-2px) scale(1.05);
+      }
+
+      &:active {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 0 12px rgba($primary-color, 0.6);
+      }
     }
   }
 

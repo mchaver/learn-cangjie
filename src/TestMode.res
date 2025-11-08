@@ -88,6 +88,13 @@ let make = (
     })
   }
 
+  // Handle virtual keyboard clicks
+  let handleKeyClick = (key: string) => {
+    setInputState(prev => {
+      {...prev, currentInput: prev.currentInput ++ key}
+    })
+  }
+
   let progress = Belt.Float.fromInt(inputState.currentIndex) /. Belt.Float.fromInt(
     lesson.characters->Js.Array2.length,
   ) *. 100.0
@@ -197,6 +204,6 @@ let make = (
       </div>
     </div>
 
-    <CangjieKeyboard nextKey={nextExpectedKey} showRadicals={true} />
+    <CangjieKeyboard nextKey={nextExpectedKey} showRadicals={true} onKeyClick={handleKeyClick} />
   </div>
 }
