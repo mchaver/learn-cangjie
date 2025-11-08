@@ -69,287 +69,573 @@ let makeLesson = (
   }
 }
 
-// Lesson 1: 日月 - Learn A (日) and B (月)
-// ~20 characters: intro with code visible, then practice without
+// PHILOSOPHY (哲理類) - Lessons 1-7
+// Lesson 1: 日 - Learn A (日)
 let lesson1Characters = [
   // Introduce 日
   makeChar("日", "A", Some(["日"]), ()),
   makeChar("日", "A", Some(["日"]), ()),
   makeChar("日", "A", Some(["日"]), ()),
+  makeChar("日", "A", Some(["日"]), ()),
+  makeChar("日", "A", Some(["日"]), ()),
+  // Characters with 日
+  makeChar("旦", "AM", Some(["日", "一"]), ()),
+  makeChar("旦", "AM", Some(["日", "一"]), ()),
+  makeChar("早", "AJ", Some(["日", "十"]), ()),
+  makeChar("早", "AJ", Some(["日", "十"]), ()),
+  makeChar("白", "HA", Some(["竹", "日"]), ()),
+  makeChar("白", "HA", Some(["竹", "日"]), ()),
+  // Practice mix
+  makeChar("日", "A", Some(["日"]), ()),
+  makeChar("旦", "AM", Some(["日", "一"]), ()),
+  makeChar("早", "AJ", Some(["日", "十"]), ()),
+  makeChar("日", "A", Some(["日"]), ()),
+  makeChar("白", "HA", Some(["竹", "日"]), ()),
+  makeChar("日", "A", Some(["日"]), ()),
+]
+
+// Lesson 2: 月 - Learn B (月)
+let lesson2Characters = [
   // Introduce 月
   makeChar("月", "B", Some(["月"]), ()),
   makeChar("月", "B", Some(["月"]), ()),
   makeChar("月", "B", Some(["月"]), ()),
-  // Combine them
+  makeChar("月", "B", Some(["月"]), ()),
+  makeChar("月", "B", Some(["月"]), ()),
+  // Characters with 月
+  makeChar("朋", "BB", Some(["月", "月"]), ()),
+  makeChar("朋", "BB", Some(["月", "月"]), ()),
   makeChar("明", "AB", Some(["日", "月"]), ()),
   makeChar("明", "AB", Some(["日", "月"]), ()),
-  makeChar("明", "AB", Some(["日", "月"]), ()),
+  makeChar("有", "KB", Some(["大", "月"]), ()),
+  makeChar("有", "KB", Some(["大", "月"]), ()),
   // Practice mix
-  makeChar("日", "A", Some(["日"]), ()),
   makeChar("月", "B", Some(["月"]), ()),
+  makeChar("朋", "BB", Some(["月", "月"]), ()),
   makeChar("明", "AB", Some(["日", "月"]), ()),
-  makeChar("日", "A", Some(["日"]), ()),
   makeChar("月", "B", Some(["月"]), ()),
-  makeChar("明", "AB", Some(["日", "月"]), ()),
-  // More reinforcement
-  makeChar("明", "AB", Some(["日", "月"]), ()),
-  makeChar("日", "A", Some(["日"]), ()),
-  makeChar("月", "B", Some(["月"]), ()),
-  makeChar("明", "AB", Some(["日", "月"]), ()),
+  makeChar("有", "KB", Some(["大", "月"]), ()),
   makeChar("日", "A", Some(["日"]), ()),
 ]
 
-// Lesson 2: 木 - Learn D (木), review 日月
-let lesson2Characters = [
-  // Introduce 木
-  makeChar("木", "D", Some(["木"]), ()),
-  makeChar("木", "D", Some(["木"]), ()),
-  makeChar("木", "D", Some(["木"]), ()),
-  // Combine 木木
-  makeChar("林", "DD", Some(["木", "木"]), ()),
-  makeChar("林", "DD", Some(["木", "木"]), ()),
-  makeChar("林", "DD", Some(["木", "木"]), ()),
-  // Review previous + new
-  makeChar("日", "A", Some(["日"]), ()),
-  makeChar("木", "D", Some(["木"]), ()),
-  makeChar("月", "B", Some(["月"]), ()),
-  makeChar("林", "DD", Some(["木", "木"]), ()),
-  makeChar("明", "AB", Some(["日", "月"]), ()),
-  makeChar("木", "D", Some(["木"]), ()),
-  makeChar("林", "DD", Some(["木", "木"]), ()),
-  makeChar("日", "A", Some(["日"]), ()),
-  makeChar("月", "B", Some(["月"]), ()),
-  makeChar("木", "D", Some(["木"]), ()),
-  makeChar("明", "AB", Some(["日", "月"]), ()),
-  makeChar("林", "DD", Some(["木", "木"]), ()),
-]
-
-// Lesson 3: 一大 - Learn M (一) and K (大)
+// Lesson 3: 金 - Learn C (金)
 let lesson3Characters = [
-  // Introduce 一
-  makeChar("一", "M", Some(["一"]), ()),
-  makeChar("一", "M", Some(["一"]), ()),
-  makeChar("一", "M", Some(["一"]), ()),
-  // Introduce 大
-  makeChar("大", "K", Some(["大"]), ()),
-  makeChar("大", "K", Some(["大"]), ()),
-  makeChar("大", "K", Some(["大"]), ()),
-  // Combine them
-  makeChar("天", "MK", Some(["一", "大"]), ()),
-  makeChar("天", "MK", Some(["一", "大"]), ()),
-  makeChar("天", "MK", Some(["一", "大"]), ()),
-  // Practice mix
-  makeChar("一", "M", Some(["一"]), ()),
-  makeChar("大", "K", Some(["大"]), ()),
-  makeChar("天", "MK", Some(["一", "大"]), ()),
-  makeChar("一", "M", Some(["一"]), ()),
-  makeChar("大", "K", Some(["大"]), ()),
-  makeChar("天", "MK", Some(["一", "大"]), ()),
-  makeChar("一", "M", Some(["一"]), ()),
-  makeChar("大", "K", Some(["大"]), ()),
-  makeChar("天", "MK", Some(["一", "大"]), ()),
-]
-
-// Lesson 4: 人 - Learn O (人), review previous radicals
-let lesson4Characters = [
-  // Introduce 人
-  makeChar("人", "O", Some(["人"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-  // Practice mix with review
-  makeChar("大", "K", Some(["大"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-  makeChar("一", "M", Some(["一"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-  makeChar("天", "MK", Some(["一", "大"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-  makeChar("木", "D", Some(["木"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-  makeChar("日", "A", Some(["日"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-  makeChar("月", "B", Some(["月"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-  makeChar("明", "AB", Some(["日", "月"]), ()),
-  makeChar("大", "K", Some(["大"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-]
-
-// Lesson 5: 中口 - Learn L (中) and R (口)
-let lesson5Characters = [
-  // Introduce 中
-  makeChar("中", "L", Some(["中"]), ()),
-  makeChar("中", "L", Some(["中"]), ()),
-  makeChar("中", "L", Some(["中"]), ()),
-  // Introduce 口
-  makeChar("口", "R", Some(["口"]), ()),
-  makeChar("口", "R", Some(["口"]), ()),
-  makeChar("口", "R", Some(["口"]), ()),
-  // Practice mix
-  makeChar("中", "L", Some(["中"]), ()),
-  makeChar("口", "R", Some(["口"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-  makeChar("中", "L", Some(["中"]), ()),
-  makeChar("口", "R", Some(["口"]), ()),
-  makeChar("大", "K", Some(["大"]), ()),
-  makeChar("中", "L", Some(["中"]), ()),
-  makeChar("口", "R", Some(["口"]), ()),
-  makeChar("天", "MK", Some(["一", "大"]), ()),
-  makeChar("中", "L", Some(["中"]), ()),
-  makeChar("口", "R", Some(["口"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-]
-
-// Lesson 6: 十田 - Learn J (十) and W (田)
-let lesson6Characters = [
-  // Introduce 十
-  makeChar("十", "J", Some(["十"]), ()),
-  makeChar("十", "J", Some(["十"]), ()),
-  makeChar("十", "J", Some(["十"]), ()),
-  // Introduce 田
-  makeChar("田", "W", Some(["田"]), ()),
-  makeChar("田", "W", Some(["田"]), ()),
-  makeChar("田", "W", Some(["田"]), ()),
-  // Practice mix
-  makeChar("十", "J", Some(["十"]), ()),
-  makeChar("田", "W", Some(["田"]), ()),
-  makeChar("口", "R", Some(["口"]), ()),
-  makeChar("十", "J", Some(["十"]), ()),
-  makeChar("田", "W", Some(["田"]), ()),
-  makeChar("中", "L", Some(["中"]), ()),
-  makeChar("十", "J", Some(["十"]), ()),
-  makeChar("田", "W", Some(["田"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-  makeChar("十", "J", Some(["十"]), ()),
-  makeChar("田", "W", Some(["田"]), ()),
-  makeChar("中", "L", Some(["中"]), ()),
-]
-
-// Lesson 7: 火水 - Learn F (火) and E (水)
-let lesson7Characters = [
-  // Introduce 火
-  makeChar("火", "F", Some(["火"]), ()),
-  makeChar("火", "F", Some(["火"]), ()),
-  makeChar("火", "F", Some(["火"]), ()),
-  // Introduce 水
-  makeChar("水", "E", Some(["水"]), ()),
-  makeChar("水", "E", Some(["水"]), ()),
-  makeChar("水", "E", Some(["水"]), ()),
-  // Combine 火火
-  makeChar("炎", "FF", Some(["火", "火"]), ()),
-  makeChar("炎", "FF", Some(["火", "火"]), ()),
-  makeChar("炎", "FF", Some(["火", "火"]), ()),
-  // Practice mix
-  makeChar("火", "F", Some(["火"]), ()),
-  makeChar("水", "E", Some(["水"]), ()),
-  makeChar("炎", "FF", Some(["火", "火"]), ()),
-  makeChar("田", "W", Some(["田"]), ()),
-  makeChar("火", "F", Some(["火"]), ()),
-  makeChar("十", "J", Some(["十"]), ()),
-  makeChar("水", "E", Some(["水"]), ()),
-  makeChar("炎", "FF", Some(["火", "火"]), ()),
-  makeChar("中", "L", Some(["中"]), ()),
-]
-
-// Lesson 8: 金土 - Learn C (金) and G (土)
-let lesson8Characters = [
   // Introduce 金
   makeChar("金", "C", Some(["金"]), ()),
   makeChar("金", "C", Some(["金"]), ()),
   makeChar("金", "C", Some(["金"]), ()),
+  makeChar("金", "C", Some(["金"]), ()),
+  makeChar("金", "C", Some(["金"]), ()),
+  // Characters with 金
+  makeChar("公", "CI", Some(["金", "戈"]), ()),
+  makeChar("公", "CI", Some(["金", "戈"]), ()),
+  makeChar("分", "CSH", Some(["金", "尸", "竹"]), ()),
+  makeChar("分", "CSH", Some(["金", "尸", "竹"]), ()),
+  // Practice mix
+  makeChar("金", "C", Some(["金"]), ()),
+  makeChar("公", "CI", Some(["金", "戈"]), ()),
+  makeChar("分", "CSH", Some(["金", "尸", "竹"]), ()),
+  makeChar("金", "C", Some(["金"]), ()),
+  makeChar("公", "CI", Some(["金", "戈"]), ()),
+  makeChar("金", "C", Some(["金"]), ()),
+]
+
+// Lesson 4: 木 - Learn D (木)
+let lesson4Characters = [
+  // Introduce 木
+  makeChar("木", "D", Some(["木"]), ()),
+  makeChar("木", "D", Some(["木"]), ()),
+  makeChar("木", "D", Some(["木"]), ()),
+  makeChar("木", "D", Some(["木"]), ()),
+  makeChar("木", "D", Some(["木"]), ()),
+  // Characters with 木
+  makeChar("林", "DD", Some(["木", "木"]), ()),
+  makeChar("林", "DD", Some(["木", "木"]), ()),
+  makeChar("東", "DW", Some(["木", "田"]), ()),
+  makeChar("東", "DW", Some(["木", "田"]), ()),
+  makeChar("末", "DJ", Some(["木", "十"]), ()),
+  makeChar("末", "DJ", Some(["木", "十"]), ()),
+  // Practice mix
+  makeChar("木", "D", Some(["木"]), ()),
+  makeChar("林", "DD", Some(["木", "木"]), ()),
+  makeChar("東", "DW", Some(["木", "田"]), ()),
+  makeChar("木", "D", Some(["木"]), ()),
+  makeChar("末", "DJ", Some(["木", "十"]), ()),
+  makeChar("木", "D", Some(["木"]), ()),
+]
+
+// Lesson 5: 水 - Learn E (水)
+let lesson5Characters = [
+  // Introduce 水
+  makeChar("水", "E", Some(["水"]), ()),
+  makeChar("水", "E", Some(["水"]), ()),
+  makeChar("水", "E", Some(["水"]), ()),
+  makeChar("水", "E", Some(["水"]), ()),
+  makeChar("水", "E", Some(["水"]), ()),
+  // Characters with 水
+  makeChar("汉", "EE", Some(["水", "水"]), ()),
+  makeChar("汉", "EE", Some(["水", "水"]), ()),
+  makeChar("友", "KE", Some(["大", "水"]), ()),
+  makeChar("友", "KE", Some(["大", "水"]), ()),
+  // Practice mix
+  makeChar("水", "E", Some(["水"]), ()),
+  makeChar("汉", "EE", Some(["水", "水"]), ()),
+  makeChar("友", "KE", Some(["大", "水"]), ()),
+  makeChar("水", "E", Some(["水"]), ()),
+  makeChar("水", "E", Some(["水"]), ()),
+  makeChar("友", "KE", Some(["大", "水"]), ()),
+]
+
+// Lesson 6: 火 - Learn F (火)
+let lesson6Characters = [
+  // Introduce 火
+  makeChar("火", "F", Some(["火"]), ()),
+  makeChar("火", "F", Some(["火"]), ()),
+  makeChar("火", "F", Some(["火"]), ()),
+  makeChar("火", "F", Some(["火"]), ()),
+  makeChar("火", "F", Some(["火"]), ()),
+  // Characters with 火
+  makeChar("炎", "FF", Some(["火", "火"]), ()),
+  makeChar("炎", "FF", Some(["火", "火"]), ()),
+  makeChar("杰", "DF", Some(["木", "火"]), ()),
+  makeChar("杰", "DF", Some(["木", "火"]), ()),
+  makeChar("灰", "KF", Some(["大", "火"]), ()),
+  makeChar("灰", "KF", Some(["大", "火"]), ()),
+  makeChar("少", "FH", Some(["火", "竹"]), ()),
+  makeChar("少", "FH", Some(["火", "竹"]), ()),
+  // Practice mix
+  makeChar("火", "F", Some(["火"]), ()),
+  makeChar("炎", "FF", Some(["火", "火"]), ()),
+  makeChar("火", "F", Some(["火"]), ()),
+  makeChar("杰", "DF", Some(["木", "火"]), ()),
+]
+
+// Lesson 7: 土 - Learn G (土)
+let lesson7Characters = [
   // Introduce 土
   makeChar("土", "G", Some(["土"]), ()),
   makeChar("土", "G", Some(["土"]), ()),
   makeChar("土", "G", Some(["土"]), ()),
-  // Practice mix (five elements: 金木水火土)
+  makeChar("土", "G", Some(["土"]), ()),
+  makeChar("土", "G", Some(["土"]), ()),
+  // Characters with 土
+  makeChar("去", "GI", Some(["土", "戈"]), ()),
+  makeChar("去", "GI", Some(["土", "戈"]), ()),
+  makeChar("竺", "HG", Some(["竹", "土"]), ()),
+  makeChar("竺", "HG", Some(["竹", "土"]), ()),
+  // Practice mix with five elements review
+  makeChar("土", "G", Some(["土"]), ()),
+  makeChar("去", "GI", Some(["土", "戈"]), ()),
   makeChar("金", "C", Some(["金"]), ()),
   makeChar("木", "D", Some(["木"]), ()),
   makeChar("水", "E", Some(["水"]), ()),
   makeChar("火", "F", Some(["火"]), ()),
-  makeChar("土", "G", Some(["土"]), ()),
-  makeChar("金", "C", Some(["金"]), ()),
-  makeChar("火", "F", Some(["火"]), ()),
-  makeChar("土", "G", Some(["土"]), ()),
-  makeChar("水", "E", Some(["水"]), ()),
-  makeChar("金", "C", Some(["金"]), ()),
-  makeChar("木", "D", Some(["木"]), ()),
   makeChar("土", "G", Some(["土"]), ()),
 ]
 
-// Lesson 9: 竹戈 - Learn H (竹) and I (戈)
-let lesson9Characters = [
+// STROKES (筆畫類) - Lessons 8-14
+// Lesson 8: 竹 - Learn H (竹)
+let lesson8Characters = [
   // Introduce 竹
   makeChar("竹", "H", Some(["竹"]), ()),
   makeChar("竹", "H", Some(["竹"]), ()),
   makeChar("竹", "H", Some(["竹"]), ()),
+  makeChar("竹", "H", Some(["竹"]), ()),
+  makeChar("竹", "H", Some(["竹"]), ()),
+  // Characters with 竹
+  makeChar("竺", "HG", Some(["竹", "土"]), ()),
+  makeChar("竺", "HG", Some(["竹", "土"]), ()),
+  makeChar("白", "HA", Some(["竹", "日"]), ()),
+  makeChar("白", "HA", Some(["竹", "日"]), ()),
+  makeChar("千", "HJ", Some(["竹", "十"]), ()),
+  makeChar("千", "HJ", Some(["竹", "十"]), ()),
+  makeChar("八", "HO", Some(["竹", "人"]), ()),
+  makeChar("八", "HO", Some(["竹", "人"]), ()),
+  makeChar("禾", "HD", Some(["竹", "木"]), ()),
+  makeChar("禾", "HD", Some(["竹", "木"]), ()),
+  makeChar("少", "FH", Some(["火", "竹"]), ()),
+  makeChar("少", "FH", Some(["火", "竹"]), ()),
+]
+
+// Lesson 9: 戈 - Learn I (戈)
+let lesson9Characters = [
   // Introduce 戈
   makeChar("戈", "I", Some(["戈"]), ()),
   makeChar("戈", "I", Some(["戈"]), ()),
   makeChar("戈", "I", Some(["戈"]), ()),
-  // Combinations
+  makeChar("戈", "I", Some(["戈"]), ()),
+  makeChar("戈", "I", Some(["戈"]), ()),
+  // Characters with 戈
   makeChar("成", "IJ", Some(["戈", "十"]), ()),
   makeChar("成", "IJ", Some(["戈", "十"]), ()),
-  makeChar("竺", "HG", Some(["竹", "土"]), ()),
-  makeChar("竺", "HG", Some(["竹", "土"]), ()),
+  makeChar("去", "GI", Some(["土", "戈"]), ()),
+  makeChar("去", "GI", Some(["土", "戈"]), ()),
+  makeChar("公", "CI", Some(["金", "戈"]), ()),
+  makeChar("公", "CI", Some(["金", "戈"]), ()),
+  makeChar("寸", "DI", Some(["木", "戈"]), ()),
+  makeChar("寸", "DI", Some(["木", "戈"]), ()),
   // Practice mix
-  makeChar("竹", "H", Some(["竹"]), ()),
   makeChar("戈", "I", Some(["戈"]), ()),
   makeChar("成", "IJ", Some(["戈", "十"]), ()),
-  makeChar("竹", "H", Some(["竹"]), ()),
-  makeChar("竺", "HG", Some(["竹", "土"]), ()),
+  makeChar("去", "GI", Some(["土", "戈"]), ()),
   makeChar("戈", "I", Some(["戈"]), ()),
-  makeChar("十", "J", Some(["十"]), ()),
-  makeChar("土", "G", Some(["土"]), ()),
 ]
 
-// Lesson 10: 心手 - Learn P (心) and Q (手)
+// Lesson 10: 十 - Learn J (十)
 let lesson10Characters = [
+  // Introduce 十
+  makeChar("十", "J", Some(["十"]), ()),
+  makeChar("十", "J", Some(["十"]), ()),
+  makeChar("十", "J", Some(["十"]), ()),
+  makeChar("十", "J", Some(["十"]), ()),
+  makeChar("十", "J", Some(["十"]), ()),
+  // Characters with 十
+  makeChar("早", "AJ", Some(["日", "十"]), ()),
+  makeChar("早", "AJ", Some(["日", "十"]), ()),
+  makeChar("末", "DJ", Some(["木", "十"]), ()),
+  makeChar("末", "DJ", Some(["木", "十"]), ()),
+  makeChar("千", "HJ", Some(["竹", "十"]), ()),
+  makeChar("千", "HJ", Some(["竹", "十"]), ()),
+  makeChar("支", "JE", Some(["十", "水"]), ()),
+  makeChar("支", "JE", Some(["十", "水"]), ()),
+  makeChar("成", "IJ", Some(["戈", "十"]), ()),
+  makeChar("成", "IJ", Some(["戈", "十"]), ()),
+  makeChar("十", "J", Some(["十"]), ()),
+]
+
+// Lesson 11: 大 - Learn K (大)
+let lesson11Characters = [
+  // Introduce 大
+  makeChar("大", "K", Some(["大"]), ()),
+  makeChar("大", "K", Some(["大"]), ()),
+  makeChar("大", "K", Some(["大"]), ()),
+  makeChar("大", "K", Some(["大"]), ()),
+  makeChar("大", "K", Some(["大"]), ()),
+  // Characters with 大
+  makeChar("天", "MK", Some(["一", "大"]), ()),
+  makeChar("天", "MK", Some(["一", "大"]), ()),
+  makeChar("友", "KE", Some(["大", "水"]), ()),
+  makeChar("友", "KE", Some(["大", "水"]), ()),
+  makeChar("灰", "KF", Some(["大", "火"]), ()),
+  makeChar("灰", "KF", Some(["大", "火"]), ()),
+  makeChar("有", "KB", Some(["大", "月"]), ()),
+  makeChar("有", "KB", Some(["大", "月"]), ()),
+  makeChar("右", "KR", Some(["大", "口"]), ()),
+  makeChar("右", "KR", Some(["大", "口"]), ()),
+  makeChar("大", "K", Some(["大"]), ()),
+]
+
+// Lesson 12: 中 - Learn L (中)
+let lesson12Characters = [
+  // Introduce 中
+  makeChar("中", "L", Some(["中"]), ()),
+  makeChar("中", "L", Some(["中"]), ()),
+  makeChar("中", "L", Some(["中"]), ()),
+  makeChar("中", "L", Some(["中"]), ()),
+  makeChar("中", "L", Some(["中"]), ()),
+  // Characters with 中
+  makeChar("个", "OL", Some(["人", "中"]), ()),
+  makeChar("个", "OL", Some(["人", "中"]), ()),
+  makeChar("由", "LW", Some(["中", "田"]), ()),
+  makeChar("由", "LW", Some(["中", "田"]), ()),
+  // Practice mix
+  makeChar("中", "L", Some(["中"]), ()),
+  makeChar("个", "OL", Some(["人", "中"]), ()),
+  makeChar("由", "LW", Some(["中", "田"]), ()),
+  makeChar("中", "L", Some(["中"]), ()),
+  makeChar("个", "OL", Some(["人", "中"]), ()),
+  makeChar("中", "L", Some(["中"]), ()),
+]
+
+// Lesson 13: 一 - Learn M (一)
+let lesson13Characters = [
+  // Introduce 一
+  makeChar("一", "M", Some(["一"]), ()),
+  makeChar("一", "M", Some(["一"]), ()),
+  makeChar("一", "M", Some(["一"]), ()),
+  makeChar("一", "M", Some(["一"]), ()),
+  makeChar("一", "M", Some(["一"]), ()),
+  // Characters with 一
+  makeChar("天", "MK", Some(["一", "大"]), ()),
+  makeChar("天", "MK", Some(["一", "大"]), ()),
+  makeChar("旦", "AM", Some(["日", "一"]), ()),
+  makeChar("旦", "AM", Some(["日", "一"]), ()),
+  makeChar("石", "MR", Some(["一", "口"]), ()),
+  makeChar("石", "MR", Some(["一", "口"]), ()),
+  // Practice mix
+  makeChar("一", "M", Some(["一"]), ()),
+  makeChar("天", "MK", Some(["一", "大"]), ()),
+  makeChar("旦", "AM", Some(["日", "一"]), ()),
+  makeChar("一", "M", Some(["一"]), ()),
+  makeChar("石", "MR", Some(["一", "口"]), ()),
+]
+
+// Lesson 14: 弓 - Learn N (弓)
+let lesson14Characters = [
+  // Introduce 弓
+  makeChar("弓", "N", Some(["弓"]), ()),
+  makeChar("弓", "N", Some(["弓"]), ()),
+  makeChar("弓", "N", Some(["弓"]), ()),
+  makeChar("弓", "N", Some(["弓"]), ()),
+  makeChar("弓", "N", Some(["弓"]), ()),
+  // Characters with 弓
+  makeChar("引", "NL", Some(["弓", "中"]), ()),
+  makeChar("引", "NL", Some(["弓", "中"]), ()),
+  makeChar("弱", "NN", Some(["弓", "弓"]), ()),
+  makeChar("弱", "NN", Some(["弓", "弓"]), ()),
+  makeChar("強", "NR", Some(["弓", "口"]), ()),
+  makeChar("強", "NR", Some(["弓", "口"]), ()),
+  // Practice mix
+  makeChar("弓", "N", Some(["弓"]), ()),
+  makeChar("引", "NL", Some(["弓", "中"]), ()),
+  makeChar("弱", "NN", Some(["弓", "弓"]), ()),
+  makeChar("弓", "N", Some(["弓"]), ()),
+]
+
+// BODY PARTS (人體類) - Lessons 15-18
+// Lesson 15: 人 - Learn O (人)
+let lesson15Characters = [
+  // Introduce 人
+  makeChar("人", "O", Some(["人"]), ()),
+  makeChar("人", "O", Some(["人"]), ()),
+  makeChar("人", "O", Some(["人"]), ()),
+  makeChar("人", "O", Some(["人"]), ()),
+  makeChar("人", "O", Some(["人"]), ()),
+  // Characters with 人
+  makeChar("个", "OL", Some(["人", "中"]), ()),
+  makeChar("个", "OL", Some(["人", "中"]), ()),
+  makeChar("八", "HO", Some(["竹", "人"]), ()),
+  makeChar("八", "HO", Some(["竹", "人"]), ()),
+  makeChar("從", "OO", Some(["人", "人"]), ()),
+  makeChar("從", "OO", Some(["人", "人"]), ()),
+  // Practice mix
+  makeChar("人", "O", Some(["人"]), ()),
+  makeChar("个", "OL", Some(["人", "中"]), ()),
+  makeChar("人", "O", Some(["人"]), ()),
+  makeChar("八", "HO", Some(["竹", "人"]), ()),
+  makeChar("從", "OO", Some(["人", "人"]), ()),
+]
+
+// Lesson 16: 心 - Learn P (心)
+let lesson16Characters = [
   // Introduce 心
   makeChar("心", "P", Some(["心"]), ()),
   makeChar("心", "P", Some(["心"]), ()),
   makeChar("心", "P", Some(["心"]), ()),
+  makeChar("心", "P", Some(["心"]), ()),
+  makeChar("心", "P", Some(["心"]), ()),
+  // Characters with 心
+  makeChar("必", "HP", Some(["竹", "心"]), ()),
+  makeChar("必", "HP", Some(["竹", "心"]), ()),
+  // Practice mix
+  makeChar("心", "P", Some(["心"]), ()),
+  makeChar("必", "HP", Some(["竹", "心"]), ()),
+  makeChar("心", "P", Some(["心"]), ()),
+  makeChar("必", "HP", Some(["竹", "心"]), ()),
+  makeChar("心", "P", Some(["心"]), ()),
+  makeChar("心", "P", Some(["心"]), ()),
+]
+
+// Lesson 17: 手 - Learn Q (手)
+let lesson17Characters = [
   // Introduce 手
   makeChar("手", "Q", Some(["手"]), ()),
   makeChar("手", "Q", Some(["手"]), ()),
   makeChar("手", "Q", Some(["手"]), ()),
-  // Combinations
-  makeChar("扣", "QR", Some(["手", "口"]), ()),
+  makeChar("手", "Q", Some(["手"]), ()),
+  makeChar("手", "Q", Some(["手"]), ()),
+  // Characters with 手
   makeChar("扣", "QR", Some(["手", "口"]), ()),
   makeChar("扣", "QR", Some(["手", "口"]), ()),
   // Practice mix
-  makeChar("心", "P", Some(["心"]), ()),
   makeChar("手", "Q", Some(["手"]), ()),
   makeChar("扣", "QR", Some(["手", "口"]), ()),
-  makeChar("心", "P", Some(["心"]), ()),
   makeChar("手", "Q", Some(["手"]), ()),
-  makeChar("口", "R", Some(["口"]), ()),
-  makeChar("心", "P", Some(["心"]), ()),
   makeChar("扣", "QR", Some(["手", "口"]), ()),
+  makeChar("手", "Q", Some(["手"]), ()),
   makeChar("手", "Q", Some(["手"]), ()),
 ]
 
-// Lesson 11: 山女 - Learn U (山) and V (女)
-let lesson11Characters = [
+// Lesson 18: 口 - Learn R (口)
+let lesson18Characters = [
+  // Introduce 口
+  makeChar("口", "R", Some(["口"]), ()),
+  makeChar("口", "R", Some(["口"]), ()),
+  makeChar("口", "R", Some(["口"]), ()),
+  makeChar("口", "R", Some(["口"]), ()),
+  makeChar("口", "R", Some(["口"]), ()),
+  // Characters with 口
+  makeChar("石", "MR", Some(["一", "口"]), ()),
+  makeChar("石", "MR", Some(["一", "口"]), ()),
+  makeChar("呆", "RD", Some(["口", "木"]), ()),
+  makeChar("呆", "RD", Some(["口", "木"]), ()),
+  makeChar("右", "KR", Some(["大", "口"]), ()),
+  makeChar("右", "KR", Some(["大", "口"]), ()),
+  makeChar("扣", "QR", Some(["手", "口"]), ()),
+  makeChar("扣", "QR", Some(["手", "口"]), ()),
+  makeChar("同", "BMR", Some(["月", "一", "口"]), ()),
+  makeChar("同", "BMR", Some(["月", "一", "口"]), ()),
+]
+
+// CHARACTER SHAPES (字形類) - Lessons 19-24
+// Lesson 19: 尸 - Learn S (尸)
+let lesson19Characters = [
+  // Introduce 尸
+  makeChar("尸", "S", Some(["尸"]), ()),
+  makeChar("尸", "S", Some(["尸"]), ()),
+  makeChar("尸", "S", Some(["尸"]), ()),
+  makeChar("尸", "S", Some(["尸"]), ()),
+  makeChar("尸", "S", Some(["尸"]), ()),
+  // Characters with 尸
+  makeChar("尺", "SI", Some(["尸", "戈"]), ()),
+  makeChar("尺", "SI", Some(["尸", "戈"]), ()),
+  makeChar("尼", "SP", Some(["尸", "心"]), ()),
+  makeChar("尼", "SP", Some(["尸", "心"]), ()),
+  // Practice mix
+  makeChar("尸", "S", Some(["尸"]), ()),
+  makeChar("尺", "SI", Some(["尸", "戈"]), ()),
+  makeChar("尼", "SP", Some(["尸", "心"]), ()),
+  makeChar("尸", "S", Some(["尸"]), ()),
+  makeChar("尺", "SI", Some(["尸", "戈"]), ()),
+]
+
+// Lesson 20: 廿 - Learn T (廿)
+let lesson20Characters = [
+  // Introduce 廿
+  makeChar("廿", "T", Some(["廿"]), ()),
+  makeChar("廿", "T", Some(["廿"]), ()),
+  makeChar("廿", "T", Some(["廿"]), ()),
+  makeChar("廿", "T", Some(["廿"]), ()),
+  makeChar("廿", "T", Some(["廿"]), ()),
+  // Characters with 廿
+  makeChar("卅", "TM", Some(["廿", "一"]), ()),
+  makeChar("卅", "TM", Some(["廿", "一"]), ()),
+  makeChar("草", "TA", Some(["廿", "日"]), ()),
+  makeChar("草", "TA", Some(["廿", "日"]), ()),
+  makeChar("若", "TR", Some(["廿", "口"]), ()),
+  makeChar("若", "TR", Some(["廿", "口"]), ()),
+  // Practice mix
+  makeChar("廿", "T", Some(["廿"]), ()),
+  makeChar("卅", "TM", Some(["廿", "一"]), ()),
+  makeChar("草", "TA", Some(["廿", "日"]), ()),
+  makeChar("廿", "T", Some(["廿"]), ()),
+]
+
+// Lesson 21: 山 - Learn U (山)
+let lesson21Characters = [
   // Introduce 山
   makeChar("山", "U", Some(["山"]), ()),
   makeChar("山", "U", Some(["山"]), ()),
   makeChar("山", "U", Some(["山"]), ()),
+  makeChar("山", "U", Some(["山"]), ()),
+  makeChar("山", "U", Some(["山"]), ()),
+  // Characters with 山
+  makeChar("出", "UU", Some(["山", "山"]), ()),
+  makeChar("出", "UU", Some(["山", "山"]), ()),
+  // Practice mix
+  makeChar("山", "U", Some(["山"]), ()),
+  makeChar("出", "UU", Some(["山", "山"]), ()),
+  makeChar("山", "U", Some(["山"]), ()),
+  makeChar("出", "UU", Some(["山", "山"]), ()),
+  makeChar("山", "U", Some(["山"]), ()),
+  makeChar("山", "U", Some(["山"]), ()),
+]
+
+// Lesson 22: 女 - Learn V (女)
+let lesson22Characters = [
   // Introduce 女
   makeChar("女", "V", Some(["女"]), ()),
   makeChar("女", "V", Some(["女"]), ()),
   makeChar("女", "V", Some(["女"]), ()),
+  makeChar("女", "V", Some(["女"]), ()),
+  makeChar("女", "V", Some(["女"]), ()),
+  // Characters with 女
+  makeChar("好", "VND", Some(["女", "弓", "木"]), ()),
+  makeChar("好", "VND", Some(["女", "弓", "木"]), ()),
   // Practice mix
-  makeChar("山", "U", Some(["山"]), ()),
   makeChar("女", "V", Some(["女"]), ()),
-  makeChar("心", "P", Some(["心"]), ()),
-  makeChar("山", "U", Some(["山"]), ()),
+  makeChar("好", "VND", Some(["女", "弓", "木"]), ()),
   makeChar("女", "V", Some(["女"]), ()),
-  makeChar("手", "Q", Some(["手"]), ()),
-  makeChar("山", "U", Some(["山"]), ()),
+  makeChar("好", "VND", Some(["女", "弓", "木"]), ()),
   makeChar("女", "V", Some(["女"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-  makeChar("山", "U", Some(["山"]), ()),
   makeChar("女", "V", Some(["女"]), ()),
-  makeChar("竹", "H", Some(["竹"]), ()),
+]
+
+// Lesson 23: 田 - Learn W (田)
+let lesson23Characters = [
+  // Introduce 田
+  makeChar("田", "W", Some(["田"]), ()),
+  makeChar("田", "W", Some(["田"]), ()),
+  makeChar("田", "W", Some(["田"]), ()),
+  makeChar("田", "W", Some(["田"]), ()),
+  makeChar("田", "W", Some(["田"]), ()),
+  // Characters with 田
+  makeChar("東", "DW", Some(["木", "田"]), ()),
+  makeChar("東", "DW", Some(["木", "田"]), ()),
+  makeChar("由", "LW", Some(["中", "田"]), ()),
+  makeChar("由", "LW", Some(["中", "田"]), ()),
+  // Practice mix
+  makeChar("田", "W", Some(["田"]), ()),
+  makeChar("東", "DW", Some(["木", "田"]), ()),
+  makeChar("由", "LW", Some(["中", "田"]), ()),
+  makeChar("田", "W", Some(["田"]), ()),
+  makeChar("田", "W", Some(["田"]), ()),
+]
+
+// Lesson 24: 卜 - Learn Y (卜)
+let lesson24Characters = [
+  // Introduce 卜
+  makeChar("卜", "Y", Some(["卜"]), ()),
+  makeChar("卜", "Y", Some(["卜"]), ()),
+  makeChar("卜", "Y", Some(["卜"]), ()),
+  makeChar("卜", "Y", Some(["卜"]), ()),
+  makeChar("卜", "Y", Some(["卜"]), ()),
+  // Characters with 卜
+  makeChar("上", "YM", Some(["卜", "一"]), ()),
+  makeChar("上", "YM", Some(["卜", "一"]), ()),
+  makeChar("占", "YR", Some(["卜", "口"]), ()),
+  makeChar("占", "YR", Some(["卜", "口"]), ()),
+  makeChar("下", "MY", Some(["一", "卜"]), ()),
+  makeChar("下", "MY", Some(["一", "卜"]), ()),
+  // Practice mix
+  makeChar("卜", "Y", Some(["卜"]), ()),
+  makeChar("上", "YM", Some(["卜", "一"]), ()),
+  makeChar("占", "YR", Some(["卜", "口"]), ()),
+  makeChar("下", "MY", Some(["一", "卜"]), ()),
+]
+
+// SPECIAL KEYS (特殊鍵) - Lessons 25-26
+// Lesson 25: 難 - Learn X (難)
+let lesson25Characters = [
+  // X is used for difficult/special characters
+  makeChar("卵", "XHQF", Some(["難", "竹", "手", "火"]), ()),
+  makeChar("卵", "XHQF", Some(["難", "竹", "手", "火"]), ()),
+  makeChar("巢", "XXHDB", Some(["難", "難", "竹", "木", "月"]), ()),
+  makeChar("巢", "XXHDB", Some(["難", "難", "竹", "木", "月"]), ()),
+  makeChar("鹿", "XIXP", Some(["難", "戈", "難", "心"]), ()),
+  makeChar("鹿", "XIXP", Some(["難", "戈", "難", "心"]), ()),
+  // Practice mix
+  makeChar("卵", "XHQF", Some(["難", "竹", "手", "火"]), ()),
+  makeChar("巢", "XXHDB", Some(["難", "難", "竹", "木", "月"]), ()),
+  makeChar("鹿", "XIXP", Some(["難", "戈", "難", "心"]), ()),
+  makeChar("卵", "XHQF", Some(["難", "竹", "手", "火"]), ()),
+]
+
+// Lesson 26: 重 - Learn Z (重)
+let lesson26Characters = [
+  // Z is the repeat key - used when a shape repeats
+  makeChar("昌", "AA", Some(["日", "日"]), ()),
+  makeChar("昌", "AA", Some(["日", "日"]), ()),
+  makeChar("朋", "BB", Some(["月", "月"]), ()),
+  makeChar("朋", "BB", Some(["月", "月"]), ()),
+  makeChar("林", "DD", Some(["木", "木"]), ()),
+  makeChar("林", "DD", Some(["木", "木"]), ()),
+  makeChar("炎", "FF", Some(["火", "火"]), ()),
+  makeChar("炎", "FF", Some(["火", "火"]), ()),
+  makeChar("從", "OO", Some(["人", "人"]), ()),
+  makeChar("從", "OO", Some(["人", "人"]), ()),
+  makeChar("出", "UU", Some(["山", "山"]), ()),
+  makeChar("出", "UU", Some(["山", "山"]), ()),
 ]
 
 // Application lessons - multi-character words using learned radicals
@@ -896,167 +1182,152 @@ let placementTestChars = [
 // Generate all lessons
 let getAllLessons = (): array<lesson> => {
   let basicRadicalLessons = [
-    // SECTION 1: STROKES (筆畫類) - Lessons 1-5
-    // Lesson 1: Content - 日月
-    makeLesson(1, "筆畫 1：日月", "學習 A(日) 和 B(月)",
-      Strokes, Radicals, Practice, [A, B], lesson1Characters, ~showCode=false, ~allowHints=true, ()),
+    // SECTION 1: PHILOSOPHY (哲理類) - Lessons 1-7
+    // Lesson 1: 日
+    makeLesson(1, "哲理 1：日", "學習 A(日)",
+      Philosophy, Radicals, Practice, [A], lesson1Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 2: Content - 一大
-    makeLesson(2, "筆畫 2：一大", "學習 M(一) 和 K(大)",
-      Strokes, Radicals, Practice, [M, K], lesson3Characters, ~showCode=false, ~allowHints=true, ()),
+    // Lesson 2: 月
+    makeLesson(2, "哲理 2：月", "學習 B(月)",
+      Philosophy, Radicals, Practice, [B], lesson2Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 3: Content - 十田
-    makeLesson(3, "筆畫 3：十田", "學習 J(十) 和 W(田)",
-      Strokes, Radicals, Practice, [J, W], lesson6Characters, ~showCode=false, ~allowHints=true, ()),
+    // Lesson 3: 金
+    makeLesson(3, "哲理 3：金", "學習 C(金)",
+      Philosophy, Radicals, Practice, [C], lesson3Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 4: Content Review - 日月一大十田
-    makeLesson(4, "筆畫複習", "複習日月一大十田",
-      Strokes, Radicals, Review, [A, B, M, K, J, W],
-      Js.Array2.concat(lesson1Characters, Js.Array2.concat(lesson3Characters, lesson6Characters)),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 3], ()),
+    // Lesson 4: 木
+    makeLesson(4, "哲理 4：木", "學習 D(木)",
+      Philosophy, Radicals, Practice, [D], lesson4Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 5: Comprehensive Review with application chars
-    makeLesson(5, "筆畫綜合", "綜合練習基礎筆畫",
-      Strokes, Radicals, MixedReview, [A, B, M, K, J, W],
-      Js.Array2.concat(
-        Js.Array2.concat(lesson1Characters, Js.Array2.concat(lesson3Characters, lesson6Characters)),
-        application1Characters
-      ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 3], ()),
+    // Lesson 5: 水
+    makeLesson(5, "哲理 5：水", "學習 E(水)",
+      Philosophy, Radicals, Practice, [E], lesson5Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // SECTION 2: PHILOSOPHY (哲理類) - Lessons 6-10
-    // Five Elements: 金木水火土
-    // Lesson 6: Content - 木
-    makeLesson(6, "哲理 1：木", "學習 D(木)",
-      Philosophy, Radicals, Practice, [D], lesson2Characters, ~showCode=false, ~allowHints=true, ()),
+    // Lesson 6: 火
+    makeLesson(6, "哲理 6：火", "學習 F(火)",
+      Philosophy, Radicals, Practice, [F], lesson6Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 7: Content - 火水
-    makeLesson(7, "哲理 2：火水", "學習 F(火) 和 E(水)",
-      Philosophy, Radicals, Practice, [F, E], lesson7Characters, ~showCode=false, ~allowHints=true, ()),
+    // Lesson 7: 土
+    makeLesson(7, "哲理 7：土", "學習 G(土)",
+      Philosophy, Radicals, Practice, [G], lesson7Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 8: Content - 金土
-    makeLesson(8, "哲理 3：金土", "學習 C(金) 和 G(土)",
-      Philosophy, Radicals, Practice, [C, G], lesson8Characters, ~showCode=false, ~allowHints=true, ()),
+    // SECTION 2: STROKES (筆畫類) - Lessons 8-14
+    // Lesson 8: 竹
+    makeLesson(8, "筆畫 1：竹", "學習 H(竹)",
+      Strokes, Radicals, Practice, [H], lesson8Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 9: Review - 五行
-    makeLesson(9, "哲理複習", "複習五行：金木水火土",
-      Philosophy, Radicals, Review, [D, F, E, C, G],
-      Js.Array2.concat(lesson2Characters, Js.Array2.concat(lesson7Characters, lesson8Characters)),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[6, 7, 8], ()),
+    // Lesson 9: 戈
+    makeLesson(9, "筆畫 2：戈", "學習 I(戈)",
+      Strokes, Radicals, Practice, [I], lesson9Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 10: Comprehensive Review
-    makeLesson(10, "哲理綜合", "綜合練習五行應用",
-      Philosophy, Radicals, MixedReview, [D, F, E, C, G],
-      Js.Array2.concat(
-        Js.Array2.concat(lesson2Characters, Js.Array2.concat(lesson7Characters, lesson8Characters)),
-        application3Characters
-      ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[6, 7, 8], ()),
+    // Lesson 10: 十
+    makeLesson(10, "筆畫 3：十", "學習 J(十)",
+      Strokes, Radicals, Practice, [J], lesson10Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // SECTION 3: BODY PARTS (人體類) - Lessons 11-14
-    // Lesson 11: Content - 人
-    makeLesson(11, "人體 1：人", "學習 O(人)",
-      BodyParts, Radicals, Practice, [O], lesson4Characters, ~showCode=false, ~allowHints=true, ()),
+    // Lesson 11: 大
+    makeLesson(11, "筆畫 4：大", "學習 K(大)",
+      Strokes, Radicals, Practice, [K], lesson11Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 12: Content - 心手
-    makeLesson(12, "人體 2：心手", "學習 P(心) 和 Q(手)",
-      BodyParts, Radicals, Practice, [P, Q], lesson10Characters, ~showCode=false, ~allowHints=true, ()),
+    // Lesson 12: 中
+    makeLesson(12, "筆畫 5：中", "學習 L(中)",
+      Strokes, Radicals, Practice, [L], lesson12Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 13: Review - 人心手
-    makeLesson(13, "人體複習", "複習人心手",
-      BodyParts, Radicals, Review, [O, P, Q],
-      Js.Array2.concat(lesson4Characters, lesson10Characters),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[11, 12], ()),
+    // Lesson 13: 一
+    makeLesson(13, "筆畫 6：一", "學習 M(一)",
+      Strokes, Radicals, Practice, [M], lesson13Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 14: Comprehensive Review
-    makeLesson(14, "人體綜合", "綜合練習人體應用",
-      BodyParts, Radicals, MixedReview, [O, P, Q],
-      Js.Array2.concat(
-        Js.Array2.concat(lesson4Characters, lesson10Characters),
-        application2Characters
-      ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[11, 12], ()),
+    // Lesson 14: 弓
+    makeLesson(14, "筆畫 7：弓", "學習 N(弓)",
+      Strokes, Radicals, Practice, [N], lesson14Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // SECTION 4: CHARACTER SHAPES (字形類) - Lessons 15-20
-    // Lesson 15: Content - 中口
-    makeLesson(15, "字形 1：中口", "學習 L(中) 和 R(口)",
-      CharacterShapes, Radicals, Practice, [L, R], lesson5Characters, ~showCode=false, ~allowHints=true, ()),
+    // SECTION 3: BODY PARTS (人體類) - Lessons 15-18
+    // Lesson 15: 人
+    makeLesson(15, "人體 1：人", "學習 O(人)",
+      BodyParts, Radicals, Practice, [O], lesson15Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 16: Content - 山女
-    makeLesson(16, "字形 2：山女", "學習 U(山) 和 V(女)",
-      CharacterShapes, Radicals, Practice, [U, V], lesson11Characters, ~showCode=false, ~allowHints=true, ()),
+    // Lesson 16: 心
+    makeLesson(16, "人體 2：心", "學習 P(心)",
+      BodyParts, Radicals, Practice, [P], lesson16Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 17: Content - 竹戈
-    makeLesson(17, "字形 3：竹戈", "學習 H(竹) 和 I(戈)",
-      CharacterShapes, Radicals, Practice, [H, I], lesson9Characters, ~showCode=false, ~allowHints=true, ()),
+    // Lesson 17: 手
+    makeLesson(17, "人體 3：手", "學習 Q(手)",
+      BodyParts, Radicals, Practice, [Q], lesson17Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 18: Review - 中口山女竹戈
-    makeLesson(18, "字形複習", "複習中口山女竹戈",
-      CharacterShapes, Radicals, Review, [L, R, U, V, H, I],
-      Js.Array2.concat(lesson5Characters, Js.Array2.concat(lesson11Characters, lesson9Characters)),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[15, 16, 17], ()),
+    // Lesson 18: 口
+    makeLesson(18, "人體 4：口", "學習 R(口)",
+      BodyParts, Radicals, Practice, [R], lesson18Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 19: Comprehensive Review
-    makeLesson(19, "字形綜合", "綜合練習字形應用",
-      CharacterShapes, Radicals, MixedReview, [L, R, U, V, H, I],
-      Js.Array2.concat(
-        Js.Array2.concat(lesson5Characters, Js.Array2.concat(lesson11Characters, lesson9Characters)),
-        application2Characters
-      ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[15, 16, 17], ()),
+    // SECTION 4: CHARACTER SHAPES (字形類) - Lessons 19-24
+    // Lesson 19: 尸
+    makeLesson(19, "字形 1：尸", "學習 S(尸)",
+      CharacterShapes, Radicals, Practice, [S], lesson19Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 20: FINAL COMPREHENSIVE REVIEW - All basic radicals
-    makeLesson(20, "基礎綜合複習", "綜合複習所有基礎部首",
-      CharacterShapes, Radicals, MixedReview, [A, B, M, K, J, W, D, F, E, C, G, O, P, Q, L, R, U, V, H, I],
-      Js.Array2.concat(
-        Js.Array2.concat(
-          Js.Array2.concat(lesson1Characters, Js.Array2.concat(lesson3Characters, lesson6Characters)),
-          Js.Array2.concat(lesson2Characters, Js.Array2.concat(lesson7Characters, lesson8Characters))
-        ),
-        Js.Array2.concat(
-          Js.Array2.concat(lesson4Characters, lesson10Characters),
-          Js.Array2.concat(lesson5Characters, Js.Array2.concat(lesson11Characters, lesson9Characters))
-        )
-      ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19], ()),
+    // Lesson 20: 廿
+    makeLesson(20, "字形 2：廿", "學習 T(廿)",
+      CharacterShapes, Radicals, Practice, [T], lesson20Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 21: 山
+    makeLesson(21, "字形 3：山", "學習 U(山)",
+      CharacterShapes, Radicals, Practice, [U], lesson21Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 22: 女
+    makeLesson(22, "字形 4：女", "學習 V(女)",
+      CharacterShapes, Radicals, Practice, [V], lesson22Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 23: 田
+    makeLesson(23, "字形 5：田", "學習 W(田)",
+      CharacterShapes, Radicals, Practice, [W], lesson23Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 24: 卜
+    makeLesson(24, "字形 6：卜", "學習 Y(卜)",
+      CharacterShapes, Radicals, Practice, [Y], lesson24Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // SECTION 5: SPECIAL KEYS (特殊鍵) - Lessons 25-26
+    // Lesson 25: 難 (X)
+    makeLesson(25, "特殊鍵 1：難", "學習 X(難)",
+      Advanced, Radicals, Practice, [X], lesson25Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 26: 重 (Z)
+    makeLesson(26, "特殊鍵 2：重", "學習重複鍵的使用",
+      Advanced, Radicals, Practice, [Z], lesson26Characters, ~showCode=false, ~allowHints=true, ()),
   ]
 
-  // SECTION 6: TOP COMMON (前100個字) - Lessons 21-50
+  // SECTION 6: TOP COMMON (前100個字) - Lessons 27-onwards
   // Pattern: 3-4 content lessons → review → comprehensive review
 
   let commonCharLessons = [
-    // SET 1: Lessons 21-26 (Characters 1-20)
-    makeLesson(21, "常用字（一）：的一是不了", "學習最常用的五個字",
+    // SET 1: Lessons 27-32 (Characters 1-20)
+    makeLesson(27, "常用字（一）：的一是不了", "學習最常用的五個字",
       TopCommon, CommonWords, Practice, [], commonChars1, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(22, "常用字（二）：人我在有他", "學習常用代詞和動詞",
+    makeLesson(28, "常用字（二）：人我在有他", "學習常用代詞和動詞",
       TopCommon, CommonWords, Practice, [], commonChars2, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(23, "常用字（三）：這為之大來", "學習常用連詞和動詞",
+    makeLesson(29, "常用字（三）：這為之大來", "學習常用連詞和動詞",
       TopCommon, CommonWords, Practice, [], commonChars3, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(24, "常用字（四）：以個中上們", "學習常用介詞和量詞",
+    makeLesson(30, "常用字（四）：以個中上們", "學習常用介詞和量詞",
       TopCommon, CommonWords, Practice, [], commonChars4, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(25, "複習：字符 1-20", "複習第二十一到二十四課的常用字",
+    makeLesson(31, "複習：字符 1-20", "複習第二十七到三十課的常用字",
       TopCommon, CommonWords, Review, [],
       Js.Array2.concat(commonChars1, Js.Array2.concat(commonChars2, Js.Array2.concat(commonChars3, commonChars4))),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[21, 22, 23, 24], ()),
-    makeLesson(26, "綜合複習：字符 1-20", "隨機複習所有已學常用字",
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[27, 28, 29, 30], ()),
+    makeLesson(32, "綜合複習：字符 1-20", "隨機複習所有已學常用字",
       TopCommon, CommonWords, MixedReview, [],
       CangjieUtils.shuffleArray(Js.Array2.concat(commonChars1, Js.Array2.concat(commonChars2, Js.Array2.concat(commonChars3, commonChars4)))),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[21, 22, 23, 24], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[27, 28, 29, 30], ()),
 
-    // SET 2: Lessons 27-32 (Characters 21-40)
-    makeLesson(27, "常用字（五）：到說國和地", "學習常用動詞和名詞",
+    // SET 2: Lessons 33-38 (Characters 21-40)
+    makeLesson(33, "常用字（五）：到說國和地", "學習常用動詞和名詞",
       TopCommon, CommonWords, Practice, [], commonChars5, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(28, "常用字（六）：也子時道出", "學習常用副詞和時間詞",
+    makeLesson(34, "常用字（六）：也子時道出", "學習常用副詞和時間詞",
       TopCommon, CommonWords, Practice, [], commonChars6, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(29, "常用字（七）：而要於就下", "學習常用連詞和方位詞",
+    makeLesson(35, "常用字（七）：而要於就下", "學習常用連詞和方位詞",
       TopCommon, CommonWords, Practice, [], commonChars7, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(30, "常用字（八）：得可你年生", "學習常用動詞和名詞",
+    makeLesson(36, "常用字（八）：得可你年生", "學習常用動詞和名詞",
       TopCommon, CommonWords, Practice, [], commonChars8, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(31, "複習：字符 21-40", "複習第二十七到三十課的常用字",
+    makeLesson(37, "複習：字符 21-40", "複習第三十三到三十六課的常用字",
       TopCommon, CommonWords, Review, [],
       Js.Array2.concat(commonChars5, Js.Array2.concat(commonChars6, Js.Array2.concat(commonChars7, commonChars8))),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[27, 28, 29, 30], ()),
-    makeLesson(32, "綜合複習：字符 1-40", "隨機複習所有已學常用字",
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[33, 34, 35, 36], ()),
+    makeLesson(38, "綜合複習：字符 1-40", "隨機複習所有已學常用字",
       TopCommon, CommonWords, MixedReview, [],
       CangjieUtils.shuffleArray(
         Js.Array2.concat(
@@ -1064,22 +1335,22 @@ let getAllLessons = (): array<lesson> => {
           Js.Array2.concat(commonChars5, Js.Array2.concat(commonChars6, Js.Array2.concat(commonChars7, commonChars8)))
         )
       ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[21, 22, 23, 24, 27, 28, 29, 30], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[27, 28, 29, 30, 33, 34, 35, 36], ()),
 
-    // SET 3: Lessons 33-38 (Characters 41-60)
-    makeLesson(33, "常用字（九）：自會那後能", "學習常用代詞和助動詞",
+    // SET 3: Lessons 39-44 (Characters 41-60)
+    makeLesson(39, "常用字（九）：自會那後能", "學習常用代詞和助動詞",
       TopCommon, CommonWords, Practice, [], commonChars9, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(34, "常用字（十）：對著事其里", "學習常用動詞和名詞",
+    makeLesson(40, "常用字（十）：對著事其里", "學習常用動詞和名詞",
       TopCommon, CommonWords, Practice, [], commonChars10, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(35, "常用字（十一）：所去行過家", "學習常用動詞和名詞",
+    makeLesson(41, "常用字（十一）：所去行過家", "學習常用動詞和名詞",
       TopCommon, CommonWords, Practice, [], commonChars11, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(36, "常用字（十二）：十用發天如", "學習常用數詞和動詞",
+    makeLesson(42, "常用字（十二）：十用發天如", "學習常用數詞和動詞",
       TopCommon, CommonWords, Practice, [], commonChars12, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(37, "複習：字符 41-60", "複習第三十三到三十六課的常用字",
+    makeLesson(43, "複習：字符 41-60", "複習第三十九到四十二課的常用字",
       TopCommon, CommonWords, Review, [],
       Js.Array2.concat(commonChars9, Js.Array2.concat(commonChars10, Js.Array2.concat(commonChars11, commonChars12))),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[33, 34, 35, 36], ()),
-    makeLesson(38, "綜合複習：字符 1-60", "隨機複習所有已學常用字",
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[39, 40, 41, 42], ()),
+    makeLesson(44, "綜合複習：字符 1-60", "隨機複習所有已學常用字",
       TopCommon, CommonWords, MixedReview, [],
       CangjieUtils.shuffleArray(
         Js.Array2.concat(
@@ -1090,20 +1361,20 @@ let getAllLessons = (): array<lesson> => {
           Js.Array2.concat(commonChars9, Js.Array2.concat(commonChars10, Js.Array2.concat(commonChars11, commonChars12)))
         )
       ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[21, 22, 23, 24, 27, 28, 29, 30, 33, 34, 35, 36], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[27, 28, 29, 30, 33, 34, 35, 36, 39, 40, 41, 42], ()),
 
-    // SET 4: Lessons 39-43 (Characters 61-75)
-    makeLesson(39, "常用字（十三）：然作方成者", "學習常用副詞和動詞",
+    // SET 4: Lessons 45-49 (Characters 61-75)
+    makeLesson(45, "常用字（十三）：然作方成者", "學習常用副詞和動詞",
       TopCommon, CommonWords, Practice, [], commonChars13, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(40, "常用字（十四）：多日都三同", "學習常用量詞和形容詞",
+    makeLesson(46, "常用字（十四）：多日都三同", "學習常用量詞和形容詞",
       TopCommon, CommonWords, Practice, [], commonChars14, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(41, "常用字（十五）：已經法當起", "學習常用副詞和動詞",
+    makeLesson(47, "常用字（十五）：已經法當起", "學習常用副詞和動詞",
       TopCommon, CommonWords, Practice, [], commonChars15, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(42, "複習：字符 61-75", "複習第三十九到四十一課的常用字",
+    makeLesson(48, "複習：字符 61-75", "複習第四十五到四十七課的常用字",
       TopCommon, CommonWords, Review, [],
       Js.Array2.concat(commonChars13, Js.Array2.concat(commonChars14, commonChars15)),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[39, 40, 41], ()),
-    makeLesson(43, "綜合複習：字符 1-75", "隨機複習所有已學常用字",
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[45, 46, 47], ()),
+    makeLesson(49, "綜合複習：字符 1-75", "隨機複習所有已學常用字",
       TopCommon, CommonWords, MixedReview, [],
       CangjieUtils.shuffleArray(
         Js.Array2.concat(
@@ -1117,22 +1388,22 @@ let getAllLessons = (): array<lesson> => {
           Js.Array2.concat(commonChars13, Js.Array2.concat(commonChars14, commonChars15))
         )
       ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[21, 22, 23, 24, 27, 28, 29, 30, 33, 34, 35, 36, 39, 40, 41], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[27, 28, 29, 30, 33, 34, 35, 36, 39, 40, 41, 42, 45, 46, 47], ()),
 
-    // SET 5: Lessons 44-49 (Characters 76-96)
-    makeLesson(44, "常用字（十六）：與好看學進", "學習常用連詞和動詞",
+    // SET 5: Lessons 50-55 (Characters 76-96)
+    makeLesson(50, "常用字（十六）：與好看學進", "學習常用連詞和動詞",
       TopCommon, CommonWords, Practice, [], commonChars16, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(45, "常用字（十七）：種將還分此", "學習常用名詞和動詞",
+    makeLesson(51, "常用字（十七）：種將還分此", "學習常用名詞和動詞",
       TopCommon, CommonWords, Practice, [], commonChars17, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(46, "常用字（十八）：心前面又定", "學習常用名詞和副詞",
+    makeLesson(52, "常用字（十八）：心前面又定", "學習常用名詞和副詞",
       TopCommon, CommonWords, Practice, [], commonChars18, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(47, "常用字（十九）：見只主沒公從", "學習常用動詞和副詞",
+    makeLesson(53, "常用字（十九）：見只主沒公從", "學習常用動詞和副詞",
       TopCommon, CommonWords, Practice, [], commonChars19, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(48, "複習：字符 76-96", "複習第四十四到四十七課的常用字",
+    makeLesson(54, "複習：字符 76-96", "複習第五十到五十三課的常用字",
       TopCommon, CommonWords, Review, [],
       Js.Array2.concat(commonChars16, Js.Array2.concat(commonChars17, Js.Array2.concat(commonChars18, commonChars19))),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[44, 45, 46, 47], ()),
-    makeLesson(49, "綜合複習：前100常用字", "隨機複習所有已學的96個常用字",
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[50, 51, 52, 53], ()),
+    makeLesson(55, "綜合複習：前100常用字", "隨機複習所有已學的96個常用字",
       TopCommon, CommonWords, MixedReview, [],
       CangjieUtils.shuffleArray(
         Js.Array2.concat(
@@ -1152,7 +1423,7 @@ let getAllLessons = (): array<lesson> => {
           commonChars19
         )
       ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[21, 22, 23, 24, 27, 28, 29, 30, 33, 34, 35, 36, 39, 40, 41, 44, 45, 46, 47], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[27, 28, 29, 30, 33, 34, 35, 36, 39, 40, 41, 42, 45, 46, 47, 50, 51, 52, 53], ()),
   ]
 
   // Placement test
