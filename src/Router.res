@@ -7,6 +7,8 @@ type route =
   | LessonIntro(int) // /lesson/:id/intro
   | LessonPractice(int) // /lesson/:id/practice
   | LessonComplete(int) // /lesson/:id/complete
+  | RandomReview // /review/random
+  | TimedChallenge // /challenge/timed
   | Dictionary
   | LessonGenerator
   | NotFound
@@ -31,6 +33,8 @@ let urlToRoute = (url: RescriptReactRouter.url): route => {
     | Some(lessonId) => LessonComplete(lessonId)
     | None => NotFound
     }
+  | list{"review", "random"} => RandomReview
+  | list{"challenge", "timed"} => TimedChallenge
   | list{"dictionary"} => Dictionary
   | list{"generator"} => LessonGenerator
   | _ => NotFound
@@ -45,6 +49,8 @@ let routeToUrl = (route: route): string => {
   | LessonIntro(id) => `/lesson/${Belt.Int.toString(id)}/intro`
   | LessonPractice(id) => `/lesson/${Belt.Int.toString(id)}/practice`
   | LessonComplete(id) => `/lesson/${Belt.Int.toString(id)}/complete`
+  | RandomReview => "/review/random"
+  | TimedChallenge => "/challenge/timed"
   | Dictionary => "/dictionary"
   | LessonGenerator => "/generator"
   | NotFound => "/404"

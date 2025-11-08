@@ -5,7 +5,6 @@ open Types
 @react.component
 let make = () => {
   let currentRoute = Router.useRoute()
-  let (dynamicLesson, setDynamicLesson) = React.useState(() => None)
   let (userProgress, setUserProgress) = React.useState(() => LocalStorage.loadProgress())
   let (database, setDatabase) = React.useState(() => DatabaseLoader.NotLoaded)
 
@@ -31,23 +30,12 @@ let make = () => {
     Router.push(LessonIntro(lessonId))
   }
 
-  let handleStartDynamicLesson = (lesson: lesson) => {
-    setDynamicLesson(_ => Some(lesson))
-    Router.push(Home) // Stay on home but show dynamic lesson
-  }
-
   let handleStartReview = () => {
-    switch CangjieData.createReviewLesson(userProgress.completedLessons, 20) {
-    | Some(lesson) => handleStartDynamicLesson(lesson)
-    | None => ()
-    }
+    Router.push(RandomReview)
   }
 
   let handleStartTimedChallenge = () => {
-    switch CangjieData.createTimedChallenge(userProgress.completedLessons, 60) {
-    | Some(lesson) => handleStartDynamicLesson(lesson)
-    | None => ()
-    }
+    Router.push(TimedChallenge)
   }
 
   let handleBackToList = () => {
@@ -55,7 +43,6 @@ let make = () => {
   }
 
   let handleBackToHome = () => {
-    setDynamicLesson(_ => None) // Clear dynamic lesson
     Router.push(Home)
   }
 
@@ -118,15 +105,7 @@ let make = () => {
       </div>
 
     | Loaded(_) =>
-      {switch dynamicLesson {
-      | Some(lesson) =>
-        <DynamicLessonView
-          lesson={lesson}
-          onBack={handleBackToHome}
-          onUpdateProgress={handleUpdateProgress}
-        />
-      | None =>
-        switch currentRoute {
+      {switch currentRoute {
         | Router.Home =>
           <HomeView
             onStartLearning={() => Router.push(LessonList)}
@@ -188,17 +167,53 @@ let make = () => {
         | Router.LessonGenerator =>
           <LessonGeneratorView
             onBack={handleBackToHome}
-            onStartLesson={handleStartDynamicLesson}
+            onStartLesson={_ => {
+              // For lesson generator, navigate to home
+              Router.push(Home)
+            }}
             database={getDatabase()}
           />
+        | Router.RandomReview =>
+          {switch CangjieData.createReviewLesson(userProgress.completedLessons, 20) {
+          | Some(lesson) =>
+            <DynamicLessonView
+              lesson={lesson}
+              onBack={handleBackToHome}
+              onUpdateProgress={handleUpdateProgress}
+            />
+          | None =>
+            <div className="error-screen">
+              <h2> {React.string("無法創建複習")} </h2>
+              <p> {React.string("請先完成一些課程")} </p>
+              <button className="btn btn-primary" onClick={_ => Router.push(LessonList)}>
+                {React.string("前往課程列表")}
+              </button>
+            </div>
+          }}
+        | Router.TimedChallenge =>
+          {switch CangjieData.createTimedChallenge(userProgress.completedLessons, 60) {
+          | Some(lesson) =>
+            <DynamicLessonView
+              lesson={lesson}
+              onBack={handleBackToHome}
+              onUpdateProgress={handleUpdateProgress}
+            />
+          | None =>
+            <div className="error-screen">
+              <h2> {React.string("無法創建挑戰")} </h2>
+              <p> {React.string("請先完成一些課程")} </p>
+              <button className="btn btn-primary" onClick={_ => Router.push(LessonList)}>
+                {React.string("前往課程列表")}
+              </button>
+            </div>
+          }}
         | Router.NotFound =>
           <div className="error-screen">
             <h2> {React.string("找不到頁面")} </h2>
             <p> {React.string("您訪問的頁面不存在")} </p>
             <button onClick={_ => Router.push(Home)}> {React.string("返回首頁")} </button>
           </div>
-        }
-      }}
+        }}
     }}
   </div>
 }
