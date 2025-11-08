@@ -27,17 +27,8 @@ let make = () => {
   }, [userProgress])
 
   let handleLessonSelect = (lessonId: int) => {
-    // Always go to intro first for introduction lessons
-    let lesson = CangjieData.getLessonById(lessonId)
-    switch lesson {
-    | Some(l) =>
-      if l.lessonType == Types.Introduction {
-        Router.push(LessonIntro(lessonId))
-      } else {
-        Router.push(LessonPractice(lessonId))
-      }
-    | None => Router.push(LessonIntro(lessonId)) // Default to intro
-    }
+    // Always go to intro screen first for all lessons
+    Router.push(LessonIntro(lessonId))
   }
 
   let handleStartDynamicLesson = (lesson: lesson) => {
@@ -153,14 +144,37 @@ let make = () => {
             userProgress={userProgress}
           />
         | Router.LessonIntro(lessonId) =>
-          <IntroductionMode
-            lesson={switch CangjieData.getLessonById(lessonId) {
-            | Some(l) => l
-            | None => CangjieData.getLessonById(1)->Belt.Option.getExn // Fallback
-            }}
-            onContinue={() => Router.push(LessonPractice(lessonId))}
-            onBack={handleBackToList}
-          />
+          {switch CangjieData.getLessonById(lessonId) {
+          | Some(lesson) =>
+            // Use IntroductionMode for Introduction lessons, ReadyScreen for others
+            if lesson.lessonType == Types.Introduction {
+              <IntroductionMode
+                lesson={lesson}
+                onContinue={() => Router.push(LessonPractice(lessonId))}
+                onBack={handleBackToList}
+              />
+            } else {
+              <div className="lesson-view">
+                <div className="lesson-header">
+                  <button className="btn btn-back" onClick={_ => handleBackToList()}>
+                    {React.string("← 返回")}
+                  </button>
+                  <h1 className="lesson-title"> {React.string(lesson.title)} </h1>
+                </div>
+                <ReadyScreen
+                  lesson={lesson}
+                  onStart={() => Router.push(LessonPractice(lessonId))}
+                />
+              </div>
+            }
+          | None =>
+            // Fallback to lesson 1
+            <IntroductionMode
+              lesson={CangjieData.getLessonById(1)->Belt.Option.getExn}
+              onContinue={() => Router.push(LessonPractice(lessonId))}
+              onBack={handleBackToList}
+            />
+          }}
         | Router.LessonPractice(lessonId) =>
           <LessonView
             lessonId={lessonId}
