@@ -78,14 +78,14 @@ let make = (
       <ReadyScreen lesson={lesson} onStart={handleStart} />
     | Active =>
       switch lesson.lessonType {
-      | Practice =>
+      | Practice | Review | MixedReview =>
         <PracticeMode
           lesson={lesson}
           inputState={inputState}
           setInputState={setInputState}
           onComplete={handleComplete}
         />
-      | Test | _ =>
+      | Test | TimedChallenge | _ =>
         <TestMode
           lesson={lesson}
           inputState={inputState}
