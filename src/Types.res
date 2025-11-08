@@ -14,6 +14,16 @@ type characterInfo = {
   frequencyRank: option<int>, // Frequency ranking (1 = most common)
 }
 
+// Lesson section - thematic grouping
+type lessonSection =
+  | Philosophy    // 哲理類 - Philosophical concepts (五行: 金木水火土)
+  | Strokes       // 筆畫類 - Stroke types (一十日月...)
+  | BodyParts     // 人體類 - Body parts (人心手...)
+  | CharacterShapes // 字形類 - Character shapes (口田中...)
+  | SpecialKeys   // 特殊鍵 - Special keys
+  | TopCommon     // 前100個字 - Top 100 common characters
+  | Advanced      // 進階 - Advanced lessons
+
 // Lesson category
 type lessonCategory =
   | Radicals      // Basic radicals
@@ -38,6 +48,7 @@ type lesson = {
   id: int,
   title: string,
   description: string,
+  section: lessonSection, // Thematic section grouping
   category: lessonCategory,
   lessonType: lessonType,
   introducedKeys: array<cangjieKey>, // Keys introduced in this lesson

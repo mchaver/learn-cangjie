@@ -1,6 +1,6 @@
-# 學習倉頡輸入法 (Learn Cangjie Input Method)
+# 倉頡鍵客 (Cangjie Typing Master)
 
-A progressive web application for learning the Cangjie (倉頡) input method, built with ReScript and React.
+A progressive web application for mastering the Cangjie (倉頡) input method, built with ReScript and React.
 
 ## Features
 

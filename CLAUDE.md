@@ -15,7 +15,7 @@ This comprehensive guide provides the complete API reference for ReScript with R
 
 ## Project Overview
 
-This is a Cangjie (倉頡) input method learning application built with ReScript and React. It helps Chinese speakers learn how to type using the Cangjie input method through a series of progressive lessons, practice sessions, and tests.
+**倉頡鍵客 (Cangjie Typing Master)** is a Cangjie (倉頡) input method learning application built with ReScript and React. It helps Chinese speakers master typing using the Cangjie input method through a series of progressive lessons, practice sessions, and tests.
 
 ## Technology Stack
 

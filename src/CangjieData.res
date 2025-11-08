@@ -21,11 +21,12 @@ let makeChar = (
   }
 }
 
-// Create lesson structure with category
+// Create lesson structure with section and category
 let makeLesson = (
   id: int,
   title: string,
   description: string,
+  section: lessonSection,
   category: lessonCategory,
   lessonType: lessonType,
   keys: array<cangjieKey>,
@@ -40,6 +41,7 @@ let makeLesson = (
     id: id,
     title: title,
     description: description,
+    section: section,
     category: category,
     lessonType: lessonType,
     introducedKeys: keys,
@@ -894,169 +896,191 @@ let placementTestChars = [
 // Generate all lessons
 let getAllLessons = (): array<lesson> => {
   let basicRadicalLessons = [
-    // SET 1: Lessons 1-4
+    // SECTION 1: STROKES (筆畫類) - Lessons 1-5
     // Lesson 1: Content - 日月
-    makeLesson(1, "第一課：日月 (內容)", "學習 A(日) 和 B(月)",
-      Radicals, Practice, [A, B], lesson1Characters, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(1, "筆畫 1：日月", "學習 A(日) 和 B(月)",
+      Strokes, Radicals, Practice, [A, B], lesson1Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 2: Content - 木
-    makeLesson(2, "第二課：木 (內容)", "學習 D(木)",
-      Radicals, Practice, [D], lesson2Characters, ~showCode=false, ~allowHints=true, ()),
+    // Lesson 2: Content - 一大
+    makeLesson(2, "筆畫 2：一大", "學習 M(一) 和 K(大)",
+      Strokes, Radicals, Practice, [M, K], lesson3Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 3: Content - 一大
-    makeLesson(3, "第三課：一大 (內容)", "學習 M(一) 和 K(大)",
-      Radicals, Practice, [M, K], lesson3Characters, ~showCode=false, ~allowHints=true, ()),
+    // Lesson 3: Content - 十田
+    makeLesson(3, "筆畫 3：十田", "學習 J(十) 和 W(田)",
+      Strokes, Radicals, Practice, [J, W], lesson6Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 4: Content Review - 日月木一大
-    makeLesson(4, "內容複習：日月木一大", "複習第一到第三課",
-      Radicals, Review, [A, B, D, M, K],
-      Js.Array2.concat(lesson1Characters, Js.Array2.concat(lesson2Characters, lesson3Characters)),
+    // Lesson 4: Content Review - 日月一大十田
+    makeLesson(4, "筆畫複習", "複習日月一大十田",
+      Strokes, Radicals, Review, [A, B, M, K, J, W],
+      Js.Array2.concat(lesson1Characters, Js.Array2.concat(lesson3Characters, lesson6Characters)),
       ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 3], ()),
 
-    // SET 2: Lessons 5-9
-    // Lesson 5: Content - 人
-    makeLesson(5, "第四課：人 (內容)", "學習 O(人)",
-      Radicals, Practice, [O], lesson4Characters, ~showCode=false, ~allowHints=true, ()),
-
-    // Lesson 6: Content - 中口
-    makeLesson(6, "第五課：中口 (內容)", "學習 L(中) 和 R(口)",
-      Radicals, Practice, [L, R], lesson5Characters, ~showCode=false, ~allowHints=true, ()),
-
-    // Lesson 7: Content - 十田
-    makeLesson(7, "第六課：十田 (內容)", "學習 J(十) 和 W(田)",
-      Radicals, Practice, [J, W], lesson6Characters, ~showCode=false, ~allowHints=true, ()),
-
-    // Lesson 8: Content Review - 人中口十田
-    makeLesson(8, "內容複習：人中口十田", "複習第四到第六課",
-      Radicals, Review, [O, L, R, J, W],
-      Js.Array2.concat(lesson4Characters, Js.Array2.concat(lesson5Characters, lesson6Characters)),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[5, 6, 7], ()),
-
-    // Lesson 9: Mixed Review - all previous + application chars
-    makeLesson(9, "綜合練習：基礎 + 應用", "練習所有已學字符及應用字",
-      Radicals, MixedReview, [A, B, D, M, K, O, L, R, J, W],
+    // Lesson 5: Comprehensive Review with application chars
+    makeLesson(5, "筆畫綜合", "綜合練習基礎筆畫",
+      Strokes, Radicals, MixedReview, [A, B, M, K, J, W],
       Js.Array2.concat(
-        Js.Array2.concat(lesson1Characters, Js.Array2.concat(lesson2Characters, lesson3Characters)),
-        Js.Array2.concat(
-          Js.Array2.concat(lesson4Characters, Js.Array2.concat(lesson5Characters, lesson6Characters)),
-          application1Characters
-        )
+        Js.Array2.concat(lesson1Characters, Js.Array2.concat(lesson3Characters, lesson6Characters)),
+        application1Characters
       ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 3, 5, 6, 7], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 3], ()),
 
-    // SET 3: Lessons 10-14
-    // Lesson 10: Content - 火水
-    makeLesson(10, "第七課：火水 (內容)", "學習 F(火) 和 E(水)",
-      Radicals, Practice, [F, E], lesson7Characters, ~showCode=false, ~allowHints=true, ()),
+    // SECTION 2: PHILOSOPHY (哲理類) - Lessons 6-10
+    // Five Elements: 金木水火土
+    // Lesson 6: Content - 木
+    makeLesson(6, "哲理 1：木", "學習 D(木)",
+      Philosophy, Radicals, Practice, [D], lesson2Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 11: Content - 金土
-    makeLesson(11, "第八課：金土 (內容)", "學習 C(金) 和 G(土)",
-      Radicals, Practice, [C, G], lesson8Characters, ~showCode=false, ~allowHints=true, ()),
+    // Lesson 7: Content - 火水
+    makeLesson(7, "哲理 2：火水", "學習 F(火) 和 E(水)",
+      Philosophy, Radicals, Practice, [F, E], lesson7Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 12: Content - 竹戈
-    makeLesson(12, "第九課：竹戈 (內容)", "學習 H(竹) 和 I(戈)",
-      Radicals, Practice, [H, I], lesson9Characters, ~showCode=false, ~allowHints=true, ()),
+    // Lesson 8: Content - 金土
+    makeLesson(8, "哲理 3：金土", "學習 C(金) 和 G(土)",
+      Philosophy, Radicals, Practice, [C, G], lesson8Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 13: Content Review - 火水金土竹戈
-    makeLesson(13, "內容複習：火水金土竹戈", "複習第七到第九課",
-      Radicals, Review, [F, E, C, G, H, I],
-      Js.Array2.concat(lesson7Characters, Js.Array2.concat(lesson8Characters, lesson9Characters)),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[10, 11, 12], ()),
+    // Lesson 9: Review - 五行
+    makeLesson(9, "哲理複習", "複習五行：金木水火土",
+      Philosophy, Radicals, Review, [D, F, E, C, G],
+      Js.Array2.concat(lesson2Characters, Js.Array2.concat(lesson7Characters, lesson8Characters)),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[6, 7, 8], ()),
 
-    // Lesson 14: Mixed Review - all previous + application chars
-    makeLesson(14, "綜合練習：擴展應用", "練習所有已學字符及擴展應用字",
-      Radicals, MixedReview, [A, B, D, M, K, O, L, R, J, W, F, E, C, G, H, I],
+    // Lesson 10: Comprehensive Review
+    makeLesson(10, "哲理綜合", "綜合練習五行應用",
+      Philosophy, Radicals, MixedReview, [D, F, E, C, G],
       Js.Array2.concat(
-        Js.Array2.concat(lesson1Characters, Js.Array2.concat(lesson2Characters, Js.Array2.concat(lesson3Characters, Js.Array2.concat(lesson4Characters, Js.Array2.concat(lesson5Characters, Js.Array2.concat(lesson6Characters, Js.Array2.concat(lesson7Characters, Js.Array2.concat(lesson8Characters, lesson9Characters)))))))),
-        Js.Array2.concat(application1Characters, Js.Array2.concat(application2Characters, application3Characters))
+        Js.Array2.concat(lesson2Characters, Js.Array2.concat(lesson7Characters, lesson8Characters)),
+        application3Characters
       ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 3, 5, 6, 7, 10, 11, 12], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[6, 7, 8], ()),
 
-    // SET 4: Lessons 15-18
-    // Lesson 15: Content - 心手
-    makeLesson(15, "第十課：心手 (內容)", "學習 P(心) 和 Q(手)",
-      Radicals, Practice, [P, Q], lesson10Characters, ~showCode=false, ~allowHints=true, ()),
+    // SECTION 3: BODY PARTS (人體類) - Lessons 11-14
+    // Lesson 11: Content - 人
+    makeLesson(11, "人體 1：人", "學習 O(人)",
+      BodyParts, Radicals, Practice, [O], lesson4Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 12: Content - 心手
+    makeLesson(12, "人體 2：心手", "學習 P(心) 和 Q(手)",
+      BodyParts, Radicals, Practice, [P, Q], lesson10Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 13: Review - 人心手
+    makeLesson(13, "人體複習", "複習人心手",
+      BodyParts, Radicals, Review, [O, P, Q],
+      Js.Array2.concat(lesson4Characters, lesson10Characters),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[11, 12], ()),
+
+    // Lesson 14: Comprehensive Review
+    makeLesson(14, "人體綜合", "綜合練習人體應用",
+      BodyParts, Radicals, MixedReview, [O, P, Q],
+      Js.Array2.concat(
+        Js.Array2.concat(lesson4Characters, lesson10Characters),
+        application2Characters
+      ),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[11, 12], ()),
+
+    // SECTION 4: CHARACTER SHAPES (字形類) - Lessons 15-20
+    // Lesson 15: Content - 中口
+    makeLesson(15, "字形 1：中口", "學習 L(中) 和 R(口)",
+      CharacterShapes, Radicals, Practice, [L, R], lesson5Characters, ~showCode=false, ~allowHints=true, ()),
 
     // Lesson 16: Content - 山女
-    makeLesson(16, "第十一課：山女 (內容)", "學習 U(山) 和 V(女)",
-      Radicals, Practice, [U, V], lesson11Characters, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(16, "字形 2：山女", "學習 U(山) 和 V(女)",
+      CharacterShapes, Radicals, Practice, [U, V], lesson11Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 17: Content Review - 心手山女
-    makeLesson(17, "內容複習：心手山女", "複習第十到第十一課",
-      Radicals, Review, [P, Q, U, V],
-      Js.Array2.concat(lesson10Characters, lesson11Characters),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[15, 16], ()),
+    // Lesson 17: Content - 竹戈
+    makeLesson(17, "字形 3：竹戈", "學習 H(竹) 和 I(戈)",
+      CharacterShapes, Radicals, Practice, [H, I], lesson9Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 18: Mixed Review - all radicals + all application chars
-    makeLesson(18, "綜合練習：全面掌握", "練習所有已學字符及全部應用字",
-      Radicals, MixedReview, [A, B, D, M, K, O, L, R, J, W, F, E, C, G, H, I, P, Q, U, V],
+    // Lesson 18: Review - 中口山女竹戈
+    makeLesson(18, "字形複習", "複習中口山女竹戈",
+      CharacterShapes, Radicals, Review, [L, R, U, V, H, I],
+      Js.Array2.concat(lesson5Characters, Js.Array2.concat(lesson11Characters, lesson9Characters)),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[15, 16, 17], ()),
+
+    // Lesson 19: Comprehensive Review
+    makeLesson(19, "字形綜合", "綜合練習字形應用",
+      CharacterShapes, Radicals, MixedReview, [L, R, U, V, H, I],
       Js.Array2.concat(
-        Js.Array2.concat(lesson1Characters, Js.Array2.concat(lesson2Characters, Js.Array2.concat(lesson3Characters, Js.Array2.concat(lesson4Characters, Js.Array2.concat(lesson5Characters, Js.Array2.concat(lesson6Characters, Js.Array2.concat(lesson7Characters, Js.Array2.concat(lesson8Characters, Js.Array2.concat(lesson9Characters, Js.Array2.concat(lesson10Characters, lesson11Characters)))))))))),
-        Js.Array2.concat(application1Characters, Js.Array2.concat(application2Characters, Js.Array2.concat(application3Characters, application4Characters)))
+        Js.Array2.concat(lesson5Characters, Js.Array2.concat(lesson11Characters, lesson9Characters)),
+        application2Characters
       ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 3, 5, 6, 7, 10, 11, 12, 15, 16], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[15, 16, 17], ()),
+
+    // Lesson 20: FINAL COMPREHENSIVE REVIEW - All basic radicals
+    makeLesson(20, "基礎綜合複習", "綜合複習所有基礎部首",
+      CharacterShapes, Radicals, MixedReview, [A, B, M, K, J, W, D, F, E, C, G, O, P, Q, L, R, U, V, H, I],
+      Js.Array2.concat(
+        Js.Array2.concat(
+          Js.Array2.concat(lesson1Characters, Js.Array2.concat(lesson3Characters, lesson6Characters)),
+          Js.Array2.concat(lesson2Characters, Js.Array2.concat(lesson7Characters, lesson8Characters))
+        ),
+        Js.Array2.concat(
+          Js.Array2.concat(lesson4Characters, lesson10Characters),
+          Js.Array2.concat(lesson5Characters, Js.Array2.concat(lesson11Characters, lesson9Characters))
+        )
+      ),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19], ()),
   ]
 
-  // Top 100 Common Characters - Advanced Lessons
+  // SECTION 6: TOP COMMON (前100個字) - Lessons 21-50
   // Pattern: 3-4 content lessons → review → comprehensive review
 
   let commonCharLessons = [
-    // SET 1: Lessons 19-24 (Characters 1-20)
-    makeLesson(19, "常用字（一）：的一是不了", "學習最常用的五個字",
-      CommonWords, Practice, [], commonChars1, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(20, "常用字（二）：人我在有他", "學習常用代詞和動詞",
-      CommonWords, Practice, [], commonChars2, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(21, "常用字（三）：這為之大來", "學習常用連詞和動詞",
-      CommonWords, Practice, [], commonChars3, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(22, "常用字（四）：以個中上們", "學習常用介詞和量詞",
-      CommonWords, Practice, [], commonChars4, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(23, "複習：字符 1-20", "複習第十二到十五課的常用字",
-      CommonWords, Review, [],
+    // SET 1: Lessons 21-26 (Characters 1-20)
+    makeLesson(21, "常用字（一）：的一是不了", "學習最常用的五個字",
+      TopCommon, CommonWords, Practice, [], commonChars1, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(22, "常用字（二）：人我在有他", "學習常用代詞和動詞",
+      TopCommon, CommonWords, Practice, [], commonChars2, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(23, "常用字（三）：這為之大來", "學習常用連詞和動詞",
+      TopCommon, CommonWords, Practice, [], commonChars3, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(24, "常用字（四）：以個中上們", "學習常用介詞和量詞",
+      TopCommon, CommonWords, Practice, [], commonChars4, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(25, "複習：字符 1-20", "複習第二十一到二十四課的常用字",
+      TopCommon, CommonWords, Review, [],
       Js.Array2.concat(commonChars1, Js.Array2.concat(commonChars2, Js.Array2.concat(commonChars3, commonChars4))),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[19, 20, 21, 22], ()),
-    makeLesson(24, "綜合複習：字符 1-20", "隨機複習所有已學常用字",
-      CommonWords, MixedReview, [],
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[21, 22, 23, 24], ()),
+    makeLesson(26, "綜合複習：字符 1-20", "隨機複習所有已學常用字",
+      TopCommon, CommonWords, MixedReview, [],
       CangjieUtils.shuffleArray(Js.Array2.concat(commonChars1, Js.Array2.concat(commonChars2, Js.Array2.concat(commonChars3, commonChars4)))),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[19, 20, 21, 22], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[21, 22, 23, 24], ()),
 
-    // SET 2: Lessons 25-30 (Characters 21-40)
-    makeLesson(25, "常用字（五）：到說國和地", "學習常用動詞和名詞",
-      CommonWords, Practice, [], commonChars5, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(26, "常用字（六）：也子時道出", "學習常用副詞和時間詞",
-      CommonWords, Practice, [], commonChars6, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(27, "常用字（七）：而要於就下", "學習常用連詞和方位詞",
-      CommonWords, Practice, [], commonChars7, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(28, "常用字（八）：得可你年生", "學習常用動詞和名詞",
-      CommonWords, Practice, [], commonChars8, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(29, "複習：字符 21-40", "複習第十六到十九課的常用字",
-      CommonWords, Review, [],
+    // SET 2: Lessons 27-32 (Characters 21-40)
+    makeLesson(27, "常用字（五）：到說國和地", "學習常用動詞和名詞",
+      TopCommon, CommonWords, Practice, [], commonChars5, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(28, "常用字（六）：也子時道出", "學習常用副詞和時間詞",
+      TopCommon, CommonWords, Practice, [], commonChars6, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(29, "常用字（七）：而要於就下", "學習常用連詞和方位詞",
+      TopCommon, CommonWords, Practice, [], commonChars7, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(30, "常用字（八）：得可你年生", "學習常用動詞和名詞",
+      TopCommon, CommonWords, Practice, [], commonChars8, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(31, "複習：字符 21-40", "複習第二十七到三十課的常用字",
+      TopCommon, CommonWords, Review, [],
       Js.Array2.concat(commonChars5, Js.Array2.concat(commonChars6, Js.Array2.concat(commonChars7, commonChars8))),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[25, 26, 27, 28], ()),
-    makeLesson(30, "綜合複習：字符 1-40", "隨機複習所有已學常用字",
-      CommonWords, MixedReview, [],
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[27, 28, 29, 30], ()),
+    makeLesson(32, "綜合複習：字符 1-40", "隨機複習所有已學常用字",
+      TopCommon, CommonWords, MixedReview, [],
       CangjieUtils.shuffleArray(
         Js.Array2.concat(
           Js.Array2.concat(commonChars1, Js.Array2.concat(commonChars2, Js.Array2.concat(commonChars3, commonChars4))),
           Js.Array2.concat(commonChars5, Js.Array2.concat(commonChars6, Js.Array2.concat(commonChars7, commonChars8)))
         )
       ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[19, 20, 21, 22, 25, 26, 27, 28], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[21, 22, 23, 24, 27, 28, 29, 30], ()),
 
-    // SET 3: Lessons 31-36 (Characters 41-60)
-    makeLesson(31, "常用字（九）：自會那後能", "學習常用代詞和助動詞",
-      CommonWords, Practice, [], commonChars9, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(32, "常用字（十）：對著事其里", "學習常用動詞和名詞",
-      CommonWords, Practice, [], commonChars10, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(33, "常用字（十一）：所去行過家", "學習常用動詞和名詞",
-      CommonWords, Practice, [], commonChars11, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(34, "常用字（十二）：十用發天如", "學習常用數詞和動詞",
-      CommonWords, Practice, [], commonChars12, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(35, "複習：字符 41-60", "複習第二十到二十三課的常用字",
-      CommonWords, Review, [],
+    // SET 3: Lessons 33-38 (Characters 41-60)
+    makeLesson(33, "常用字（九）：自會那後能", "學習常用代詞和助動詞",
+      TopCommon, CommonWords, Practice, [], commonChars9, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(34, "常用字（十）：對著事其里", "學習常用動詞和名詞",
+      TopCommon, CommonWords, Practice, [], commonChars10, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(35, "常用字（十一）：所去行過家", "學習常用動詞和名詞",
+      TopCommon, CommonWords, Practice, [], commonChars11, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(36, "常用字（十二）：十用發天如", "學習常用數詞和動詞",
+      TopCommon, CommonWords, Practice, [], commonChars12, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(37, "複習：字符 41-60", "複習第三十三到三十六課的常用字",
+      TopCommon, CommonWords, Review, [],
       Js.Array2.concat(commonChars9, Js.Array2.concat(commonChars10, Js.Array2.concat(commonChars11, commonChars12))),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[31, 32, 33, 34], ()),
-    makeLesson(36, "綜合複習：字符 1-60", "隨機複習所有已學常用字",
-      CommonWords, MixedReview, [],
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[33, 34, 35, 36], ()),
+    makeLesson(38, "綜合複習：字符 1-60", "隨機複習所有已學常用字",
+      TopCommon, CommonWords, MixedReview, [],
       CangjieUtils.shuffleArray(
         Js.Array2.concat(
           Js.Array2.concat(
@@ -1066,21 +1090,21 @@ let getAllLessons = (): array<lesson> => {
           Js.Array2.concat(commonChars9, Js.Array2.concat(commonChars10, Js.Array2.concat(commonChars11, commonChars12)))
         )
       ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[19, 20, 21, 22, 25, 26, 27, 28, 31, 32, 33, 34], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[21, 22, 23, 24, 27, 28, 29, 30, 33, 34, 35, 36], ()),
 
-    // SET 4: Lessons 37-42 (Characters 61-75)
-    makeLesson(37, "常用字（十三）：然作方成者", "學習常用副詞和動詞",
-      CommonWords, Practice, [], commonChars13, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(38, "常用字（十四）：多日都三同", "學習常用量詞和形容詞",
-      CommonWords, Practice, [], commonChars14, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(39, "常用字（十五）：已經法當起", "學習常用副詞和動詞",
-      CommonWords, Practice, [], commonChars15, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(40, "複習：字符 61-75", "複習第二十四到二十六課的常用字",
-      CommonWords, Review, [],
+    // SET 4: Lessons 39-43 (Characters 61-75)
+    makeLesson(39, "常用字（十三）：然作方成者", "學習常用副詞和動詞",
+      TopCommon, CommonWords, Practice, [], commonChars13, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(40, "常用字（十四）：多日都三同", "學習常用量詞和形容詞",
+      TopCommon, CommonWords, Practice, [], commonChars14, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(41, "常用字（十五）：已經法當起", "學習常用副詞和動詞",
+      TopCommon, CommonWords, Practice, [], commonChars15, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(42, "複習：字符 61-75", "複習第三十九到四十一課的常用字",
+      TopCommon, CommonWords, Review, [],
       Js.Array2.concat(commonChars13, Js.Array2.concat(commonChars14, commonChars15)),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[37, 38, 39], ()),
-    makeLesson(41, "綜合複習：字符 1-75", "隨機複習所有已學常用字",
-      CommonWords, MixedReview, [],
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[39, 40, 41], ()),
+    makeLesson(43, "綜合複習：字符 1-75", "隨機複習所有已學常用字",
+      TopCommon, CommonWords, MixedReview, [],
       CangjieUtils.shuffleArray(
         Js.Array2.concat(
           Js.Array2.concat(
@@ -1093,47 +1117,23 @@ let getAllLessons = (): array<lesson> => {
           Js.Array2.concat(commonChars13, Js.Array2.concat(commonChars14, commonChars15))
         )
       ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[19, 20, 21, 22, 25, 26, 27, 28, 31, 32, 33, 34, 37, 38, 39], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[21, 22, 23, 24, 27, 28, 29, 30, 33, 34, 35, 36, 39, 40, 41], ()),
 
-    // SET 5: Lessons 42-47 (Characters 76-90)
-    makeLesson(42, "常用字（十六）：與好看學進", "學習常用連詞和動詞",
-      CommonWords, Practice, [], commonChars16, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(43, "常用字（十七）：種將還分此", "學習常用名詞和動詞",
-      CommonWords, Practice, [], commonChars17, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(44, "常用字（十八）：心前面又定", "學習常用名詞和副詞",
-      CommonWords, Practice, [], commonChars18, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(45, "複習：字符 76-90", "複習第二十九到三十一課的常用字",
-      CommonWords, Review, [],
-      Js.Array2.concat(commonChars16, Js.Array2.concat(commonChars17, commonChars18)),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[42, 43, 44], ()),
-    makeLesson(46, "綜合複習：字符 1-90", "隨機複習所有已學常用字",
-      CommonWords, MixedReview, [],
-      CangjieUtils.shuffleArray(
-        Js.Array2.concat(
-          Js.Array2.concat(
-            Js.Array2.concat(
-              Js.Array2.concat(
-                Js.Array2.concat(commonChars1, Js.Array2.concat(commonChars2, Js.Array2.concat(commonChars3, commonChars4))),
-                Js.Array2.concat(commonChars5, Js.Array2.concat(commonChars6, Js.Array2.concat(commonChars7, commonChars8)))
-              ),
-              Js.Array2.concat(commonChars9, Js.Array2.concat(commonChars10, Js.Array2.concat(commonChars11, commonChars12)))
-            ),
-            Js.Array2.concat(commonChars13, Js.Array2.concat(commonChars14, commonChars15))
-          ),
-          Js.Array2.concat(commonChars16, Js.Array2.concat(commonChars17, commonChars18))
-        )
-      ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[19, 20, 21, 22, 25, 26, 27, 28, 31, 32, 33, 34, 37, 38, 39, 42, 43, 44], ()),
-
-    // SET 6: Lessons 47-48 (Characters 91-96)
+    // SET 5: Lessons 44-49 (Characters 76-96)
+    makeLesson(44, "常用字（十六）：與好看學進", "學習常用連詞和動詞",
+      TopCommon, CommonWords, Practice, [], commonChars16, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(45, "常用字（十七）：種將還分此", "學習常用名詞和動詞",
+      TopCommon, CommonWords, Practice, [], commonChars17, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(46, "常用字（十八）：心前面又定", "學習常用名詞和副詞",
+      TopCommon, CommonWords, Practice, [], commonChars18, ~showCode=false, ~allowHints=true, ()),
     makeLesson(47, "常用字（十九）：見只主沒公從", "學習常用動詞和副詞",
-      CommonWords, Practice, [], commonChars19, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(48, "複習：字符 91-96", "複習第三十二課的常用字",
-      CommonWords, Review, [],
-      commonChars19,
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[47], ()),
+      TopCommon, CommonWords, Practice, [], commonChars19, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(48, "複習：字符 76-96", "複習第四十四到四十七課的常用字",
+      TopCommon, CommonWords, Review, [],
+      Js.Array2.concat(commonChars16, Js.Array2.concat(commonChars17, Js.Array2.concat(commonChars18, commonChars19))),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[44, 45, 46, 47], ()),
     makeLesson(49, "綜合複習：前100常用字", "隨機複習所有已學的96個常用字",
-      CommonWords, MixedReview, [],
+      TopCommon, CommonWords, MixedReview, [],
       CangjieUtils.shuffleArray(
         Js.Array2.concat(
           Js.Array2.concat(
@@ -1152,13 +1152,13 @@ let getAllLessons = (): array<lesson> => {
           commonChars19
         )
       ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[19, 20, 21, 22, 25, 26, 27, 28, 31, 32, 33, 34, 37, 38, 39, 42, 43, 44, 47], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[21, 22, 23, 24, 27, 28, 29, 30, 33, 34, 35, 36, 39, 40, 41, 44, 45, 46, 47], ()),
   ]
 
   // Placement test
   let placementTest = [
     makeLesson(100, "程度測驗", "測試您的倉頡輸入水平",
-      Radicals, PlacementTest, [], placementTestChars, ()),
+      Advanced, Radicals, PlacementTest, [], placementTestChars, ()),
   ]
 
   // Combine all lessons
@@ -1213,6 +1213,7 @@ let createReviewLesson = (completedLessonIds: array<int>, characterCount: int): 
       id: 9000, // Special ID for review lessons
       title: "隨機複習",
       description: `複習 ${Belt.Int.toString(selected->Js.Array2.length)} 個已學過的字`,
+      section: Advanced,
       category: Custom,
       lessonType: Review,
       introducedKeys: [],
@@ -1262,6 +1263,7 @@ let createTimedChallenge = (completedLessonIds: array<int>, durationSeconds: int
       id: 9001, // Special ID for timed challenges
       title: `限時挑戰 (${Belt.Int.toString(durationSeconds)}秒)`,
       description: `在 ${Belt.Int.toString(durationSeconds)} 秒內盡可能打出更多字`,
+      section: Advanced,
       category: Custom,
       lessonType: TimedChallenge,
       introducedKeys: [],
