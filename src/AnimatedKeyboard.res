@@ -97,7 +97,7 @@ let playKeystrokeSound = (isCorrect: bool) => {
 }
 
 @react.component
-let make = (~nextKey: option<string>, ~lastKeyPressed: option<(string, bool)>, ~showRadicals: bool=true) => {
+let make = (~nextKey: option<string>, ~lastKeyPressed: option<(string, bool)>, ~showRadicals: bool=true, ~onKeyClick: option<string => unit>=?) => {
   // Track animation state
   let (animatingKey, setAnimatingKey) = React.useState(() => None)
 
@@ -134,9 +134,17 @@ let make = (~nextKey: option<string>, ~lastKeyPressed: option<(string, bool)>, ~
     let fingerClass = fingerToString(finger)
     let radical = getRadical(key)
 
+    let handleClick = (_event) => {
+      switch onKeyClick {
+      | Some(callback) => callback(key)
+      | None => ()
+      }
+    }
+
     <div
       key={key}
-      className={`animated-key ${isHighlighted ? "key-next" : ""} ${isAnimating ? "key-pressed" : ""} finger-${fingerClass}`}
+      className={`animated-key ${isHighlighted ? "key-next" : ""} ${isAnimating ? "key-pressed" : ""} finger-${fingerClass} ${onKeyClick->Belt.Option.isSome ? "clickable" : ""}`}
+      onClick={handleClick}
     >
       <div className="key-letter"> {React.string(key)} </div>
       {showRadicals && radical->Belt.Option.isSome

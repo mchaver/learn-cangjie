@@ -14,7 +14,7 @@ let getRadical = (key: string): option<string> => {
 }
 
 @react.component
-let make = (~nextKey: option<string>, ~showRadicals: bool=true) => {
+let make = (~nextKey: option<string>, ~showRadicals: bool=true, ~onKeyClick: option<string => unit>=?) => {
   let renderKey = (key: string) => {
     let isHighlighted = switch nextKey {
     | Some(next) => next->Js.String2.toUpperCase == key
@@ -23,9 +23,17 @@ let make = (~nextKey: option<string>, ~showRadicals: bool=true) => {
 
     let radical = getRadical(key)
 
+    let handleClick = (_event) => {
+      switch onKeyClick {
+      | Some(callback) => callback(key)
+      | None => ()
+      }
+    }
+
     <div
       key={key}
-      className={`keyboard-key ${isHighlighted ? "keyboard-key-highlight" : ""}`}
+      className={`keyboard-key ${isHighlighted ? "keyboard-key-highlight" : ""} ${onKeyClick->Belt.Option.isSome ? "clickable" : ""}`}
+      onClick={handleClick}
     >
       <div className="key-letter"> {React.string(key)} </div>
       {showRadicals && radical->Belt.Option.isSome
