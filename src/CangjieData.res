@@ -640,55 +640,88 @@ let lesson26Characters = [
 
 // Application lessons - multi-character words using learned radicals
 
-// Application 1: After Set 1 (日月木一大)
-let application1Characters = [
+// Philosophy Application: Only uses A-G (日月金木水火土)
+let philosophyApplicationCharacters = [
+  // Practice double radicals
   makeChar("明", "AB", Some(["日", "月"]), ()), // bright/tomorrow
-  makeChar("天", "MK", Some(["一", "大"]), ()), // sky/day
-  makeChar("林", "DD", Some(["木", "木"]), ()), // forest
+  makeChar("昌", "AA", Some(["日", "日"]), ()), // prosperous
   makeChar("朋", "BB", Some(["月", "月"]), ()), // friend
-  makeChar("旦", "AM", Some(["日", "一"]), ()), // dawn/morning
+  makeChar("林", "DD", Some(["木", "木"]), ()), // forest
+  makeChar("炎", "FF", Some(["火", "火"]), ()), // flame/inflammation
+  makeChar("汉", "EE", Some(["水", "水"]), ()), // Han Chinese
+  // More combinations with A-G only
+  makeChar("杜", "DG", Some(["木", "土"]), ()), // Du (surname), prevent
+  makeChar("柏", "DA", Some(["木", "日"]), ()), // cypress
+  makeChar("杲", "DA", Some(["木", "日"]), ()), // bright (archaic)
+  makeChar("析", "DE", Some(["木", "水"]), ()), // analyze/split
+  makeChar("枝", "DE", Some(["木", "水"]), ()), // branch
+  makeChar("杏", "DAB", Some(["木", "日", "月"]), ()), // apricot
+  makeChar("朴", "DG", Some(["木", "土"]), ()), // simple/plain
+  makeChar("杳", "DAF", Some(["木", "日", "火"]), ()), // dark/obscure
+  makeChar("灿", "FCA", Some(["火", "金", "日"]), ()), // brilliant
+  makeChar("焚", "FF", Some(["火", "火"]), ()), // burn
+  // Mix practice - reinforce the basics
+  makeChar("明", "AB", Some(["日", "月"]), ()),
+  makeChar("林", "DD", Some(["木", "木"]), ()),
+  makeChar("炎", "FF", Some(["火", "火"]), ()),
+  makeChar("汉", "EE", Some(["水", "水"]), ()),
+  makeChar("朋", "BB", Some(["月", "月"]), ()),
+  makeChar("昌", "AA", Some(["日", "日"]), ()),
+  makeChar("杜", "DG", Some(["木", "土"]), ()),
+  makeChar("柏", "DA", Some(["木", "日"]), ()),
 ]
 
-// Application 2: After Set 2 (人中口十田)
-let application2Characters = [
+// Strokes Application: Only uses A-N (日月金木水火土竹戈十大中一弓)
+let strokesApplicationCharacters = [
+  makeChar("早", "AJ", Some(["日", "十"]), ()), // early/morning
+  makeChar("末", "DJ", Some(["木", "十"]), ()), // end
+  makeChar("友", "KE", Some(["大", "水"]), ()), // friend
+  makeChar("炎", "FF", Some(["火", "火"]), ()), // flame
+  makeChar("汉", "EE", Some(["水", "水"]), ()), // Han
+  makeChar("灰", "KF", Some(["大", "火"]), ()), // ash/grey
+  makeChar("支", "JE", Some(["十", "水"]), ()), // support/branch
+  makeChar("去", "GI", Some(["土", "戈"]), ()), // go
+  makeChar("公", "CI", Some(["金", "戈"]), ()), // public
+  makeChar("白", "HA", Some(["竹", "日"]), ()), // white
+  makeChar("千", "HJ", Some(["竹", "十"]), ()), // thousand
+  makeChar("禾", "HD", Some(["竹", "木"]), ()), // grain/rice
+  makeChar("少", "FH", Some(["火", "竹"]), ()), // few/little
+  makeChar("寸", "DI", Some(["木", "戈"]), ()), // inch
+  makeChar("引", "NL", Some(["弓", "中"]), ()), // pull/guide
+  makeChar("弱", "NN", Some(["弓", "弓"]), ()), // weak
+  makeChar("天", "MK", Some(["一", "大"]), ()), // sky/heaven
+  makeChar("旦", "AM", Some(["日", "一"]), ()), // dawn
+  makeChar("成", "IJ", Some(["戈", "十"]), ()), // become
+  makeChar("有", "KB", Some(["大", "月"]), ()), // have
+]
+
+// Body Parts Application: Only uses A-R (all previous + 人心手口)
+let bodyPartsApplicationCharacters = [
   makeChar("同", "BMR", Some(["月", "一", "口"]), ()), // same
   makeChar("右", "KR", Some(["大", "口"]), ()), // right
   makeChar("石", "MR", Some(["一", "口"]), ()), // stone
   makeChar("呆", "RD", Some(["口", "木"]), ()), // dull/stay
   makeChar("个", "OL", Some(["人", "中"]), ()), // MW/individual
-]
-
-// Application 3: After Set 3 (火水金土竹戈)
-let application3Characters = [
-  makeChar("早", "AJ", Some(["日", "十"]), ()), // early/morning
-  makeChar("東", "DW", Some(["木", "田"]), ()), // east
-  makeChar("末", "DJ", Some(["木", "十"]), ()), // end
-  makeChar("友", "KE", Some(["大", "水"]), ()), // friend
-  makeChar("炎", "FF", Some(["火", "火"]), ()), // flame/inflammation
-  makeChar("杰", "DF", Some(["木", "火"]), ()), // outstanding/hero
-  makeChar("汉", "EE", Some(["水", "水"]), ()), // Han Chinese
-  makeChar("灰", "KF", Some(["大", "火"]), ()), // ash/grey
-  makeChar("由", "LW", Some(["中", "田"]), ()), // by/from/reason
-  makeChar("支", "JE", Some(["十", "水"]), ()), // support/branch
-  makeChar("去", "GI", Some(["土", "戈"]), ()), // go
-  makeChar("公", "CI", Some(["金", "戈"]), ()), // public/male
-  makeChar("才", "DH", Some(["木", "竹"]), ()), // talent
-  makeChar("白", "HA", Some(["竹", "日"]), ()), // white
-  makeChar("千", "HJ", Some(["竹", "十"]), ()), // thousand
   makeChar("八", "HO", Some(["竹", "人"]), ()), // eight
-  makeChar("禾", "HD", Some(["竹", "木"]), ()), // grain/rice
-  makeChar("少", "FH", Some(["火", "竹"]), ()), // few/little
-  makeChar("寸", "DI", Some(["木", "戈"]), ()), // inch/small
+  makeChar("從", "OO", Some(["人", "人"]), ()), // from/follow
+  makeChar("必", "HP", Some(["竹", "心"]), ()), // must
+  makeChar("扣", "QR", Some(["手", "口"]), ()), // button/knock
 ]
 
-// Application 4: After Set 4 (心手山女)
-let application4Characters = [
-  // Will add more application characters as needed
-  makeChar("明", "AB", Some(["日", "月"]), ()),
-  makeChar("天", "MK", Some(["一", "大"]), ()),
-  makeChar("同", "BMR", Some(["月", "一", "口"]), ()),
-  makeChar("早", "AJ", Some(["日", "十"]), ()),
-  makeChar("白", "HA", Some(["竹", "日"]), ()),
+// Shapes Application: Only uses A-Y (all previous + 尸廿山女田卜)
+let shapesApplicationCharacters = [
+  makeChar("早", "AJ", Some(["日", "十"]), ()), // early
+  makeChar("白", "HA", Some(["竹", "日"]), ()), // white
+  makeChar("同", "BMR", Some(["月", "一", "口"]), ()), // same
+  makeChar("出", "UU", Some(["山", "山"]), ()), // out/exit
+  makeChar("好", "VND", Some(["女", "弓", "木"]), ()), // good
+  makeChar("上", "YM", Some(["卜", "一"]), ()), // up/above
+  makeChar("下", "MY", Some(["一", "卜"]), ()), // down/below
+  makeChar("占", "YR", Some(["卜", "口"]), ()), // occupy/divine
+  makeChar("若", "TR", Some(["廿", "口"]), ()), // if/like
+  makeChar("草", "TA", Some(["廿", "日"]), ()), // grass
+  makeChar("東", "DW", Some(["木", "田"]), ()), // east
+  makeChar("由", "LW", Some(["中", "田"]), ()), // by/from
 ]
 
 // Top 100 Most Common Characters - Advanced Lessons
@@ -1231,7 +1264,7 @@ let getAllLessons = (): array<lesson> => {
             )
           )
         ),
-        application3Characters
+        philosophyApplicationCharacters
       ),
       ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 3, 4], ()),
 
@@ -1284,7 +1317,7 @@ let getAllLessons = (): array<lesson> => {
             )
           )
         ),
-        application1Characters
+        strokesApplicationCharacters
       ),
       ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[7, 8, 9, 10], ()),
 
@@ -1316,7 +1349,7 @@ let getAllLessons = (): array<lesson> => {
           Js.Array2.concat(lesson15Characters, lesson16Characters),
           Js.Array2.concat(lesson17Characters, lesson18Characters)
         ),
-        application2Characters
+        bodyPartsApplicationCharacters
       ),
       ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[13, 14], ()),
 
@@ -1359,7 +1392,7 @@ let getAllLessons = (): array<lesson> => {
             Js.Array2.concat(lesson23Characters, lesson24Characters)
           )
         ),
-        application2Characters
+        shapesApplicationCharacters
       ),
       ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[17, 18, 19], ()),
 
