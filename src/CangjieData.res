@@ -238,7 +238,7 @@ let lesson8Characters = [
   makeChar("竹", "H", Some(["竹"]), ()),
   makeChar("竹", "H", Some(["竹"]), ()),
   makeChar("竹", "H", Some(["竹"]), ()),
-  // Characters with 竹
+  // Characters with 竹 (A-H available)
   makeChar("竺", "HG", Some(["竹", "土"]), ()),
   makeChar("竺", "HG", Some(["竹", "土"]), ()),
   makeChar("白", "HA", Some(["竹", "日"]), ()),
@@ -247,10 +247,14 @@ let lesson8Characters = [
   makeChar("禾", "HD", Some(["竹", "木"]), ()),
   makeChar("少", "FH", Some(["火", "竹"]), ()),
   makeChar("少", "FH", Some(["火", "竹"]), ()),
+  makeChar("皇", "HAB", Some(["竹", "日", "月"]), ()),
+  makeChar("皇", "HAB", Some(["竹", "日", "月"]), ()),
   // Practice mix
   makeChar("竹", "H", Some(["竹"]), ()),
   makeChar("白", "HA", Some(["竹", "日"]), ()),
   makeChar("竺", "HG", Some(["竹", "土"]), ()),
+  makeChar("禾", "HD", Some(["竹", "木"]), ()),
+  makeChar("少", "FH", Some(["火", "竹"]), ()),
   makeChar("竹", "H", Some(["竹"]), ()),
 ]
 
@@ -262,13 +266,17 @@ let lesson9Characters = [
   makeChar("戈", "I", Some(["戈"]), ()),
   makeChar("戈", "I", Some(["戈"]), ()),
   makeChar("戈", "I", Some(["戈"]), ()),
-  // Characters with 戈
+  // Characters with 戈 (A-I available)
   makeChar("去", "GI", Some(["土", "戈"]), ()),
   makeChar("去", "GI", Some(["土", "戈"]), ()),
   makeChar("公", "CI", Some(["金", "戈"]), ()),
   makeChar("公", "CI", Some(["金", "戈"]), ()),
   makeChar("寸", "DI", Some(["木", "戈"]), ()),
   makeChar("寸", "DI", Some(["木", "戈"]), ()),
+  makeChar("戒", "IHI", Some(["戈", "竹", "戈"]), ()),
+  makeChar("戒", "IHI", Some(["戈", "竹", "戈"]), ()),
+  makeChar("戊", "GI", Some(["土", "戈"]), ()),
+  makeChar("戊", "GI", Some(["土", "戈"]), ()),
   // Practice mix
   makeChar("戈", "I", Some(["戈"]), ()),
   makeChar("去", "GI", Some(["土", "戈"]), ()),
@@ -286,7 +294,7 @@ let lesson10Characters = [
   makeChar("十", "J", Some(["十"]), ()),
   makeChar("十", "J", Some(["十"]), ()),
   makeChar("十", "J", Some(["十"]), ()),
-  // Characters with 十
+  // Characters with 十 (A-J available)
   makeChar("早", "AJ", Some(["日", "十"]), ()),
   makeChar("早", "AJ", Some(["日", "十"]), ()),
   makeChar("末", "DJ", Some(["木", "十"]), ()),
@@ -297,7 +305,13 @@ let lesson10Characters = [
   makeChar("支", "JE", Some(["十", "水"]), ()),
   makeChar("成", "IJ", Some(["戈", "十"]), ()),
   makeChar("成", "IJ", Some(["戈", "十"]), ()),
+  makeChar("卉", "JHJ", Some(["十", "竹", "十"]), ()),
+  makeChar("卉", "JHJ", Some(["十", "竹", "十"]), ()),
+  // Practice mix
   makeChar("十", "J", Some(["十"]), ()),
+  makeChar("早", "AJ", Some(["日", "十"]), ()),
+  makeChar("千", "HJ", Some(["竹", "十"]), ()),
+  makeChar("成", "IJ", Some(["戈", "十"]), ()),
 ]
 
 // Lesson 11: 大 - Learn K (大) - Can only use: A, B, C, D, E, F, G, H, I, J, K
@@ -308,20 +322,24 @@ let lesson11Characters = [
   makeChar("大", "K", Some(["大"]), ()),
   makeChar("大", "K", Some(["大"]), ()),
   makeChar("大", "K", Some(["大"]), ()),
-  // Characters with 大
+  // Characters with 大 (A-K available)
   makeChar("友", "KE", Some(["大", "水"]), ()),
   makeChar("友", "KE", Some(["大", "水"]), ()),
   makeChar("灰", "KF", Some(["大", "火"]), ()),
   makeChar("灰", "KF", Some(["大", "火"]), ()),
   makeChar("有", "KB", Some(["大", "月"]), ()),
   makeChar("有", "KB", Some(["大", "月"]), ()),
+  makeChar("夫", "KJ", Some(["大", "十"]), ()),
+  makeChar("夫", "KJ", Some(["大", "十"]), ()),
+  makeChar("太", "KA", Some(["大", "日"]), ()),
+  makeChar("太", "KA", Some(["大", "日"]), ()),
   // Practice mix
   makeChar("大", "K", Some(["大"]), ()),
   makeChar("友", "KE", Some(["大", "水"]), ()),
   makeChar("灰", "KF", Some(["大", "火"]), ()),
   makeChar("大", "K", Some(["大"]), ()),
   makeChar("有", "KB", Some(["大", "月"]), ()),
-  makeChar("大", "K", Some(["大"]), ()),
+  makeChar("夫", "KJ", Some(["大", "十"]), ()),
 ]
 
 // Lesson 12: 中 - Learn L (中) - Can only use: A, B, C, D, E, F, G, H, I, J, K, L
@@ -332,18 +350,20 @@ let lesson12Characters = [
   makeChar("中", "L", Some(["中"]), ()),
   makeChar("中", "L", Some(["中"]), ()),
   makeChar("中", "L", Some(["中"]), ()),
-  // Characters with 中 using available keys
+  // Characters with 中 (A-L available)
   makeChar("申", "LL", Some(["中", "中"]), ()),
   makeChar("申", "LL", Some(["中", "中"]), ()),
   makeChar("申", "LL", Some(["中", "中"]), ()),
+  makeChar("串", "LLL", Some(["中", "中", "中"]), ()),
+  makeChar("串", "LLL", Some(["中", "中", "中"]), ()),
+  makeChar("央", "KLB", Some(["大", "中", "月"]), ()),
+  makeChar("央", "KLB", Some(["大", "中", "月"]), ()),
   // Practice mix
   makeChar("中", "L", Some(["中"]), ()),
   makeChar("申", "LL", Some(["中", "中"]), ()),
   makeChar("中", "L", Some(["中"]), ()),
-  makeChar("申", "LL", Some(["中", "中"]), ()),
-  makeChar("中", "L", Some(["中"]), ()),
-  makeChar("中", "L", Some(["中"]), ()),
-  makeChar("申", "LL", Some(["中", "中"]), ()),
+  makeChar("串", "LLL", Some(["中", "中", "中"]), ()),
+  makeChar("央", "KLB", Some(["大", "中", "月"]), ()),
   makeChar("中", "L", Some(["中"]), ()),
 ]
 
@@ -355,18 +375,22 @@ let lesson13Characters = [
   makeChar("一", "M", Some(["一"]), ()),
   makeChar("一", "M", Some(["一"]), ()),
   makeChar("一", "M", Some(["一"]), ()),
-  // Characters with 一
+  // Characters with 一 (A-M available)
   makeChar("天", "MK", Some(["一", "大"]), ()),
   makeChar("天", "MK", Some(["一", "大"]), ()),
   makeChar("旦", "AM", Some(["日", "一"]), ()),
   makeChar("旦", "AM", Some(["日", "一"]), ()),
   makeChar("三", "MMM", Some(["一", "一", "一"]), ()),
   makeChar("三", "MMM", Some(["一", "一", "一"]), ()),
+  makeChar("二", "MM", Some(["一", "一"]), ()),
+  makeChar("二", "MM", Some(["一", "一"]), ()),
+  makeChar("工", "M", Some(["一"]), ()),
+  makeChar("工", "M", Some(["一"]), ()),
   // Practice mix
   makeChar("一", "M", Some(["一"]), ()),
   makeChar("天", "MK", Some(["一", "大"]), ()),
   makeChar("旦", "AM", Some(["日", "一"]), ()),
-  makeChar("一", "M", Some(["一"]), ()),
+  makeChar("二", "MM", Some(["一", "一"]), ()),
   makeChar("三", "MMM", Some(["一", "一", "一"]), ()),
 ]
 
@@ -378,22 +402,25 @@ let lesson14Characters = [
   makeChar("弓", "N", Some(["弓"]), ()),
   makeChar("弓", "N", Some(["弓"]), ()),
   makeChar("弓", "N", Some(["弓"]), ()),
-  // Characters with 弓
+  // Characters with 弓 (A-N available)
   makeChar("引", "NL", Some(["弓", "中"]), ()),
   makeChar("引", "NL", Some(["弓", "中"]), ()),
   makeChar("弱", "NN", Some(["弓", "弓"]), ()),
   makeChar("弱", "NN", Some(["弓", "弓"]), ()),
-  makeChar("引", "NL", Some(["弓", "中"]), ()),
-  makeChar("弱", "NN", Some(["弓", "弓"]), ()),
+  makeChar("弔", "NJB", Some(["弓", "十", "月"]), ()),
+  makeChar("弔", "NJB", Some(["弓", "十", "月"]), ()),
+  makeChar("弗", "NHE", Some(["弓", "竹", "水"]), ()),
+  makeChar("弗", "NHE", Some(["弓", "竹", "水"]), ()),
   // Practice mix
   makeChar("弓", "N", Some(["弓"]), ()),
   makeChar("引", "NL", Some(["弓", "中"]), ()),
   makeChar("弱", "NN", Some(["弓", "弓"]), ()),
+  makeChar("弔", "NJB", Some(["弓", "十", "月"]), ()),
   makeChar("弓", "N", Some(["弓"]), ()),
 ]
 
 // BODY PARTS (人體類) - Lessons 15-18
-// Lesson 15: 人 - Learn O (人)
+// Lesson 15: 人 - Learn O (人) - Can only use: A, B, C, D, E, F, G, H, I, J, K, L, M, N, O
 let lesson15Characters = [
   // Introduce 人
   makeChar("人", "O", Some(["人"]), ()),
@@ -401,22 +428,26 @@ let lesson15Characters = [
   makeChar("人", "O", Some(["人"]), ()),
   makeChar("人", "O", Some(["人"]), ()),
   makeChar("人", "O", Some(["人"]), ()),
-  // Characters with 人
+  // Characters with 人 (A-O available)
   makeChar("个", "OL", Some(["人", "中"]), ()),
   makeChar("个", "OL", Some(["人", "中"]), ()),
   makeChar("八", "HO", Some(["竹", "人"]), ()),
   makeChar("八", "HO", Some(["竹", "人"]), ()),
   makeChar("從", "OO", Some(["人", "人"]), ()),
   makeChar("從", "OO", Some(["人", "人"]), ()),
+  makeChar("入", "OH", Some(["人", "竹"]), ()),
+  makeChar("入", "OH", Some(["人", "竹"]), ()),
+  makeChar("夾", "OKO", Some(["人", "大", "人"]), ()),
+  makeChar("夾", "OKO", Some(["人", "大", "人"]), ()),
   // Practice mix
   makeChar("人", "O", Some(["人"]), ()),
   makeChar("个", "OL", Some(["人", "中"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
   makeChar("八", "HO", Some(["竹", "人"]), ()),
   makeChar("從", "OO", Some(["人", "人"]), ()),
+  makeChar("入", "OH", Some(["人", "竹"]), ()),
 ]
 
-// Lesson 16: 心 - Learn P (心)
+// Lesson 16: 心 - Learn P (心) - Can only use: A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P
 let lesson16Characters = [
   // Introduce 心
   makeChar("心", "P", Some(["心"]), ()),
@@ -424,15 +455,19 @@ let lesson16Characters = [
   makeChar("心", "P", Some(["心"]), ()),
   makeChar("心", "P", Some(["心"]), ()),
   makeChar("心", "P", Some(["心"]), ()),
-  // Characters with 心
+  // Characters with 心 (A-P available)
   makeChar("必", "HP", Some(["竹", "心"]), ()),
   makeChar("必", "HP", Some(["竹", "心"]), ()),
+  makeChar("忙", "PNI", Some(["心", "弓", "戈"]), ()),
+  makeChar("忙", "PNI", Some(["心", "弓", "戈"]), ()),
+  makeChar("忍", "PNO", Some(["心", "弓", "人"]), ()),
+  makeChar("忍", "PNO", Some(["心", "弓", "人"]), ()),
   // Practice mix
   makeChar("心", "P", Some(["心"]), ()),
   makeChar("必", "HP", Some(["竹", "心"]), ()),
+  makeChar("忙", "PNI", Some(["心", "弓", "戈"]), ()),
   makeChar("心", "P", Some(["心"]), ()),
-  makeChar("必", "HP", Some(["竹", "心"]), ()),
-  makeChar("心", "P", Some(["心"]), ()),
+  makeChar("忍", "PNO", Some(["心", "弓", "人"]), ()),
   makeChar("心", "P", Some(["心"]), ()),
 ]
 
@@ -444,19 +479,23 @@ let lesson17Characters = [
   makeChar("手", "Q", Some(["手"]), ()),
   makeChar("手", "Q", Some(["手"]), ()),
   makeChar("手", "Q", Some(["手"]), ()),
-  // Practice mix with previous keys
+  // Characters with 手 (A-Q available)
+  makeChar("拜", "QJD", Some(["手", "十", "木"]), ()),
+  makeChar("拜", "QJD", Some(["手", "十", "木"]), ()),
+  makeChar("拾", "QJ", Some(["手", "十"]), ()),
+  makeChar("拾", "QJ", Some(["手", "十"]), ()),
+  makeChar("打", "QJ", Some(["手", "十"]), ()),
+  makeChar("打", "QJ", Some(["手", "十"]), ()),
+  // Practice mix
   makeChar("手", "Q", Some(["手"]), ()),
+  makeChar("拜", "QJD", Some(["手", "十", "木"]), ()),
+  makeChar("拾", "QJ", Some(["手", "十"]), ()),
   makeChar("手", "Q", Some(["手"]), ()),
-  makeChar("心", "P", Some(["心"]), ()),
-  makeChar("手", "Q", Some(["手"]), ()),
-  makeChar("人", "O", Some(["人"]), ()),
-  makeChar("手", "Q", Some(["手"]), ()),
-  makeChar("必", "HP", Some(["竹", "心"]), ()),
-  makeChar("手", "Q", Some(["手"]), ()),
+  makeChar("打", "QJ", Some(["手", "十"]), ()),
   makeChar("手", "Q", Some(["手"]), ()),
 ]
 
-// Lesson 18: 口 - Learn R (口)
+// Lesson 18: 口 - Learn R (口) - Can only use: A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R
 let lesson18Characters = [
   // Introduce 口
   makeChar("口", "R", Some(["口"]), ()),
@@ -464,7 +503,7 @@ let lesson18Characters = [
   makeChar("口", "R", Some(["口"]), ()),
   makeChar("口", "R", Some(["口"]), ()),
   makeChar("口", "R", Some(["口"]), ()),
-  // Characters with 口
+  // Characters with 口 (A-R available)
   makeChar("石", "MR", Some(["一", "口"]), ()),
   makeChar("石", "MR", Some(["一", "口"]), ()),
   makeChar("呆", "RD", Some(["口", "木"]), ()),
@@ -475,10 +514,20 @@ let lesson18Characters = [
   makeChar("扣", "QR", Some(["手", "口"]), ()),
   makeChar("同", "BMR", Some(["月", "一", "口"]), ()),
   makeChar("同", "BMR", Some(["月", "一", "口"]), ()),
+  makeChar("古", "RJR", Some(["口", "十", "口"]), ()),
+  makeChar("古", "RJR", Some(["口", "十", "口"]), ()),
+  makeChar("可", "MNR", Some(["一", "弓", "口"]), ()),
+  makeChar("可", "MNR", Some(["一", "弓", "口"]), ()),
+  // Practice mix
+  makeChar("口", "R", Some(["口"]), ()),
+  makeChar("右", "KR", Some(["大", "口"]), ()),
+  makeChar("扣", "QR", Some(["手", "口"]), ()),
+  makeChar("同", "BMR", Some(["月", "一", "口"]), ()),
+  makeChar("古", "RJR", Some(["口", "十", "口"]), ()),
 ]
 
 // CHARACTER SHAPES (字形類) - Lessons 19-24
-// Lesson 19: 尸 - Learn S (尸)
+// Lesson 19: 尸 - Learn S (尸) - Can only use: A-S
 let lesson19Characters = [
   // Introduce 尸
   makeChar("尸", "S", Some(["尸"]), ()),
@@ -486,20 +535,24 @@ let lesson19Characters = [
   makeChar("尸", "S", Some(["尸"]), ()),
   makeChar("尸", "S", Some(["尸"]), ()),
   makeChar("尸", "S", Some(["尸"]), ()),
-  // Characters with 尸
+  // Characters with 尸 (A-S available)
   makeChar("尺", "SI", Some(["尸", "戈"]), ()),
   makeChar("尺", "SI", Some(["尸", "戈"]), ()),
   makeChar("尼", "SP", Some(["尸", "心"]), ()),
   makeChar("尼", "SP", Some(["尸", "心"]), ()),
+  makeChar("尾", "SHF", Some(["尸", "竹", "火"]), ()),
+  makeChar("尾", "SHF", Some(["尸", "竹", "火"]), ()),
+  makeChar("局", "SHR", Some(["尸", "竹", "口"]), ()),
+  makeChar("局", "SHR", Some(["尸", "竹", "口"]), ()),
   // Practice mix
   makeChar("尸", "S", Some(["尸"]), ()),
   makeChar("尺", "SI", Some(["尸", "戈"]), ()),
   makeChar("尼", "SP", Some(["尸", "心"]), ()),
-  makeChar("尸", "S", Some(["尸"]), ()),
-  makeChar("尺", "SI", Some(["尸", "戈"]), ()),
+  makeChar("尾", "SHF", Some(["尸", "竹", "火"]), ()),
+  makeChar("局", "SHR", Some(["尸", "竹", "口"]), ()),
 ]
 
-// Lesson 20: 廿 - Learn T (廿)
+// Lesson 20: 廿 - Learn T (廿) - Can only use: A-T
 let lesson20Characters = [
   // Introduce 廿
   makeChar("廿", "T", Some(["廿"]), ()),
@@ -507,21 +560,26 @@ let lesson20Characters = [
   makeChar("廿", "T", Some(["廿"]), ()),
   makeChar("廿", "T", Some(["廿"]), ()),
   makeChar("廿", "T", Some(["廿"]), ()),
-  // Characters with 廿
+  // Characters with 廿 (A-T available)
   makeChar("卅", "TM", Some(["廿", "一"]), ()),
   makeChar("卅", "TM", Some(["廿", "一"]), ()),
   makeChar("草", "TA", Some(["廿", "日"]), ()),
   makeChar("草", "TA", Some(["廿", "日"]), ()),
   makeChar("若", "TR", Some(["廿", "口"]), ()),
   makeChar("若", "TR", Some(["廿", "口"]), ()),
+  makeChar("共", "TC", Some(["廿", "金"]), ()),
+  makeChar("共", "TC", Some(["廿", "金"]), ()),
+  makeChar("廿", "TT", Some(["廿", "廿"]), ()),
+  makeChar("廿", "TT", Some(["廿", "廿"]), ()),
   // Practice mix
   makeChar("廿", "T", Some(["廿"]), ()),
   makeChar("卅", "TM", Some(["廿", "一"]), ()),
   makeChar("草", "TA", Some(["廿", "日"]), ()),
-  makeChar("廿", "T", Some(["廿"]), ()),
+  makeChar("若", "TR", Some(["廿", "口"]), ()),
+  makeChar("共", "TC", Some(["廿", "金"]), ()),
 ]
 
-// Lesson 21: 山 - Learn U (山)
+// Lesson 21: 山 - Learn U (山) - Can only use: A-U
 let lesson21Characters = [
   // Introduce 山
   makeChar("山", "U", Some(["山"]), ()),
@@ -529,19 +587,24 @@ let lesson21Characters = [
   makeChar("山", "U", Some(["山"]), ()),
   makeChar("山", "U", Some(["山"]), ()),
   makeChar("山", "U", Some(["山"]), ()),
-  // Characters with 山
+  // Characters with 山 (A-U available)
   makeChar("出", "UU", Some(["山", "山"]), ()),
   makeChar("出", "UU", Some(["山", "山"]), ()),
+  makeChar("出", "UU", Some(["山", "山"]), ()),
+  makeChar("岐", "UJB", Some(["山", "十", "月"]), ()),
+  makeChar("岐", "UJB", Some(["山", "十", "月"]), ()),
+  makeChar("屯", "UOJ", Some(["山", "人", "十"]), ()),
+  makeChar("屯", "UOJ", Some(["山", "人", "十"]), ()),
   // Practice mix
   makeChar("山", "U", Some(["山"]), ()),
   makeChar("出", "UU", Some(["山", "山"]), ()),
+  makeChar("岐", "UJB", Some(["山", "十", "月"]), ()),
   makeChar("山", "U", Some(["山"]), ()),
-  makeChar("出", "UU", Some(["山", "山"]), ()),
-  makeChar("山", "U", Some(["山"]), ()),
+  makeChar("屯", "UOJ", Some(["山", "人", "十"]), ()),
   makeChar("山", "U", Some(["山"]), ()),
 ]
 
-// Lesson 22: 女 - Learn V (女)
+// Lesson 22: 女 - Learn V (女) - Can only use: A-V
 let lesson22Characters = [
   // Introduce 女
   makeChar("女", "V", Some(["女"]), ()),
@@ -549,19 +612,24 @@ let lesson22Characters = [
   makeChar("女", "V", Some(["女"]), ()),
   makeChar("女", "V", Some(["女"]), ()),
   makeChar("女", "V", Some(["女"]), ()),
-  // Characters with 女
+  // Characters with 女 (A-V available)
   makeChar("好", "VND", Some(["女", "弓", "木"]), ()),
   makeChar("好", "VND", Some(["女", "弓", "木"]), ()),
+  makeChar("好", "VND", Some(["女", "弓", "木"]), ()),
+  makeChar("如", "VR", Some(["女", "口"]), ()),
+  makeChar("如", "VR", Some(["女", "口"]), ()),
+  makeChar("妃", "VB", Some(["女", "月"]), ()),
+  makeChar("妃", "VB", Some(["女", "月"]), ()),
   // Practice mix
   makeChar("女", "V", Some(["女"]), ()),
   makeChar("好", "VND", Some(["女", "弓", "木"]), ()),
+  makeChar("如", "VR", Some(["女", "口"]), ()),
   makeChar("女", "V", Some(["女"]), ()),
-  makeChar("好", "VND", Some(["女", "弓", "木"]), ()),
-  makeChar("女", "V", Some(["女"]), ()),
+  makeChar("妃", "VB", Some(["女", "月"]), ()),
   makeChar("女", "V", Some(["女"]), ()),
 ]
 
-// Lesson 23: 田 - Learn W (田)
+// Lesson 23: 田 - Learn W (田) - Can only use: A-W
 let lesson23Characters = [
   // Introduce 田
   makeChar("田", "W", Some(["田"]), ()),
@@ -569,20 +637,24 @@ let lesson23Characters = [
   makeChar("田", "W", Some(["田"]), ()),
   makeChar("田", "W", Some(["田"]), ()),
   makeChar("田", "W", Some(["田"]), ()),
-  // Characters with 田
+  // Characters with 田 (A-W available)
   makeChar("東", "DW", Some(["木", "田"]), ()),
   makeChar("東", "DW", Some(["木", "田"]), ()),
   makeChar("由", "LW", Some(["中", "田"]), ()),
   makeChar("由", "LW", Some(["中", "田"]), ()),
+  makeChar("甲", "WL", Some(["田", "中"]), ()),
+  makeChar("甲", "WL", Some(["田", "中"]), ()),
+  makeChar("男", "WLB", Some(["田", "中", "月"]), ()),
+  makeChar("男", "WLB", Some(["田", "中", "月"]), ()),
   // Practice mix
   makeChar("田", "W", Some(["田"]), ()),
   makeChar("東", "DW", Some(["木", "田"]), ()),
   makeChar("由", "LW", Some(["中", "田"]), ()),
-  makeChar("田", "W", Some(["田"]), ()),
+  makeChar("甲", "WL", Some(["田", "中"]), ()),
   makeChar("田", "W", Some(["田"]), ()),
 ]
 
-// Lesson 24: 卜 - Learn Y (卜)
+// Lesson 24: 卜 - Learn Y (卜) - Can only use: A-Y
 let lesson24Characters = [
   // Introduce 卜
   makeChar("卜", "Y", Some(["卜"]), ()),
@@ -590,18 +662,23 @@ let lesson24Characters = [
   makeChar("卜", "Y", Some(["卜"]), ()),
   makeChar("卜", "Y", Some(["卜"]), ()),
   makeChar("卜", "Y", Some(["卜"]), ()),
-  // Characters with 卜
+  // Characters with 卜 (A-Y available)
   makeChar("上", "YM", Some(["卜", "一"]), ()),
   makeChar("上", "YM", Some(["卜", "一"]), ()),
   makeChar("占", "YR", Some(["卜", "口"]), ()),
   makeChar("占", "YR", Some(["卜", "口"]), ()),
   makeChar("下", "MY", Some(["一", "卜"]), ()),
   makeChar("下", "MY", Some(["一", "卜"]), ()),
+  makeChar("外", "YKS", Some(["卜", "大", "尸"]), ()),
+  makeChar("外", "YKS", Some(["卜", "大", "尸"]), ()),
+  makeChar("卡", "YHL", Some(["卜", "竹", "中"]), ()),
+  makeChar("卡", "YHL", Some(["卜", "竹", "中"]), ()),
   // Practice mix
   makeChar("卜", "Y", Some(["卜"]), ()),
   makeChar("上", "YM", Some(["卜", "一"]), ()),
   makeChar("占", "YR", Some(["卜", "口"]), ()),
   makeChar("下", "MY", Some(["一", "卜"]), ()),
+  makeChar("外", "YKS", Some(["卜", "大", "尸"]), ()),
 ]
 
 // SPECIAL KEYS (特殊鍵) - Lessons 25-26
