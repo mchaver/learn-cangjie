@@ -1159,6 +1159,128 @@ p {
 .intro-actions {
   text-align: center;
   margin-top: 3rem;
+
+  .practice-hint {
+    color: $text-secondary;
+    font-size: 0.9rem;
+    padding: 1rem;
+    background: color.adjust($primary-color, $lightness: 45%);
+    border-radius: 8px;
+    display: inline-block;
+  }
+}
+
+// Multi-character practice in introduction mode
+.multi-char-practice {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: color.adjust($bg-primary, $lightness: -2%);
+  border-radius: 8px;
+  border: 2px solid $border-color;
+
+  h3 {
+    text-align: center;
+    margin-bottom: 0.5rem;
+    color: $primary-color;
+  }
+
+  .practice-instruction {
+    text-align: center;
+    color: $text-secondary;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.multi-char-practice-container {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+.practice-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+
+  .practice-character {
+    font-size: 6rem;
+    font-weight: 400;
+    color: $text-primary;
+    line-height: 1;
+
+    @media (max-width: 768px) {
+      font-size: 4rem;
+    }
+  }
+
+  .practice-code-display {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $primary-color;
+    letter-spacing: 0.25rem;
+    font-family: monospace;
+  }
+
+  .practice-progress {
+    font-size: 0.9rem;
+    color: $text-secondary;
+    margin-top: 0.5rem;
+  }
+}
+
+.practice-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 300px;
+
+  @media (max-width: 768px) {
+    min-width: 100%;
+  }
+}
+
+.practice-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  background: $bg-primary;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+
+  &.current-row {
+    background: color.adjust($primary-color, $lightness: 45%);
+    border-color: $primary-color;
+  }
+
+  &.completed-row {
+    opacity: 0.6;
+    background: color.adjust($success-color, $lightness: 40%);
+  }
+
+  .row-number {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: $text-secondary;
+    min-width: 1.5rem;
+    text-align: center;
+  }
+
+  .char-input-boxes {
+    display: flex;
+    gap: 0.25rem;
+  }
 }
 
 // Ready Screen
@@ -1326,6 +1448,113 @@ p {
   @media (max-width: 768px) {
     min-height: 180px;
     padding: 0.5rem;
+  }
+}
+
+// First-time multi-character practice layout
+.first-time-multi-practice {
+  display: flex;
+  gap: 4rem;
+  align-items: center;
+  justify-content: center;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
+  }
+}
+
+.first-time-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  .first-time-character {
+    font-size: 8rem;
+    font-weight: 400;
+    color: $text-primary;
+    line-height: 1;
+
+    @media (max-width: 768px) {
+      font-size: 5rem;
+    }
+  }
+
+  .first-time-code-display {
+    font-size: 2rem;
+    font-weight: 600;
+    color: $primary-color;
+    letter-spacing: 0.5rem;
+    font-family: monospace;
+
+    @media (max-width: 768px) {
+      font-size: 1.5rem;
+      letter-spacing: 0.3rem;
+    }
+  }
+
+  .first-time-progress {
+    font-size: 1rem;
+    color: $text-secondary;
+    margin-top: 0.5rem;
+  }
+}
+
+.first-time-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 350px;
+
+  @media (max-width: 768px) {
+    min-width: 100%;
+    max-width: 400px;
+  }
+}
+
+.first-time-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: $bg-primary;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+
+  &.current-row {
+    background: color.adjust($primary-color, $lightness: 45%);
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px color.adjust($primary-color, $lightness: 40%);
+  }
+
+  &.completed-row {
+    opacity: 0.7;
+    background: color.adjust($success-color, $lightness: 42%);
+    border-color: $success-color;
+
+    .row-number {
+      color: $success-color;
+    }
+  }
+
+  .row-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $text-secondary;
+    min-width: 2rem;
+    text-align: center;
+  }
+
+  .char-input-boxes {
+    display: flex;
+    gap: 0.375rem;
+    flex: 1;
   }
 }
 

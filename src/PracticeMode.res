@@ -27,10 +27,36 @@ let make = (
   // Track hint visibility
   let (showHint, setShowHint) = React.useState(() => false)
 
+  // Track first-time multi-character practice
+  let (firstTimeAttempt, setFirstTimeAttempt) = React.useState(() => 0) // 0, 1, 2 for three attempts
+
   let currentChar = lesson.characters->Belt.Array.get(inputState.currentIndex)
 
   // Determine if we're in review mode
   let isReviewMode = lesson.lessonType == Review
+
+  // Check if current character is first-time multi-character code
+  let isFirstTimeMultiChar = switch currentChar {
+  | None => false
+  | Some(charInfo) => {
+      let isMultiChar = charInfo.cangjieCode->Js.Array2.length > 1
+      if !isMultiChar {
+        false
+      } else {
+        // Check if this character has been seen before
+        switch LocalStorage.getCharacterProgress(charInfo.character) {
+        | None => true // Never seen before
+        | Some(progress) => progress.correctCount == 0 && progress.state == New
+        }
+      }
+    }
+  }
+
+  // Reset first-time attempt counter when moving to a new character
+  React.useEffect1(() => {
+    setFirstTimeAttempt(_ => 0)
+    None
+  }, [inputState.currentIndex])
 
   // Handle hint button click
   let handleShowHint = () => {
@@ -98,9 +124,6 @@ let make = (
             if newInput == expectedCode {
               let isLast = inputState.currentIndex == lesson.characters->Js.Array2.length - 1
 
-              // Record correct attempt in character progress
-              LocalStorage.recordCorrectAttempt(charInfo.character, lesson.showCode || showHint)
-
               // For multi-char codes, trigger fade-out animation
               if expectedCode->Js.String2.length > 1 {
                 setJustCompleted(_ => Some(newInput))
@@ -110,25 +133,35 @@ let make = (
                 ()
               }
 
-              // Hide hint for next character
-              setShowHint(_ => false)
+              // Handle first-time multi-character practice (need 3 completions)
+              if isFirstTimeMultiChar && firstTimeAttempt < 2 {
+                // Increment attempt counter and reset input
+                setFirstTimeAttempt(prev => prev + 1)
+                setInputState(prev => {...prev, currentInput: ""})
+              } else {
+                // Record correct attempt in character progress
+                LocalStorage.recordCorrectAttempt(charInfo.character, lesson.showCode || showHint)
 
-              // Move to next character
-              setInputState(prev => {
-                {
-                  currentIndex: prev.currentIndex + 1,
-                  currentInput: "",
-                  stats: {
-                    ...prev.stats,
-                    totalCharacters: prev.stats.totalCharacters + 1,
-                    correctCharacters: prev.stats.correctCharacters + 1,
-                  },
-                  errors: prev.errors,
+                // Hide hint for next character
+                setShowHint(_ => false)
+
+                // Move to next character
+                setInputState(prev => {
+                  {
+                    currentIndex: prev.currentIndex + 1,
+                    currentInput: "",
+                    stats: {
+                      ...prev.stats,
+                      totalCharacters: prev.stats.totalCharacters + 1,
+                      correctCharacters: prev.stats.correctCharacters + 1,
+                    },
+                    errors: prev.errors,
+                  }
+                })
+
+                if isLast {
+                  onComplete()
                 }
-              })
-
-              if isLast {
-                onComplete()
               }
             } else {
               // Add correct key to input
@@ -250,10 +283,64 @@ let make = (
     <div className="practice-area">
       {switch currentChar {
       | None => <div className="practice-complete"> {React.string("練習完成！")} </div>
-      | Some(_) =>
-        <div className="characters-row">
-          {visibleChars
-          ->Js.Array2.mapi((charInfo, idx) => {
+      | Some(charInfo) => {
+          // Show special layout for first-time multi-character
+          if isFirstTimeMultiChar {
+            let expectedCode = CangjieUtils.keysToCode(charInfo.cangjieCode)
+            let codeLength = expectedCode->Js.String2.length
+
+            <div className="first-time-multi-practice">
+              <div className="first-time-left">
+                <div className="first-time-character"> {React.string(charInfo.character)} </div>
+                <div className="first-time-code-display">
+                  {React.string(expectedCode)}
+                </div>
+                <div className="first-time-progress">
+                  {React.string(`第 ${Belt.Int.toString(firstTimeAttempt + 1)} / 3 次練習`)}
+                </div>
+              </div>
+
+              <div className="first-time-right">
+                {Belt.Array.range(0, 2)->Js.Array2.map(attemptNum => {
+                  let isCurrentAttempt = attemptNum == firstTimeAttempt
+                  let isCompleted = attemptNum < firstTimeAttempt
+                  let attemptInput = if isCurrentAttempt { inputState.currentInput } else if isCompleted { expectedCode } else { "" }
+
+                  <div key={Belt.Int.toString(attemptNum)} className={`first-time-row ${isCurrentAttempt ? "current-row" : ""} ${isCompleted ? "completed-row" : ""}`}>
+                    <div className="row-number"> {React.string(Belt.Int.toString(attemptNum + 1))} </div>
+                    <div className="char-input-boxes">
+                      {Belt.Array.range(0, codeLength - 1)
+                      ->Js.Array2.map(i => {
+                        let inputChar = if i < attemptInput->Js.String2.length {
+                          Some(attemptInput->Js.String2.charAt(i))
+                        } else {
+                          None
+                        }
+                        let isWrongBox = isCurrentAttempt && wrongBoxIndex == Some(i)
+
+                        <div key={Belt.Int.toString(i)} className={`input-box ${isWrongBox ? "input-box-error" : ""}`}>
+                          {switch inputChar {
+                          | Some(c) => {
+                              let radical = CangjieUtils.stringToKey(c)
+                                ->Belt.Option.map(CangjieUtils.keyToRadicalName)
+                                ->Belt.Option.getWithDefault(c)
+                              <span className="input-radical"> {React.string(radical)} </span>
+                            }
+                          | None => React.null
+                          }}
+                        </div>
+                      })
+                      ->React.array}
+                    </div>
+                  </div>
+                })->React.array}
+              </div>
+            </div>
+          } else {
+            // Normal characters row view
+            <div className="characters-row">
+              {visibleChars
+              ->Js.Array2.mapi((charInfo, idx) => {
             let isCurrentChar = idx == relativeCurrentIndex
             let isCompleted = idx < relativeCurrentIndex
             let isPrevCompleted = idx == relativeCurrentIndex - 1
@@ -338,9 +425,11 @@ let make = (
                   : React.null}
               </div>
             </div>
-          })
-          ->React.array}
-        </div>
+              })
+              ->React.array}
+            </div>
+          }
+        }
       }}
     </div>
 
