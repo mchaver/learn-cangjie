@@ -1,5 +1,23 @@
 # Claude AI Development Guide
 
+## Cangjie Resources
+
+### Theory and Understanding
+
+These resources explain how Cangjie decomposes characters and 
+
+https://zh.wikibooks.org/wiki/%E5%80%89%E9%A0%A1%E8%BC%B8%E5%85%A5%E6%B3%95
+https://zh.wikibooks.org/wiki/%E5%80%89%E9%A0%A1%E8%BC%B8%E5%85%A5%E6%B3%95/%E5%9F%BA%E6%9C%AC%E5%8F%96%E7%A2%BC
+https://zh.wikibooks.org/wiki/%E5%80%89%E9%A0%A1%E8%BC%B8%E5%85%A5%E6%B3%95/%E5%8F%96%E7%A2%BC%E5%8E%9F%E5%89%87
+https://zh.wikibooks.org/wiki/%E5%80%89%E9%A0%A1%E8%BC%B8%E5%85%A5%E6%B3%95/%E4%BE%8B%E5%A4%96%E5%AD%97
+https://zh.wikibooks.org/wiki/%E5%80%89%E9%A0%A1%E8%BC%B8%E5%85%A5%E6%B3%95/%E7%89%B9%E5%88%A5%E6%B3%A8%E6%84%8F
+https://zh.wikibooks.org/wiki/%E5%80%89%E9%A0%A1%E8%BC%B8%E5%85%A5%E6%B3%95/%E7%89%88%E6%9C%AC%E5%B7%AE%E7%95%B0
+
+### Database
+
+- We have the Cangjie version 5 database in /dist/assets/cangjie5.txt
+- Whenever Claude needs to lookup a Cangjie code, do so in the file mentioned above
+
 ## ReScript/React Reference
 
 For ReScript and React development in this project, please refer to:
