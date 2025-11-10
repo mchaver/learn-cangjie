@@ -10,7 +10,10 @@
     "preview": "vite preview",
     "clean": "rescript clean",
     "res:watch": "rescript -w",
-    "res:build": "rescript"
+    "res:build": "rescript",
+    "validate:codes": "node tools/validateLessonCodes.js",
+    "generate:chars": "node tools/characterGenerator.js",
+    "fix:codes": "node tools/fixLessonCodes.js"
   },
   "dependencies": {
     "@rescript/react": "^0.12.1",

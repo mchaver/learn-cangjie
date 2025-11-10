@@ -238,8 +238,8 @@ let lesson8Characters = [
   makeChar("竹", "H", Some(["竹"]), ()),
   makeChar("竹", "H", Some(["竹"]), ()),
   // Characters with 竹 (A-H available)
-  makeChar("竺", "HG", Some(["竹", "土"]), ()),
-  makeChar("竺", "HG", Some(["竹", "土"]), ()),
+  makeChar("竺", "HMM", Some(["竹", "土"]), ()),
+  makeChar("竺", "HMM", Some(["竹", "土"]), ()),
   makeChar("白", "HA", Some(["竹", "日"]), ()),
   makeChar("白", "HA", Some(["竹", "日"]), ()),
   makeChar("禾", "HD", Some(["竹", "木"]), ()),
@@ -249,7 +249,7 @@ let lesson8Characters = [
   // Practice mix (removed 皇 - uses M not available yet)
   makeChar("竹", "H", Some(["竹"]), ()),
   makeChar("白", "HA", Some(["竹", "日"]), ()),
-  makeChar("竺", "HG", Some(["竹", "土"]), ()),
+  makeChar("竺", "HMM", Some(["竹", "土"]), ()),
   makeChar("禾", "HD", Some(["竹", "木"]), ()),
   makeChar("少", "FH", Some(["火", "竹"]), ()),
   makeChar("竹", "H", Some(["竹"]), ()),
@@ -298,13 +298,13 @@ let lesson10Characters = [
   makeChar("千", "HJ", Some(["竹", "十"]), ()),
   makeChar("支", "JE", Some(["十", "水"]), ()),
   makeChar("支", "JE", Some(["十", "水"]), ()),
-  makeChar("成", "IJ", Some(["戈", "十"]), ()),
-  makeChar("成", "IJ", Some(["戈", "十"]), ()),
+  makeChar("成", "IHS", Some(["戈", "十"]), ()),
+  makeChar("成", "IHS", Some(["戈", "十"]), ()),
   // Practice mix (removed 卉 - uses T not available)
   makeChar("十", "J", Some(["十"]), ()),
   makeChar("早", "AJ", Some(["日", "十"]), ()),
   makeChar("千", "HJ", Some(["竹", "十"]), ()),
-  makeChar("成", "IJ", Some(["戈", "十"]), ()),
+  makeChar("成", "IHS", Some(["戈", "十"]), ()),
 ]
 
 // Lesson 11: 大 - Learn K (大) - Can only use: A, B, C, D, E, F, G, H, I, J, K
@@ -342,16 +342,16 @@ let lesson12Characters = [
   makeChar("中", "L", Some(["中"]), ()),
   makeChar("中", "L", Some(["中"]), ()),
   // Characters with 中 (A-L available)
-  makeChar("申", "LL", Some(["中", "中"]), ()),
-  makeChar("申", "LL", Some(["中", "中"]), ()),
-  makeChar("申", "LL", Some(["中", "中"]), ()),
+  makeChar("申", "LWL", Some(["中", "中"]), ()),
+  makeChar("申", "LWL", Some(["中", "中"]), ()),
+  makeChar("申", "LWL", Some(["中", "中"]), ()),
   makeChar("串", "LL", Some(["中", "中"]), ()), // Fixed code: LL not LLL
   makeChar("串", "LL", Some(["中", "中"]), ()),
   makeChar("央", "LBK", Some(["中", "月", "大"]), ()), // Fixed code: LBK not KLB
   makeChar("央", "LBK", Some(["中", "月", "大"]), ()),
   // Practice mix
   makeChar("中", "L", Some(["中"]), ()),
-  makeChar("申", "LL", Some(["中", "中"]), ()),
+  makeChar("申", "LWL", Some(["中", "中"]), ()),
   makeChar("中", "L", Some(["中"]), ()),
   makeChar("串", "LL", Some(["中", "中"]), ()),
   makeChar("央", "LBK", Some(["中", "月", "大"]), ()),
@@ -396,8 +396,8 @@ let lesson14Characters = [
   // Characters with 弓 (A-N available)
   makeChar("引", "NL", Some(["弓", "中"]), ()),
   makeChar("引", "NL", Some(["弓", "中"]), ()),
-  makeChar("弱", "NN", Some(["弓", "弓"]), ()),
-  makeChar("弱", "NN", Some(["弓", "弓"]), ()),
+  makeChar("弱", "NMNIM", Some(["弓", "弓"]), ()),
+  makeChar("弱", "NMNIM", Some(["弓", "弓"]), ()),
   makeChar("弔", "NL", Some(["弓", "中"]), ()), // Fixed code: NL not NJB
   makeChar("弔", "NL", Some(["弓", "中"]), ()),
   makeChar("弗", "LLN", Some(["中", "中", "弓"]), ()), // Fixed code: LLN not NHE
@@ -405,7 +405,7 @@ let lesson14Characters = [
   // Practice mix
   makeChar("弓", "N", Some(["弓"]), ()),
   makeChar("引", "NL", Some(["弓", "中"]), ()),
-  makeChar("弱", "NN", Some(["弓", "弓"]), ()),
+  makeChar("弱", "NMNIM", Some(["弓", "弓"]), ()),
   makeChar("弔", "NL", Some(["弓", "中"]), ()),
   makeChar("弓", "N", Some(["弓"]), ()),
 ]
@@ -424,8 +424,8 @@ let lesson15Characters = [
   makeChar("个", "OL", Some(["人", "中"]), ()),
   makeChar("八", "HO", Some(["竹", "人"]), ()),
   makeChar("八", "HO", Some(["竹", "人"]), ()),
-  makeChar("從", "OO", Some(["人", "人"]), ()),
-  makeChar("從", "OO", Some(["人", "人"]), ()),
+  makeChar("從", "HOOOO", Some(["人", "人"]), ()),
+  makeChar("從", "HOOOO", Some(["人", "人"]), ()),
   makeChar("入", "OH", Some(["人", "竹"]), ()), // Code correct: OH
   makeChar("入", "OH", Some(["人", "竹"]), ()),
   makeChar("夾", "KOO", Some(["大", "人", "人"]), ()), // Fixed code: KOO not OKO
@@ -434,7 +434,7 @@ let lesson15Characters = [
   makeChar("人", "O", Some(["人"]), ()),
   makeChar("个", "OL", Some(["人", "中"]), ()),
   makeChar("八", "HO", Some(["竹", "人"]), ()),
-  makeChar("從", "OO", Some(["人", "人"]), ()),
+  makeChar("從", "HOOOO", Some(["人", "人"]), ()),
   makeChar("入", "OH", Some(["人", "竹"]), ()),
 ]
 
@@ -447,15 +447,15 @@ let lesson16Characters = [
   makeChar("心", "P", Some(["心"]), ()),
   makeChar("心", "P", Some(["心"]), ()),
   // Characters with 心 (A-P available)
-  makeChar("必", "HP", Some(["竹", "心"]), ()),
-  makeChar("必", "HP", Some(["竹", "心"]), ()),
-  makeChar("必", "HP", Some(["竹", "心"]), ()),
-  makeChar("必", "HP", Some(["竹", "心"]), ()),
+  makeChar("必", "PH", Some(["竹", "心"]), ()),
+  makeChar("必", "PH", Some(["竹", "心"]), ()),
+  makeChar("必", "PH", Some(["竹", "心"]), ()),
+  makeChar("必", "PH", Some(["竹", "心"]), ()),
   // Practice mix (removed 忙 and 忍 - use keys not available)
   makeChar("心", "P", Some(["心"]), ()),
-  makeChar("必", "HP", Some(["竹", "心"]), ()),
+  makeChar("必", "PH", Some(["竹", "心"]), ()),
   makeChar("心", "P", Some(["心"]), ()),
-  makeChar("必", "HP", Some(["竹", "心"]), ()),
+  makeChar("必", "PH", Some(["竹", "心"]), ()),
   makeChar("心", "P", Some(["心"]), ()),
   makeChar("心", "P", Some(["心"]), ()),
 ]
@@ -503,7 +503,7 @@ let lesson18Characters = [
   makeChar("扣", "QR", Some(["手", "口"]), ()),
   makeChar("同", "BMR", Some(["月", "一", "口"]), ()),
   makeChar("同", "BMR", Some(["月", "一", "口"]), ()),
-  makeChar("古", "RJR", Some(["口", "十", "口"]), ()),
+  makeChar("古", "JR", Some(["口", "十", "口"]), ()),
   makeChar("古", "JR", Some(["口", "十"]), ()), // Fixed: JR not RJR
   makeChar("可", "MNR", Some(["一", "弓", "口"]), ()),
   makeChar("可", "MNR", Some(["一", "弓", "口"]), ()),
@@ -512,7 +512,7 @@ let lesson18Characters = [
   makeChar("右", "KR", Some(["大", "口"]), ()),
   makeChar("扣", "QR", Some(["手", "口"]), ()),
   makeChar("同", "BMR", Some(["月", "一", "口"]), ()),
-  makeChar("古", "RJR", Some(["口", "十", "口"]), ()),
+  makeChar("古", "JR", Some(["口", "十", "口"]), ()),
 ]
 
 // CHARACTER SHAPES (字形類) - Lessons 19-24
@@ -525,15 +525,15 @@ let lesson19Characters = [
   makeChar("尸", "S", Some(["尸"]), ()),
   makeChar("尸", "S", Some(["尸"]), ()),
   // Characters with 尸 (A-S available)
-  makeChar("尺", "SI", Some(["尸", "戈"]), ()),
-  makeChar("尺", "SI", Some(["尸", "戈"]), ()),
+  makeChar("尺", "SO", Some(["尸", "戈"]), ()),
+  makeChar("尺", "SO", Some(["尸", "戈"]), ()),
   makeChar("尼", "SP", Some(["尸", "心"]), ()),
   makeChar("尼", "SP", Some(["尸", "心"]), ()),
   makeChar("局", "SSR", Some(["尸", "尸", "口"]), ()),
   makeChar("局", "SSR", Some(["尸", "尸", "口"]), ()),
   // Practice mix (removed 尾 - uses U not available)
   makeChar("尸", "S", Some(["尸"]), ()),
-  makeChar("尺", "SI", Some(["尸", "戈"]), ()),
+  makeChar("尺", "SO", Some(["尸", "戈"]), ()),
   makeChar("尼", "SP", Some(["尸", "心"]), ()),
   makeChar("局", "SSR", Some(["尸", "尸", "口"]), ()),
 ]
@@ -547,21 +547,21 @@ let lesson20Characters = [
   makeChar("廿", "T", Some(["廿"]), ()),
   makeChar("廿", "T", Some(["廿"]), ()),
   // Characters with 廿 (A-T available)
-  makeChar("卅", "TM", Some(["廿", "一"]), ()),
-  makeChar("卅", "TM", Some(["廿", "一"]), ()),
-  makeChar("草", "TA", Some(["廿", "日"]), ()),
-  makeChar("草", "TA", Some(["廿", "日"]), ()),
-  makeChar("若", "TR", Some(["廿", "口"]), ()),
-  makeChar("若", "TR", Some(["廿", "口"]), ()),
+  makeChar("卅", "TJ", Some(["廿", "一"]), ()),
+  makeChar("卅", "TJ", Some(["廿", "一"]), ()),
+  makeChar("草", "TAJ", Some(["廿", "日"]), ()),
+  makeChar("草", "TAJ", Some(["廿", "日"]), ()),
+  makeChar("若", "TKR", Some(["廿", "口"]), ()),
+  makeChar("若", "TKR", Some(["廿", "口"]), ()),
   makeChar("共", "TC", Some(["廿", "金"]), ()),
   makeChar("共", "TC", Some(["廿", "金"]), ()),
-  makeChar("廿", "TT", Some(["廿", "廿"]), ()),
-  makeChar("廿", "TT", Some(["廿", "廿"]), ()),
+  makeChar("廿", "T", Some(["廿", "廿"]), ()),
+  makeChar("廿", "T", Some(["廿", "廿"]), ()),
   // Practice mix
   makeChar("廿", "T", Some(["廿"]), ()),
-  makeChar("卅", "TM", Some(["廿", "一"]), ()),
-  makeChar("草", "TA", Some(["廿", "日"]), ()),
-  makeChar("若", "TR", Some(["廿", "口"]), ()),
+  makeChar("卅", "TJ", Some(["廿", "一"]), ()),
+  makeChar("草", "TAJ", Some(["廿", "日"]), ()),
+  makeChar("若", "TKR", Some(["廿", "口"]), ()),
   makeChar("共", "TC", Some(["廿", "金"]), ()),
 ]
 
@@ -673,17 +673,17 @@ let lesson24Characters = [
 // Lesson 25: 難 - Learn X (難)
 let lesson25Characters = [
   // X is used for difficult/special characters
-  makeChar("卵", "XHQF", Some(["難", "竹", "手", "火"]), ()),
-  makeChar("卵", "XHQF", Some(["難", "竹", "手", "火"]), ()),
-  makeChar("巢", "XXHDB", Some(["難", "難", "竹", "木", "月"]), ()),
-  makeChar("巢", "XXHDB", Some(["難", "難", "竹", "木", "月"]), ()),
-  makeChar("鹿", "XIXP", Some(["難", "戈", "難", "心"]), ()),
-  makeChar("鹿", "XIXP", Some(["難", "戈", "難", "心"]), ()),
+  makeChar("卵", "HHSLI", Some(["難", "竹", "手", "火"]), ()),
+  makeChar("卵", "HHSLI", Some(["難", "竹", "手", "火"]), ()),
+  makeChar("巢", "VVWD", Some(["難", "難", "竹", "木", "月"]), ()),
+  makeChar("巢", "VVWD", Some(["難", "難", "竹", "木", "月"]), ()),
+  makeChar("鹿", "IXP", Some(["難", "戈", "難", "心"]), ()),
+  makeChar("鹿", "IXP", Some(["難", "戈", "難", "心"]), ()),
   // Practice mix
-  makeChar("卵", "XHQF", Some(["難", "竹", "手", "火"]), ()),
-  makeChar("巢", "XXHDB", Some(["難", "難", "竹", "木", "月"]), ()),
-  makeChar("鹿", "XIXP", Some(["難", "戈", "難", "心"]), ()),
-  makeChar("卵", "XHQF", Some(["難", "竹", "手", "火"]), ()),
+  makeChar("卵", "HHSLI", Some(["難", "竹", "手", "火"]), ()),
+  makeChar("巢", "VVWD", Some(["難", "難", "竹", "木", "月"]), ()),
+  makeChar("鹿", "IXP", Some(["難", "戈", "難", "心"]), ()),
+  makeChar("卵", "HHSLI", Some(["難", "竹", "手", "火"]), ()),
 ]
 
 // Lesson 26: 重 - Learn Z (重)
@@ -697,8 +697,8 @@ let lesson26Characters = [
   makeChar("林", "DD", Some(["木", "木"]), ()),
   makeChar("炎", "FF", Some(["火", "火"]), ()),
   makeChar("炎", "FF", Some(["火", "火"]), ()),
-  makeChar("從", "OO", Some(["人", "人"]), ()),
-  makeChar("從", "OO", Some(["人", "人"]), ()),
+  makeChar("從", "HOOOO", Some(["人", "人"]), ()),
+  makeChar("從", "HOOOO", Some(["人", "人"]), ()),
   makeChar("出", "UU", Some(["山", "山"]), ()),
   makeChar("出", "UU", Some(["山", "山"]), ()),
 ]
@@ -718,7 +718,7 @@ let philosophyApplicationCharacters = [
   makeChar("杜", "DG", Some(["木", "土"]), ()), // Du (surname), prevent
   makeChar("杲", "AD", Some(["日", "木"]), ()), // bright (archaic) - Fixed: AD not DA
   makeChar("杳", "DA", Some(["木", "日"]), ()), // dark/obscure
-  makeChar("焚", "FF", Some(["火", "火"]), ()), // burn
+  makeChar("焚", "DDF", Some(["火", "火"]), ()), // burn
   // Removed characters that use keys beyond A-G:
   // 柏 (DHA uses H), 析 (DHML uses H,M,L), 枝 (DJE uses J),
   // 杏 (DR uses R), 朴 (DY uses Y), 灿 (FU uses U)
@@ -751,10 +751,10 @@ let strokesApplicationCharacters = [
   makeChar("少", "FH", Some(["火", "竹"]), ()), // few/little
   makeChar("寸", "DI", Some(["木", "戈"]), ()), // inch
   makeChar("引", "NL", Some(["弓", "中"]), ()), // pull/guide
-  makeChar("弱", "NN", Some(["弓", "弓"]), ()), // weak
+  makeChar("弱", "NMNIM", Some(["弓", "弓"]), ()), // weak
   makeChar("天", "MK", Some(["一", "大"]), ()), // sky/heaven
   makeChar("旦", "AM", Some(["日", "一"]), ()), // dawn
-  makeChar("成", "IJ", Some(["戈", "十"]), ()), // become
+  makeChar("成", "IHS", Some(["戈", "十"]), ()), // become
   makeChar("有", "KB", Some(["大", "月"]), ()), // have
 ]
 
@@ -766,8 +766,8 @@ let bodyPartsApplicationCharacters = [
   makeChar("呆", "RD", Some(["口", "木"]), ()), // dull/stay
   makeChar("个", "OL", Some(["人", "中"]), ()), // MW/individual
   makeChar("八", "HO", Some(["竹", "人"]), ()), // eight
-  makeChar("從", "OO", Some(["人", "人"]), ()), // from/follow
-  makeChar("必", "HP", Some(["竹", "心"]), ()), // must
+  makeChar("從", "HOOOO", Some(["人", "人"]), ()), // from/follow
+  makeChar("必", "PH", Some(["竹", "心"]), ()), // must
   makeChar("扣", "QR", Some(["手", "口"]), ()), // button/knock
 ]
 
@@ -781,8 +781,8 @@ let shapesApplicationCharacters = [
   makeChar("上", "YM", Some(["卜", "一"]), ()), // up/above
   makeChar("下", "MY", Some(["一", "卜"]), ()), // down/below
   makeChar("占", "YR", Some(["卜", "口"]), ()), // occupy/divine
-  makeChar("若", "TR", Some(["廿", "口"]), ()), // if/like
-  makeChar("草", "TA", Some(["廿", "日"]), ()), // grass
+  makeChar("若", "TKR", Some(["廿", "口"]), ()), // if/like
+  makeChar("草", "TAJ", Some(["廿", "日"]), ()), // grass
   makeChar("東", "DW", Some(["木", "田"]), ()), // east
   makeChar("由", "LW", Some(["中", "田"]), ()), // by/from
 ]
@@ -971,51 +971,51 @@ let commonChars2 = [  // 人我在有他
 ]
 
 let commonChars3 = [  // 這為之大來
-  makeChar("這", "YYK", None, ~frequencyRank=11, ()),
-  makeChar("這", "YYK", None, ~frequencyRank=11, ()),
-  makeChar("這", "YYK", None, ~frequencyRank=11, ()),
-  makeChar("為", "IKSI", None, ~frequencyRank=12, ()),
-  makeChar("為", "IKSI", None, ~frequencyRank=12, ()),
-  makeChar("為", "IKSI", None, ~frequencyRank=12, ()),
+  makeChar("這", "YYMR", None, ~frequencyRank=11, ()),
+  makeChar("這", "YYMR", None, ~frequencyRank=11, ()),
+  makeChar("這", "YYMR", None, ~frequencyRank=11, ()),
+  makeChar("為", "IKNF", None, ~frequencyRank=12, ()),
+  makeChar("為", "IKNF", None, ~frequencyRank=12, ()),
+  makeChar("為", "IKNF", None, ~frequencyRank=12, ()),
   makeChar("之", "INO", None, ~frequencyRank=13, ()),
   makeChar("之", "INO", None, ~frequencyRank=13, ()),
   makeChar("之", "INO", None, ~frequencyRank=13, ()),
   makeChar("大", "K", None, ~frequencyRank=14, ()),
   makeChar("大", "K", None, ~frequencyRank=14, ()),
   makeChar("大", "K", None, ~frequencyRank=14, ()),
-  makeChar("來", "DT", None, ~frequencyRank=15, ()),
-  makeChar("來", "DT", None, ~frequencyRank=15, ()),
-  makeChar("來", "DT", None, ~frequencyRank=15, ()),
+  makeChar("來", "DOO", None, ~frequencyRank=15, ()),
+  makeChar("來", "DOO", None, ~frequencyRank=15, ()),
+  makeChar("來", "DOO", None, ~frequencyRank=15, ()),
   // Mix practice
-  makeChar("這", "YYK", None, ~frequencyRank=11, ()),
-  makeChar("為", "IKSI", None, ~frequencyRank=12, ()),
+  makeChar("這", "YYMR", None, ~frequencyRank=11, ()),
+  makeChar("為", "IKNF", None, ~frequencyRank=12, ()),
   makeChar("之", "INO", None, ~frequencyRank=13, ()),
   makeChar("大", "K", None, ~frequencyRank=14, ()),
-  makeChar("來", "DT", None, ~frequencyRank=15, ()),
+  makeChar("來", "DOO", None, ~frequencyRank=15, ()),
 ]
 
 let commonChars4 = [  // 以個中上們
   makeChar("以", "VIO", None, ~frequencyRank=16, ()),
   makeChar("以", "VIO", None, ~frequencyRank=16, ()),
   makeChar("以", "VIO", None, ~frequencyRank=16, ()),
-  makeChar("個", "OL", None, ~frequencyRank=17, ()),
-  makeChar("個", "OL", None, ~frequencyRank=17, ()),
-  makeChar("個", "OL", None, ~frequencyRank=17, ()),
+  makeChar("個", "OWJR", None, ~frequencyRank=17, ()),
+  makeChar("個", "OWJR", None, ~frequencyRank=17, ()),
+  makeChar("個", "OWJR", None, ~frequencyRank=17, ()),
   makeChar("中", "L", None, ~frequencyRank=18, ()),
   makeChar("中", "L", None, ~frequencyRank=18, ()),
   makeChar("中", "L", None, ~frequencyRank=18, ()),
   makeChar("上", "YM", None, ~frequencyRank=19, ()),
   makeChar("上", "YM", None, ~frequencyRank=19, ()),
   makeChar("上", "YM", None, ~frequencyRank=19, ()),
-  makeChar("們", "OLIS", None, ~frequencyRank=20, ()),
-  makeChar("們", "OLIS", None, ~frequencyRank=20, ()),
-  makeChar("們", "OLIS", None, ~frequencyRank=20, ()),
+  makeChar("們", "OAN", None, ~frequencyRank=20, ()),
+  makeChar("們", "OAN", None, ~frequencyRank=20, ()),
+  makeChar("們", "OAN", None, ~frequencyRank=20, ()),
   // Mix practice
   makeChar("以", "VIO", None, ~frequencyRank=16, ()),
-  makeChar("個", "OL", None, ~frequencyRank=17, ()),
+  makeChar("個", "OWJR", None, ~frequencyRank=17, ()),
   makeChar("中", "L", None, ~frequencyRank=18, ()),
   makeChar("上", "YM", None, ~frequencyRank=19, ()),
-  makeChar("們", "OLIS", None, ~frequencyRank=20, ()),
+  makeChar("們", "OAN", None, ~frequencyRank=20, ()),
 ]
 
 // SET 2: Characters 21-40
@@ -1023,12 +1023,12 @@ let commonChars5 = [  // 到說國和地
   makeChar("到", "MGLN", None, ~frequencyRank=21, ()),
   makeChar("到", "MGLN", None, ~frequencyRank=21, ()),
   makeChar("到", "MGLN", None, ~frequencyRank=21, ()),
-  makeChar("說", "IVCRU", None, ~frequencyRank=22, ()),
-  makeChar("說", "IVCRU", None, ~frequencyRank=22, ()),
-  makeChar("說", "IVCRU", None, ~frequencyRank=22, ()),
-  makeChar("國", "WMGI", None, ~frequencyRank=23, ()),
-  makeChar("國", "WMGI", None, ~frequencyRank=23, ()),
-  makeChar("國", "WMGI", None, ~frequencyRank=23, ()),
+  makeChar("說", "YRCRU", None, ~frequencyRank=22, ()),
+  makeChar("說", "YRCRU", None, ~frequencyRank=22, ()),
+  makeChar("說", "YRCRU", None, ~frequencyRank=22, ()),
+  makeChar("國", "WIRM", None, ~frequencyRank=23, ()),
+  makeChar("國", "WIRM", None, ~frequencyRank=23, ()),
+  makeChar("國", "WIRM", None, ~frequencyRank=23, ()),
   makeChar("和", "HDR", None, ~frequencyRank=24, ()),
   makeChar("和", "HDR", None, ~frequencyRank=24, ()),
   makeChar("和", "HDR", None, ~frequencyRank=24, ()),
@@ -1037,8 +1037,8 @@ let commonChars5 = [  // 到說國和地
   makeChar("地", "GPD", None, ~frequencyRank=25, ()),
   // Mix practice
   makeChar("到", "MGLN", None, ~frequencyRank=21, ()),
-  makeChar("說", "IVCRU", None, ~frequencyRank=22, ()),
-  makeChar("國", "WMGI", None, ~frequencyRank=23, ()),
+  makeChar("說", "YRCRU", None, ~frequencyRank=22, ()),
+  makeChar("國", "WIRM", None, ~frequencyRank=23, ()),
   makeChar("和", "HDR", None, ~frequencyRank=24, ()),
   makeChar("地", "GPD", None, ~frequencyRank=25, ()),
 ]
@@ -1050,9 +1050,9 @@ let commonChars6 = [  // 也子時道出
   makeChar("子", "ND", None, ~frequencyRank=27, ()),
   makeChar("子", "ND", None, ~frequencyRank=27, ()),
   makeChar("子", "ND", None, ~frequencyRank=27, ()),
-  makeChar("時", "ADI", None, ~frequencyRank=28, ()),
-  makeChar("時", "ADI", None, ~frequencyRank=28, ()),
-  makeChar("時", "ADI", None, ~frequencyRank=28, ()),
+  makeChar("時", "AGDI", None, ~frequencyRank=28, ()),
+  makeChar("時", "AGDI", None, ~frequencyRank=28, ()),
+  makeChar("時", "AGDI", None, ~frequencyRank=28, ()),
   makeChar("道", "YTHU", None, ~frequencyRank=29, ()),
   makeChar("道", "YTHU", None, ~frequencyRank=29, ()),
   makeChar("道", "YTHU", None, ~frequencyRank=29, ()),
@@ -1062,7 +1062,7 @@ let commonChars6 = [  // 也子時道出
   // Mix practice
   makeChar("也", "PD", None, ~frequencyRank=26, ()),
   makeChar("子", "ND", None, ~frequencyRank=27, ()),
-  makeChar("時", "ADI", None, ~frequencyRank=28, ()),
+  makeChar("時", "AGDI", None, ~frequencyRank=28, ()),
   makeChar("道", "YTHU", None, ~frequencyRank=29, ()),
   makeChar("出", "UU", None, ~frequencyRank=30, ()),
 ]
@@ -1074,9 +1074,9 @@ let commonChars7 = [  // 而要於就下
   makeChar("要", "MWV", None, ~frequencyRank=32, ()),
   makeChar("要", "MWV", None, ~frequencyRank=32, ()),
   makeChar("要", "MWV", None, ~frequencyRank=32, ()),
-  makeChar("於", "MD", None, ~frequencyRank=33, ()),
-  makeChar("於", "MD", None, ~frequencyRank=33, ()),
-  makeChar("於", "MD", None, ~frequencyRank=33, ()),
+  makeChar("於", "YSOY", None, ~frequencyRank=33, ()),
+  makeChar("於", "YSOY", None, ~frequencyRank=33, ()),
+  makeChar("於", "YSOY", None, ~frequencyRank=33, ()),
   makeChar("就", "YFIKU", None, ~frequencyRank=34, ()),
   makeChar("就", "YFIKU", None, ~frequencyRank=34, ()),
   makeChar("就", "YFIKU", None, ~frequencyRank=34, ()),
@@ -1086,7 +1086,7 @@ let commonChars7 = [  // 而要於就下
   // Mix practice
   makeChar("而", "MBLL", None, ~frequencyRank=31, ()),
   makeChar("要", "MWV", None, ~frequencyRank=32, ()),
-  makeChar("於", "MD", None, ~frequencyRank=33, ()),
+  makeChar("於", "YSOY", None, ~frequencyRank=33, ()),
   makeChar("就", "YFIKU", None, ~frequencyRank=34, ()),
   makeChar("下", "MY", None, ~frequencyRank=35, ()),
 ]
@@ -1120,33 +1120,33 @@ let commonChars9 = [  // 自會那後能
   makeChar("自", "HBU", None, ~frequencyRank=41, ()),
   makeChar("自", "HBU", None, ~frequencyRank=41, ()),
   makeChar("自", "HBU", None, ~frequencyRank=41, ()),
-  makeChar("會", "OMMI", None, ~frequencyRank=42, ()),
-  makeChar("會", "OMMI", None, ~frequencyRank=42, ()),
-  makeChar("會", "OMMI", None, ~frequencyRank=42, ()),
+  makeChar("會", "OMWA", None, ~frequencyRank=42, ()),
+  makeChar("會", "OMWA", None, ~frequencyRank=42, ()),
+  makeChar("會", "OMWA", None, ~frequencyRank=42, ()),
   makeChar("那", "SQNL", None, ~frequencyRank=43, ()),
   makeChar("那", "SQNL", None, ~frequencyRank=43, ()),
   makeChar("那", "SQNL", None, ~frequencyRank=43, ()),
-  makeChar("後", "HMR", None, ~frequencyRank=44, ()),
-  makeChar("後", "HMR", None, ~frequencyRank=44, ()),
-  makeChar("後", "HMR", None, ~frequencyRank=44, ()),
+  makeChar("後", "HOVIE", None, ~frequencyRank=44, ()),
+  makeChar("後", "HOVIE", None, ~frequencyRank=44, ()),
+  makeChar("後", "HOVIE", None, ~frequencyRank=44, ()),
   makeChar("能", "IBPP", None, ~frequencyRank=45, ()),
   makeChar("能", "IBPP", None, ~frequencyRank=45, ()),
   makeChar("能", "IBPP", None, ~frequencyRank=45, ()),
   // Mix practice
   makeChar("自", "HBU", None, ~frequencyRank=41, ()),
-  makeChar("會", "OMMI", None, ~frequencyRank=42, ()),
+  makeChar("會", "OMWA", None, ~frequencyRank=42, ()),
   makeChar("那", "SQNL", None, ~frequencyRank=43, ()),
-  makeChar("後", "HMR", None, ~frequencyRank=44, ()),
+  makeChar("後", "HOVIE", None, ~frequencyRank=44, ()),
   makeChar("能", "IBPP", None, ~frequencyRank=45, ()),
 ]
 
 let commonChars10 = [  // 對著事其里
-  makeChar("對", "EDI", None, ~frequencyRank=46, ()),
-  makeChar("對", "EDI", None, ~frequencyRank=46, ()),
-  makeChar("對", "EDI", None, ~frequencyRank=46, ()),
-  makeChar("著", "TQBU", None, ~frequencyRank=47, ()),
-  makeChar("著", "TQBU", None, ~frequencyRank=47, ()),
-  makeChar("著", "TQBU", None, ~frequencyRank=47, ()),
+  makeChar("對", "TGDI", None, ~frequencyRank=46, ()),
+  makeChar("對", "TGDI", None, ~frequencyRank=46, ()),
+  makeChar("對", "TGDI", None, ~frequencyRank=46, ()),
+  makeChar("著", "TJKA", None, ~frequencyRank=47, ()),
+  makeChar("著", "TJKA", None, ~frequencyRank=47, ()),
+  makeChar("著", "TJKA", None, ~frequencyRank=47, ()),
   makeChar("事", "JLLN", None, ~frequencyRank=48, ()),
   makeChar("事", "JLLN", None, ~frequencyRank=48, ()),
   makeChar("事", "JLLN", None, ~frequencyRank=48, ()),
@@ -1157,8 +1157,8 @@ let commonChars10 = [  // 對著事其里
   makeChar("里", "WG", None, ~frequencyRank=50, ()),
   makeChar("里", "WG", None, ~frequencyRank=50, ()),
   // Mix practice
-  makeChar("對", "EDI", None, ~frequencyRank=46, ()),
-  makeChar("著", "TQBU", None, ~frequencyRank=47, ()),
+  makeChar("對", "TGDI", None, ~frequencyRank=46, ()),
+  makeChar("著", "TJKA", None, ~frequencyRank=47, ()),
   makeChar("事", "JLLN", None, ~frequencyRank=48, ()),
   makeChar("其", "TMMC", None, ~frequencyRank=49, ()),
   makeChar("里", "WG", None, ~frequencyRank=50, ()),
@@ -1174,9 +1174,9 @@ let commonChars11 = [  // 所去行過家
   makeChar("行", "HOMMN", None, ~frequencyRank=53, ()),
   makeChar("行", "HOMMN", None, ~frequencyRank=53, ()),
   makeChar("行", "HOMMN", None, ~frequencyRank=53, ()),
-  makeChar("過", "YDI", None, ~frequencyRank=54, ()),
-  makeChar("過", "YDI", None, ~frequencyRank=54, ()),
-  makeChar("過", "YDI", None, ~frequencyRank=54, ()),
+  makeChar("過", "YBBR", None, ~frequencyRank=54, ()),
+  makeChar("過", "YBBR", None, ~frequencyRank=54, ()),
+  makeChar("過", "YBBR", None, ~frequencyRank=54, ()),
   makeChar("家", "JMSO", None, ~frequencyRank=55, ()),
   makeChar("家", "JMSO", None, ~frequencyRank=55, ()),
   makeChar("家", "JMSO", None, ~frequencyRank=55, ()),
@@ -1184,7 +1184,7 @@ let commonChars11 = [  // 所去行過家
   makeChar("所", "HSHML", None, ~frequencyRank=51, ()),
   makeChar("去", "GI", None, ~frequencyRank=52, ()),
   makeChar("行", "HOMMN", None, ~frequencyRank=53, ()),
-  makeChar("過", "YDI", None, ~frequencyRank=54, ()),
+  makeChar("過", "YBBR", None, ~frequencyRank=54, ()),
   makeChar("家", "JMSO", None, ~frequencyRank=55, ()),
 ]
 
@@ -1195,9 +1195,9 @@ let commonChars12 = [  // 十用發天如
   makeChar("用", "BQ", None, ~frequencyRank=57, ()),
   makeChar("用", "BQ", None, ~frequencyRank=57, ()),
   makeChar("用", "BQ", None, ~frequencyRank=57, ()),
-  makeChar("發", "IVKE", None, ~frequencyRank=58, ()),
-  makeChar("發", "IVKE", None, ~frequencyRank=58, ()),
-  makeChar("發", "IVKE", None, ~frequencyRank=58, ()),
+  makeChar("發", "NONHE", None, ~frequencyRank=58, ()),
+  makeChar("發", "NONHE", None, ~frequencyRank=58, ()),
+  makeChar("發", "NONHE", None, ~frequencyRank=58, ()),
   makeChar("天", "MK", None, ~frequencyRank=59, ()),
   makeChar("天", "MK", None, ~frequencyRank=59, ()),
   makeChar("天", "MK", None, ~frequencyRank=59, ()),
@@ -1207,7 +1207,7 @@ let commonChars12 = [  // 十用發天如
   // Mix practice
   makeChar("十", "J", None, ~frequencyRank=56, ()),
   makeChar("用", "BQ", None, ~frequencyRank=57, ()),
-  makeChar("發", "IVKE", None, ~frequencyRank=58, ()),
+  makeChar("發", "NONHE", None, ~frequencyRank=58, ()),
   makeChar("天", "MK", None, ~frequencyRank=59, ()),
   makeChar("如", "VR", None, ~frequencyRank=60, ()),
 ]
@@ -1265,61 +1265,61 @@ let commonChars15 = [  // 已經法當起
   makeChar("已", "SU", None, ~frequencyRank=71, ()),
   makeChar("已", "SU", None, ~frequencyRank=71, ()),
   makeChar("已", "SU", None, ~frequencyRank=71, ()),
-  makeChar("經", "VMNOM", None, ~frequencyRank=72, ()),
-  makeChar("經", "VMNOM", None, ~frequencyRank=72, ()),
-  makeChar("經", "VMNOM", None, ~frequencyRank=72, ()),
+  makeChar("經", "VFMVM", None, ~frequencyRank=72, ()),
+  makeChar("經", "VFMVM", None, ~frequencyRank=72, ()),
+  makeChar("經", "VFMVM", None, ~frequencyRank=72, ()),
   makeChar("法", "EGI", None, ~frequencyRank=73, ()),
   makeChar("法", "EGI", None, ~frequencyRank=73, ()),
   makeChar("法", "EGI", None, ~frequencyRank=73, ()),
-  makeChar("當", "FSM", None, ~frequencyRank=74, ()),
-  makeChar("當", "FSM", None, ~frequencyRank=74, ()),
-  makeChar("當", "FSM", None, ~frequencyRank=74, ()),
+  makeChar("當", "FBRW", None, ~frequencyRank=74, ()),
+  makeChar("當", "FBRW", None, ~frequencyRank=74, ()),
+  makeChar("當", "FBRW", None, ~frequencyRank=74, ()),
   makeChar("起", "GORU", None, ~frequencyRank=75, ()),
   makeChar("起", "GORU", None, ~frequencyRank=75, ()),
   makeChar("起", "GORU", None, ~frequencyRank=75, ()),
   // Mix practice
   makeChar("已", "SU", None, ~frequencyRank=71, ()),
-  makeChar("經", "VMNOM", None, ~frequencyRank=72, ()),
+  makeChar("經", "VFMVM", None, ~frequencyRank=72, ()),
   makeChar("法", "EGI", None, ~frequencyRank=73, ()),
-  makeChar("當", "FSM", None, ~frequencyRank=74, ()),
+  makeChar("當", "FBRW", None, ~frequencyRank=74, ()),
   makeChar("起", "GORU", None, ~frequencyRank=75, ()),
 ]
 
 // SET 5: Characters 76-90
 let commonChars16 = [  // 與好看學進
-  makeChar("與", "YSM", None, ~frequencyRank=76, ()),
-  makeChar("與", "YSM", None, ~frequencyRank=76, ()),
-  makeChar("與", "YSM", None, ~frequencyRank=76, ()),
+  makeChar("與", "HXYC", None, ~frequencyRank=76, ()),
+  makeChar("與", "HXYC", None, ~frequencyRank=76, ()),
+  makeChar("與", "HXYC", None, ~frequencyRank=76, ()),
   makeChar("好", "VND", None, ~frequencyRank=77, ()),
   makeChar("好", "VND", None, ~frequencyRank=77, ()),
   makeChar("好", "VND", None, ~frequencyRank=77, ()),
   makeChar("看", "HQBU", None, ~frequencyRank=78, ()),
   makeChar("看", "HQBU", None, ~frequencyRank=78, ()),
   makeChar("看", "HQBU", None, ~frequencyRank=78, ()),
-  makeChar("學", "FBND", None, ~frequencyRank=79, ()),
-  makeChar("學", "FBND", None, ~frequencyRank=79, ()),
-  makeChar("學", "FBND", None, ~frequencyRank=79, ()),
-  makeChar("進", "YTT", None, ~frequencyRank=80, ()),
-  makeChar("進", "YTT", None, ~frequencyRank=80, ()),
-  makeChar("進", "YTT", None, ~frequencyRank=80, ()),
+  makeChar("學", "HBND", None, ~frequencyRank=79, ()),
+  makeChar("學", "HBND", None, ~frequencyRank=79, ()),
+  makeChar("學", "HBND", None, ~frequencyRank=79, ()),
+  makeChar("進", "YOG", None, ~frequencyRank=80, ()),
+  makeChar("進", "YOG", None, ~frequencyRank=80, ()),
+  makeChar("進", "YOG", None, ~frequencyRank=80, ()),
   // Mix practice
-  makeChar("與", "YSM", None, ~frequencyRank=76, ()),
+  makeChar("與", "HXYC", None, ~frequencyRank=76, ()),
   makeChar("好", "VND", None, ~frequencyRank=77, ()),
   makeChar("看", "HQBU", None, ~frequencyRank=78, ()),
-  makeChar("學", "FBND", None, ~frequencyRank=79, ()),
-  makeChar("進", "YTT", None, ~frequencyRank=80, ()),
+  makeChar("學", "HBND", None, ~frequencyRank=79, ()),
+  makeChar("進", "YOG", None, ~frequencyRank=80, ()),
 ]
 
 let commonChars17 = [  // 種將還分此
-  makeChar("種", "HDL", None, ~frequencyRank=81, ()),
-  makeChar("種", "HDL", None, ~frequencyRank=81, ()),
-  makeChar("種", "HDL", None, ~frequencyRank=81, ()),
-  makeChar("將", "LMNII", None, ~frequencyRank=82, ()),
-  makeChar("將", "LMNII", None, ~frequencyRank=82, ()),
-  makeChar("將", "LMNII", None, ~frequencyRank=82, ()),
-  makeChar("還", "YMF", None, ~frequencyRank=83, ()),
-  makeChar("還", "YMF", None, ~frequencyRank=83, ()),
-  makeChar("還", "YMF", None, ~frequencyRank=83, ()),
+  makeChar("種", "HDHJG", None, ~frequencyRank=81, ()),
+  makeChar("種", "HDHJG", None, ~frequencyRank=81, ()),
+  makeChar("種", "HDHJG", None, ~frequencyRank=81, ()),
+  makeChar("將", "VMBDI", None, ~frequencyRank=82, ()),
+  makeChar("將", "VMBDI", None, ~frequencyRank=82, ()),
+  makeChar("將", "VMBDI", None, ~frequencyRank=82, ()),
+  makeChar("還", "YWLV", None, ~frequencyRank=83, ()),
+  makeChar("還", "YWLV", None, ~frequencyRank=83, ()),
+  makeChar("還", "YWLV", None, ~frequencyRank=83, ()),
   makeChar("分", "CSH", None, ~frequencyRank=84, ()),
   makeChar("分", "CSH", None, ~frequencyRank=84, ()),
   makeChar("分", "CSH", None, ~frequencyRank=84, ()),
@@ -1327,9 +1327,9 @@ let commonChars17 = [  // 種將還分此
   makeChar("此", "YMP", None, ~frequencyRank=85, ()),
   makeChar("此", "YMP", None, ~frequencyRank=85, ()),
   // Mix practice
-  makeChar("種", "HDL", None, ~frequencyRank=81, ()),
-  makeChar("將", "LMNII", None, ~frequencyRank=82, ()),
-  makeChar("還", "YMF", None, ~frequencyRank=83, ()),
+  makeChar("種", "HDHJG", None, ~frequencyRank=81, ()),
+  makeChar("將", "VMBDI", None, ~frequencyRank=82, ()),
+  makeChar("還", "YWLV", None, ~frequencyRank=83, ()),
   makeChar("分", "CSH", None, ~frequencyRank=84, ()),
   makeChar("此", "YMP", None, ~frequencyRank=85, ()),
 ]
@@ -1360,50 +1360,50 @@ let commonChars18 = [  // 心前面又定
 
 // SET 6: Characters 91-96 (final set)
 let commonChars19 = [  // 見只主沒公從
-  makeChar("見", "BHU", None, ~frequencyRank=91, ()),
-  makeChar("見", "BHU", None, ~frequencyRank=91, ()),
-  makeChar("見", "BHU", None, ~frequencyRank=91, ()),
+  makeChar("見", "BUHU", None, ~frequencyRank=91, ()),
+  makeChar("見", "BUHU", None, ~frequencyRank=91, ()),
+  makeChar("見", "BUHU", None, ~frequencyRank=91, ()),
   makeChar("只", "RC", None, ~frequencyRank=92, ()),
   makeChar("只", "RC", None, ~frequencyRank=92, ()),
   makeChar("只", "RC", None, ~frequencyRank=92, ()),
   makeChar("主", "YG", None, ~frequencyRank=93, ()),
   makeChar("主", "YG", None, ~frequencyRank=93, ()),
   makeChar("主", "YG", None, ~frequencyRank=93, ()),
-  makeChar("沒", "EHNE", None, ~frequencyRank=94, ()),
-  makeChar("沒", "EHNE", None, ~frequencyRank=94, ()),
-  makeChar("沒", "EHNE", None, ~frequencyRank=94, ()),
+  makeChar("沒", "ENE", None, ~frequencyRank=94, ()),
+  makeChar("沒", "ENE", None, ~frequencyRank=94, ()),
+  makeChar("沒", "ENE", None, ~frequencyRank=94, ()),
   makeChar("公", "CI", None, ~frequencyRank=95, ()),
   makeChar("公", "CI", None, ~frequencyRank=95, ()),
   makeChar("公", "CI", None, ~frequencyRank=95, ()),
-  makeChar("從", "OO", None, ~frequencyRank=96, ()),
-  makeChar("從", "OO", None, ~frequencyRank=96, ()),
-  makeChar("從", "OO", None, ~frequencyRank=96, ()),
+  makeChar("從", "HOOOO", None, ~frequencyRank=96, ()),
+  makeChar("從", "HOOOO", None, ~frequencyRank=96, ()),
+  makeChar("從", "HOOOO", None, ~frequencyRank=96, ()),
   // Mix practice - all 6 characters
-  makeChar("見", "BHU", None, ~frequencyRank=91, ()),
+  makeChar("見", "BUHU", None, ~frequencyRank=91, ()),
   makeChar("只", "RC", None, ~frequencyRank=92, ()),
   makeChar("主", "YG", None, ~frequencyRank=93, ()),
-  makeChar("沒", "EHNE", None, ~frequencyRank=94, ()),
+  makeChar("沒", "ENE", None, ~frequencyRank=94, ()),
   makeChar("公", "CI", None, ~frequencyRank=95, ()),
-  makeChar("從", "OO", None, ~frequencyRank=96, ()),
+  makeChar("從", "HOOOO", None, ~frequencyRank=96, ()),
 ]
 
 // Placement test characters (mix of all difficulty levels)
 let placementTestChars = [
-  makeChar("我", "HQO", None, ()),
+  makeChar("我", "HQI", None, ()),
   makeChar("你", "ONF", None, ()),
   makeChar("他", "OPD", None, ()),
   makeChar("是", "AMYO", None, ()),
-  makeChar("的", "WJK", None, ()),
-  makeChar("了", "KSF", None, ()),
-  makeChar("在", "GTG", None, ()),
-  makeChar("有", "BMM", None, ()),
+  makeChar("的", "HAPI", None, ()),
+  makeChar("了", "NN", None, ()),
+  makeChar("在", "KLG", None, ()),
+  makeChar("有", "KB", None, ()),
   makeChar("和", "HDR", None, ()),
-  makeChar("到", "SCLN", None, ()),
-  makeChar("說", "YRGR", None, ()),
-  makeChar("要", "KMW", None, ()),
-  makeChar("會", "OWL", None, ()),
-  makeChar("能", "OGE", None, ()),
-  makeChar("出", "BM", None, ()),
+  makeChar("到", "MGLN", None, ()),
+  makeChar("說", "YRCRU", None, ()),
+  makeChar("要", "MWV", None, ()),
+  makeChar("會", "OMWA", None, ()),
+  makeChar("能", "IBPP", None, ()),
+  makeChar("出", "UU", None, ()),
 ]
 
 // Generate all lessons
