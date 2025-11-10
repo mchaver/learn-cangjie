@@ -1458,6 +1458,7 @@ p {
   align-items: center;
   justify-content: center;
   max-width: 900px;
+  min-height: 400px;
   margin: 0 auto;
   padding: 2rem;
 
@@ -1465,6 +1466,7 @@ p {
     flex-direction: column;
     gap: 2rem;
     padding: 1rem;
+    min-height: 350px;
   }
 }
 
@@ -1563,12 +1565,15 @@ p {
   display: flex;
   gap: 1rem;
   align-items: flex-start;
+  align-content: flex-start;
   flex-wrap: wrap;
   justify-content: center;
   max-width: 100%;
+  min-height: 400px;
 
   @media (max-width: 768px) {
     gap: 0.75rem;
+    min-height: 350px;
   }
 }
 

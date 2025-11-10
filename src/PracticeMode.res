@@ -30,15 +30,27 @@ let make = (
   // Track first-time multi-character practice
   let (firstTimeAttempt, setFirstTimeAttempt) = React.useState(() => 0) // 0, 1, 2 for three attempts
 
-  // Track which multi-char characters have been seen in this practice session
-  let (seenMultiChars, setSeenMultiChars) = React.useState(() => Belt.MutableSet.String.make())
-
   let currentChar = lesson.characters->Belt.Array.get(inputState.currentIndex)
 
   // Determine if we're in review mode
   let isReviewMode = lesson.lessonType == Review
 
-  // Check if current character is first-time multi-character code (within this practice session)
+  // Build a map of multi-character codes to their first occurrence index in this lesson
+  let firstOccurrenceMap = React.useMemo1(() => {
+    let map = Belt.MutableMap.String.make()
+    lesson.characters->Js.Array2.forEachi((charInfo, idx) => {
+      let isMultiChar = charInfo.cangjieCode->Js.Array2.length > 1
+      if isMultiChar {
+        switch map->Belt.MutableMap.String.get(charInfo.character) {
+        | None => map->Belt.MutableMap.String.set(charInfo.character, idx)
+        | Some(_) => () // Already recorded first occurrence
+        }
+      }
+    })
+    map
+  }, [lesson])
+
+  // Check if current character is first-time multi-character code (first occurrence in lesson)
   let isFirstTimeMultiChar = switch currentChar {
   | None => false
   | Some(charInfo) => {
@@ -46,8 +58,11 @@ let make = (
       if !isMultiChar {
         false
       } else {
-        // Check if this character has been seen in this session
-        !(seenMultiChars->Belt.MutableSet.String.has(charInfo.character))
+        // Check if this is the first occurrence of this character in the lesson
+        switch firstOccurrenceMap->Belt.MutableMap.String.get(charInfo.character) {
+        | Some(firstIdx) => firstIdx == inputState.currentIndex
+        | None => false
+        }
       }
     }
   }
@@ -139,15 +154,6 @@ let make = (
                 setFirstTimeAttempt(prev => prev + 1)
                 setInputState(prev => {...prev, currentInput: ""})
               } else {
-                // If this was a first-time multi-char and we just completed the 3rd attempt, mark as seen
-                if isFirstTimeMultiChar {
-                  setSeenMultiChars(prev => {
-                    let newSet = Belt.MutableSet.String.copy(prev)
-                    newSet->Belt.MutableSet.String.add(charInfo.character)
-                    newSet
-                  })
-                }
-
                 // Record correct attempt in character progress
                 LocalStorage.recordCorrectAttempt(charInfo.character, lesson.showCode || showHint)
 
