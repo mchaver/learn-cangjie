@@ -399,7 +399,7 @@ let make = (
                         | None => false
                         }
 
-                        <div key={Belt.Int.toString(i)} className={`input-box ${isWrongBox ? "input-box-error" : ""}`}>
+                        <div key={`current-${Belt.Int.toString(i)}`} className={`input-box ${isWrongBox ? "input-box-error" : ""}`}>
                           {switch inputChar {
                           | Some(c) => {
                               // Convert roman letter to Cangjie radical
@@ -426,7 +426,7 @@ let make = (
                           None
                         }
 
-                        <div key={Belt.Int.toString(i)} className="input-box">
+                        <div key={`fadeout-${Belt.Int.toString(i)}`} className="input-box">
                           {switch inputChar {
                           | Some(c) => {
                               // Convert roman letter to Cangjie radical
