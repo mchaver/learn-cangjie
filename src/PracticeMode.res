@@ -30,12 +30,15 @@ let make = (
   // Track first-time multi-character practice
   let (firstTimeAttempt, setFirstTimeAttempt) = React.useState(() => 0) // 0, 1, 2 for three attempts
 
+  // Track which multi-char characters have been seen in this practice session
+  let (seenMultiChars, setSeenMultiChars) = React.useState(() => Belt.MutableSet.String.make())
+
   let currentChar = lesson.characters->Belt.Array.get(inputState.currentIndex)
 
   // Determine if we're in review mode
   let isReviewMode = lesson.lessonType == Review
 
-  // Check if current character is first-time multi-character code
+  // Check if current character is first-time multi-character code (within this practice session)
   let isFirstTimeMultiChar = switch currentChar {
   | None => false
   | Some(charInfo) => {
@@ -43,11 +46,8 @@ let make = (
       if !isMultiChar {
         false
       } else {
-        // Check if this character has been seen before
-        switch LocalStorage.getCharacterProgress(charInfo.character) {
-        | None => true // Never seen before
-        | Some(progress) => progress.correctCount == 0 && progress.state == New
-        }
+        // Check if this character has been seen in this session
+        !(seenMultiChars->Belt.MutableSet.String.has(charInfo.character))
       }
     }
   }
@@ -139,6 +139,15 @@ let make = (
                 setFirstTimeAttempt(prev => prev + 1)
                 setInputState(prev => {...prev, currentInput: ""})
               } else {
+                // If this was a first-time multi-char and we just completed the 3rd attempt, mark as seen
+                if isFirstTimeMultiChar {
+                  setSeenMultiChars(prev => {
+                    let newSet = Belt.MutableSet.String.copy(prev)
+                    newSet->Belt.MutableSet.String.add(charInfo.character)
+                    newSet
+                  })
+                }
+
                 // Record correct attempt in character progress
                 LocalStorage.recordCorrectAttempt(charInfo.character, lesson.showCode || showHint)
 
@@ -293,7 +302,11 @@ let make = (
               <div className="first-time-left">
                 <div className="first-time-character"> {React.string(charInfo.character)} </div>
                 <div className="first-time-code-display">
-                  {React.string(expectedCode)}
+                  {React.string(
+                    charInfo.cangjieCode
+                    ->Js.Array2.map(CangjieUtils.keyToRadicalName)
+                    ->Js.Array2.joinWith("")
+                  )}
                 </div>
                 <div className="first-time-progress">
                   {React.string(`第 ${Belt.Int.toString(firstTimeAttempt + 1)} / 3 次練習`)}

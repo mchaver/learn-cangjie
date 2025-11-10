@@ -716,15 +716,12 @@ let philosophyApplicationCharacters = [
   makeChar("汉", "EE", Some(["水", "水"]), ()), // Han Chinese
   // More combinations with A-G only
   makeChar("杜", "DG", Some(["木", "土"]), ()), // Du (surname), prevent
-  makeChar("柏", "DA", Some(["木", "日"]), ()), // cypress
-  makeChar("杲", "DA", Some(["木", "日"]), ()), // bright (archaic)
-  makeChar("析", "DE", Some(["木", "水"]), ()), // analyze/split
-  makeChar("枝", "DE", Some(["木", "水"]), ()), // branch
-  makeChar("杏", "DAB", Some(["木", "日", "月"]), ()), // apricot
-  makeChar("朴", "DG", Some(["木", "土"]), ()), // simple/plain
-  makeChar("杳", "DAF", Some(["木", "日", "火"]), ()), // dark/obscure
-  makeChar("灿", "FCA", Some(["火", "金", "日"]), ()), // brilliant
+  makeChar("杲", "AD", Some(["日", "木"]), ()), // bright (archaic) - Fixed: AD not DA
+  makeChar("杳", "DA", Some(["木", "日"]), ()), // dark/obscure
   makeChar("焚", "FF", Some(["火", "火"]), ()), // burn
+  // Removed characters that use keys beyond A-G:
+  // 柏 (DHA uses H), 析 (DHML uses H,M,L), 枝 (DJE uses J),
+  // 杏 (DR uses R), 朴 (DY uses Y), 灿 (FU uses U)
   // Mix practice - reinforce the basics
   makeChar("明", "AB", Some(["日", "月"]), ()),
   makeChar("林", "DD", Some(["木", "木"]), ()),
@@ -733,7 +730,8 @@ let philosophyApplicationCharacters = [
   makeChar("朋", "BB", Some(["月", "月"]), ()),
   makeChar("昌", "AA", Some(["日", "日"]), ()),
   makeChar("杜", "DG", Some(["木", "土"]), ()),
-  makeChar("柏", "DA", Some(["木", "日"]), ()),
+  makeChar("杲", "AD", Some(["日", "木"]), ()),
+  makeChar("杳", "DA", Some(["木", "日"]), ()),
 ]
 
 // Strokes Application: Only uses A-N (日月金木水火土竹戈十大中一弓)
