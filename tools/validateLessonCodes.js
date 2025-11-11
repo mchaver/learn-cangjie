@@ -75,7 +75,7 @@ function validateAllCodes() {
   console.log(`✓ Loaded ${database.size} characters from database\n`);
 
   console.log('Extracting characters from CangjieData.res...');
-  const dataFilePath = path.join(__dirname, '../src/CangjieData.res');
+  const dataFilePath = path.join(__dirname, '../src/data/CharacterDictionary.res');
   const fileContent = fs.readFileSync(dataFilePath, 'utf-8');
   const characters = extractCharactersFromLessons(dataFilePath);
   console.log(`✓ Found ${characters.length} character instances\n`);
