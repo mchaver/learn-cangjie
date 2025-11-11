@@ -226,50 +226,53 @@ let lesson4Characters = [
   char("脊"),
 ]
 
-// Lesson 5: 水 - Learn E (水) - Can only use: A, B, C, D, E
+// Lesson 5: 土 - Learn G (土)
 let lesson5Characters = [
-  // Introduce 水
+  // Part 1
+  char("土"),
+  char("土"),
+  char("土"),
+  char("土"),
+
+  char("火"),
   char("水"),
+  char("日"),
+  char("月"),
+
+  // Part 2
+  char("土"),
+  char("金"),  
+  char("土"),
+  char("火"),
+  char("木"),  
+  char("土"),
   char("水"),
-  char("水"),
-  char("水"),
-  char("水"),
-  // Characters with 水
-  char("汉"),
-  char("汉"),
-  char("汉"),
-  // Practice mix with previous
-  char("水"),
-  char("汉"),
-  char("木"),
-  char("水"),
-  char("林"),
-  char("汉"),
-  char("明"),
-  char("水"),
+  char("土"),
+
+  // Part 3
+  char("灶"),
+  char("灶"),
+  char("圣"),
+  char("圣"),
+  char("桂"),
+  char("桂"),
+  char("肚"),
+  char("肚"),
+
+  // Part 4
+  char("金"),
+  char("肚"),
+  char("土"),
+  char("灶"),  
+  char("火"),
+  char("桂"),
+  char("圣"),
+  char("月"),
 ]
 
 // Lesson 6: 火 - Learn F (火) - Can only use: A, B, C, D, E, F
 let lesson6Characters = [
-  // Introduce 火
-  char("火"),
-  char("火"),
-  char("火"),
-  char("火"),
-  char("火"),
-  // Characters with 火
-  char("炎"),
-  char("炎"),
-  char("炎"),
-  // Practice mix with previous
-  char("火"),
-  char("炎"),
-  char("水"),
-  char("火"),
-  char("汉"),
-  char("炎"),
-  char("林"),
-  char("火"),
+
 ]
 
 // Lesson 7: 土 - Learn G (土) - Can only use: A, B, C, D, E, F, G
@@ -822,10 +825,11 @@ let getPhilosophyLessons = (): array<Types.lesson> => {
       Philosophy, Radicals, Practice, [E, F],
       lesson4Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 4: 土
-    makeLesson(4, "哲理 4：土", "學習 G(土)",
-      Philosophy, Radicals, Practice, [G], lesson7Characters, ~showCode=false, ~allowHints=true, ()),
-
+    // Lesson 5: 土
+    makeLesson(5, "哲理 4：土", "學習 G(土)",
+      Philosophy, Radicals, Practice, [G],
+      lesson5Characters, ~showCode=false, ~allowHints=true, ()),
+    
     // Lesson 5: Review
     makeLesson(5, "哲理複習", "複習哲理類所有部首",
       Philosophy, Radicals, Review, [A, B, C, D, E, F, G],
