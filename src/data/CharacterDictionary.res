@@ -108,8 +108,15 @@ let characterDictionary: Belt.Map.String.t<characterInfo> = Belt.Map.String.from
   ("早", makeChar("早", "AJ", Some(["日", "十"]), ())),
   ("旦", makeChar("旦", "AM", Some(["日", "一"]), ())),
   ("朋", makeChar("朋", "BB", Some(["月", "月"]), ())),
+  ("采", makeChar("采", "BD", Some(["月", "木"]), ())),
+  ("㓁", makeChar("㓁", "BC", Some(["月", "金"]), ())),
+  ("鈤", makeChar("鈤", "CA", Some(["金", "日"]), ())),
+  ("鈅", makeChar("鈅", "CB", Some(["金", "月"]), ())),
+  ("釟", makeChar("釟", "CC", Some(["金", "金"]), ())),
   ("公", makeChar("公", "CI", Some(["金", "戈"]), ())),
   ("杳", makeChar("杳", "DA", Some(["木", "日"]), ())),
+  ("朿", makeChar("朿", "DB", Some(["木", "月"]), ())),
+  ("朳", makeChar("朳", "DC", Some(["木", "金"]), ())),
   ("林", makeChar("林", "DD", Some(["木", "木"]), ())),
   ("杜", makeChar("杜", "DG", Some(["木", "土"]), ())),
   ("寸", makeChar("寸", "DI", Some(["木", "戈"]), ())),
@@ -164,6 +171,7 @@ let characterDictionary: Belt.Map.String.t<characterInfo> = Belt.Map.String.from
 
   // 3-key characters
   ("同", makeChar("同", "BMR", Some(["月", "一", "口"]), ())),
+  ("森", makeChar("森", "DDD", Some(["木", "木", "木"]), ())),
   ("焚", makeChar("焚", "DDF", Some(["火", "火"]), ())),
   ("竺", makeChar("竺", "HMM", Some(["竹", "土"]), ())),
   ("成", makeChar("成", "IHS", Some(["戈", "十"]), ())),
