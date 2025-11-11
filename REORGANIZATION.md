@@ -99,10 +99,12 @@ The reorganization maintains 100% backward compatibility at the API level:
 - No import path changes needed in consuming code
 - The main `CangjieData` module re-exports all functionality
 
-### Files Preserved
+### Cleanup
 
-- `CangjieData.res.old`: Original monolithic file (103,580 bytes)
-- `CangjieData.res.backup`: Backup before refactoring
+Removed old/unused files:
+- `CangjieData.res.old`: Original monolithic file (103,580 bytes) - **Removed**
+- `CangjieData.res.backup`: Backup before refactoring (86,847 bytes) - **Removed**
+- Total space saved: ~190 KB
 
 ### Benefits
 
