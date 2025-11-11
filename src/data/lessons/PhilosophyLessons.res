@@ -4,6 +4,7 @@
 open Types
 open CharacterDictionary
 
+// Lesson 1: 日月
 let lesson1Characters = [
   // part 1
   // Introduce 日
@@ -63,27 +64,97 @@ let lesson1Characters = [
   char("昌"),
 ]
 
-// Lesson 2: 月 - Learn B (月) - Can only use: A, B
+// Lesson 2: 金木
 let lesson2Characters = [
-  // Introduce 月
-  char("月"),
-  char("月"),
-  char("月"),
-  char("月"),
-  char("月"),
-  // Characters with 月
-  char("朋"),
-  char("朋"),
+  // part 1
+  // Introduce 金
+  char("金"),
+  char("金"),
+  char("金"),
+  char("金"),
+  // Introduce 木
+  char("木"),
+  char("木"),
+  char("木"),
+  char("木"),
+
+  // part 2
+  char("金"),
+  char("木"),
+  char("金"),
+  char("木"),
+  char("木"),  
+  char("金"),
+  char("木"),  
+  char("金"),
+
+  // part 3
+  char("鈤"),
+  char("鈤"),
+  char("林"),
+  char("林"),
+
+  char("鈅"),
+  char("鈅") , 
+  char("森"),
+  char("森"),
+
+  // part 4  
+  char("杲"),
+  char("杲"),  
+  char("杳"),
+  char("杳"),  
+
+  char("采"),
+  char("采"),   
+  char("朿"),
+  char("朿"),   
+
+  // part 5
+  char("釟"),
+  char("釟"),  
+  char("朳"),
+  char("朳"),
+
+  char("㓁"),
+  char("㓁"),
+  char("鈅") , 
+  char("森"),
+
+  // part 6
   char("明"),
-  char("明"),
-  char("明"),
-  // Practice mix with previous
-  char("月"),
-  char("朋"),
-  char("明"),
+  char("朋"),  
+  char("㸓"),
+  char("昌"),
+
+  char("釟"),
+  char("朳"),
+  char("㓁"),
+  char("森"),
+]
+
+// Lesson 3: Review 日月金木
+let _lesson3 = [
+  // part 1
   char("日"),
   char("月"),
+  char("金"),
+  char("木"),
+  char("月"),
+  char("金"),
+  char("木"),
+  char("日"),
+
+  // part 2
+  char("朋"),  
   char("明"),
+  char("森"),
+  char("昌"),
+  char("釟"),
+  char("朳"),
+  char("㸓"),
+  char("㓁"),
+  
 ]
 
 // Lesson 3: 金 - Learn C (金) - Can only use: A, B, C
@@ -715,7 +786,7 @@ let getPhilosophyLessons = (): array<Types.lesson> => {
     // Lesson 2: 金木
     makeLesson(2, "哲理 2：金木", "學習 C(金) 和 D(木)",
       Philosophy, Radicals, Practice, [C, D],
-      Js.Array2.concat(lesson3Characters, lesson4Characters), ~showCode=false, ~allowHints=true, ()),
+      lesson2Characters, ~showCode=false, ~allowHints=true, ()),
 
     // Lesson 3: 水火
     makeLesson(3, "哲理 3：水火", "學習 E(水) 和 F(火)",
