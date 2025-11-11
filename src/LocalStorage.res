@@ -531,3 +531,37 @@ let getCharactersNeedingReview = (): array<string> => {
     ->Js.Array2.filter(((_, cp)) => cp.state != New && cp.state != Mastered)
     ->Js.Array2.map(((char, _)) => char)
 }
+
+// Practice repeat mode settings
+let practiceRepeatModeKey = "cangjie-practice-repeat-mode"
+
+// Encode practice repeat mode to string
+let encodePracticeRepeatMode = (mode: practiceRepeatMode): string => {
+  switch mode {
+  | Never => "never"
+  | EarliestLesson => "earliest"
+  | AnyLesson => "any"
+  }
+}
+
+// Decode practice repeat mode from string
+let decodePracticeRepeatMode = (str: string): practiceRepeatMode => {
+  switch str {
+  | "never" => Never
+  | "any" => AnyLesson
+  | _ => EarliestLesson // Default to EarliestLesson
+  }
+}
+
+// Get practice repeat mode setting
+let getPracticeRepeatMode = (): practiceRepeatMode => {
+  switch getItem(practiceRepeatModeKey)->Js.Nullable.toOption {
+  | None => EarliestLesson // Default
+  | Some(str) => decodePracticeRepeatMode(str)
+  }
+}
+
+// Set practice repeat mode setting
+let setPracticeRepeatMode = (mode: practiceRepeatMode): unit => {
+  setItem(practiceRepeatModeKey, encodePracticeRepeatMode(mode))
+}

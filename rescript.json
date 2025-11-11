@@ -6,16 +6,29 @@
       "subdirs": true
     }
   ],
+  "jsx": { "version": 4 },  
   "package-specs": [
     {
       "module": "esmodule",
-      "in-source": true
+      "in-source": false
+    },
+    {
+      "module": "commonjs",
+      "in-source": false
     }
   ],
-  "suffix": ".bs.js",
-  "bs-dependencies": ["@rescript/react"],
-  "jsx": {
-    "version": 4,
-    "mode": "automatic"
-  }
+  "bs-dependencies": [
+    "@rescript/react",
+    "@rescript/core"
+  ],
+  "bs-dev-dependencies": [],
+  "bsc-flags": [
+    "-bs-no-version-header",
+    "-bs-super-errors",
+    "-open RescriptCore"
+  ],  
+  "warnings": {
+    "number": "+A-48-42-41-40-4-9-102-33",
+    "error": "+A"
+  }    
 }

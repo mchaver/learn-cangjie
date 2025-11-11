@@ -10,6 +10,7 @@ let make = (
   ~onLessonGenerator: unit => unit,
   ~onReview: unit => unit,
   ~onTimedChallenge: unit => unit,
+  ~onSettings: unit => unit,
   ~userProgress: userProgress,
 ) => {
   let completedCount = userProgress.completedLessons->Js.Array2.length
@@ -85,6 +86,10 @@ let make = (
           <button className="tool-card" onClick={_ => onLessonGenerator()}>
             <h3> {React.string("✏️ 自訂練習")} </h3>
             <p> {React.string("輸入任何文字或按難度生成練習課程")} </p>
+          </button>
+          <button className="tool-card" onClick={_ => onSettings()}>
+            <h3> {React.string("⚙️ 設定")} </h3>
+            <p> {React.string("調整練習模式和其他設定")} </p>
           </button>
         </div>
       </div>

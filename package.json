@@ -16,14 +16,17 @@
     "fix:codes": "node tools/fixLessonCodes.js"
   },
   "dependencies": {
+    "@rescript/core": "^1.6.1",    
     "@rescript/react": "^0.12.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.2.1",
-    "rescript": "^11.0.1",
-    "sass": "^1.69.5",
-    "vite": "^5.0.8"
+    "@vitejs/plugin-react": "^4.4.1",    
+    "jest": "^30.2.0",
+    "rescript-nodejs": "^16.1.0",    
+    "rescript": "^11.1.4",
+    "sass": "^1.93.2",
+    "vite": "^6.3.2"
   }
 }

@@ -11,6 +11,7 @@ type route =
   | TimedChallenge // /challenge/timed
   | Dictionary
   | LessonGenerator
+  | Settings
   | NotFound
 
 // Parse URL path to route
@@ -37,6 +38,7 @@ let urlToRoute = (url: RescriptReactRouter.url): route => {
   | list{"challenge", "timed"} => TimedChallenge
   | list{"dictionary"} => Dictionary
   | list{"generator"} => LessonGenerator
+  | list{"settings"} => Settings
   | _ => NotFound
   }
 }
@@ -53,6 +55,7 @@ let routeToUrl = (route: route): string => {
   | TimedChallenge => "/challenge/timed"
   | Dictionary => "/dictionary"
   | LessonGenerator => "/generator"
+  | Settings => "/settings"
   | NotFound => "/404"
   }
 }

@@ -31,6 +31,30 @@ This comprehensive guide provides the complete API reference for ReScript with R
 - Common patterns and idioms
 - External bindings
 
+### Best Practices
+
+#### Avoid These Patterns
+
+1. **Avoid `%raw` blocks if possible** - When you encounter JavaScript interop needs, write proper bindings with explicit types. Find ReScript-native solutions for all problems rather than escaping to JavaScript. Only use raw if it is absolutely necessary.
+2. **Never use `Obj.magic`** - it breaks type safety
+3. **Avoid `any` types** - be specific
+4. **Don't use exceptions for control flow** - use Result types
+5. **Avoid imperative loops** - use Array/List functions
+6. **Never chain promises with `then_`** - use async/await
+7. **Don't add unnecessary module imports** - ReScript modules are globally available
+8. **Don't add `let default = make`** - Components are exported automatically
+
+#### Embrace These Patterns
+
+1. **Pattern match exhaustively** - handle all cases
+2. **Use Option for nullable values** - avoid null/undefined
+3. **Create small, focused modules** - single responsibility
+4. **Write pure functions** - no side effects (except in useEffect for React components)
+5. **Document with types** - types are documentation
+6. **Use modern React hooks** - useState, useEffect, useReducer, custom hooks
+7. **Keep state local** - lift it only when necessary
+8. **Consider React optimizations** - React.memo, useMemo, useCallback but only when measurably needed
+
 ## Project Overview
 
 **倉頡鍵客 (Cangjie Typing Master)** is a Cangjie (倉頡) input method learning application built with ReScript and React. It helps Chinese speakers master typing using the Cangjie input method through a series of progressive lessons, practice sessions, and tests.

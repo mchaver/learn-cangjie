@@ -55,14 +55,38 @@ let getRadical = (key: string): option<string> => {
 }
 
 // Placeholder audio - creates a simple beep using Web Audio API
-@val @scope("window") external audioContext: Js.Nullable.t<'a> = "AudioContext"
-@val @scope("window") external webkitAudioContext: Js.Nullable.t<'a> = "webkitAudioContext"
+type audioContext
+type oscillatorNode
+type gainNode
+type audioParam
+type audioDestinationNode
+
+@new @scope("window") external makeAudioContext: unit => audioContext = "AudioContext"
+@new @scope("window") external makeWebkitAudioContext: unit => audioContext = "webkitAudioContext"
+@send external createOscillator: audioContext => oscillatorNode = "createOscillator"
+@send external createGain: audioContext => gainNode = "createGain"
+@send external connectOscillator: (oscillatorNode, gainNode) => unit = "connect"
+@send external connectGain: (gainNode, audioDestinationNode) => unit = "connect"
+@get external getFrequency: oscillatorNode => audioParam = "frequency"
+@get external getGain: gainNode => audioParam = "gain"
+@set external setValue: (audioParam, float) => unit = "value"
+@set external setType: (oscillatorNode, string) => unit = "type"
+@send external start: (oscillatorNode, float) => unit = "start"
+@send external stop: (oscillatorNode, float) => unit = "stop"
+@get external destination: audioContext => audioDestinationNode = "destination"
+@get external currentTime: audioContext => float = "currentTime"
 
 let playKeystrokeSound = (isCorrect: bool) => {
   // Try to get AudioContext (with webkit fallback for Safari)
-  let ctx = switch audioContext->Js.Nullable.toOption {
-  | Some(c) => Some(c)
-  | None => webkitAudioContext->Js.Nullable.toOption
+  let ctx = try {
+    Some(makeAudioContext())
+  } catch {
+  | _ =>
+    try {
+      Some(makeWebkitAudioContext())
+    } catch {
+    | _ => None
+    }
   }
 
   // If we have an audio context, play a simple tone
@@ -70,24 +94,23 @@ let playKeystrokeSound = (isCorrect: bool) => {
   | Some(context) => {
       try {
         // Create oscillator for beep sound
-        let oscillator = context["createOscillator"]()
-        let gainNode = context["createGain"]()
+        let oscillator = context->createOscillator
+        let gainNode = context->createGain
 
         // Connect nodes
-        let _ = oscillator["connect"](gainNode)
-        let _ = gainNode["connect"](context["destination"])
+        oscillator->connectOscillator(gainNode)
+        gainNode->connectGain(context->destination)
 
         // Set frequency based on correct/incorrect
-        oscillator["frequency"]["value"] = if isCorrect { 800.0 } else { 400.0 }
-        oscillator["type"] = "sine"
+        oscillator->getFrequency->setValue(if isCorrect { 800.0 } else { 400.0 })
+        oscillator->setType("sine")
 
         // Set volume
-        gainNode["gain"]["value"] = 0.1
+        gainNode->getGain->setValue(0.1)
 
         // Play short beep
-        let _ = oscillator["start"](0.0)
-        let _ = oscillator["stop"](context["currentTime"] +. 0.05)
-        ()
+        oscillator->start(0.0)
+        oscillator->stop(context->currentTime +. 0.05)
       } catch {
       | _ => () // Silently fail if audio doesn't work
       }

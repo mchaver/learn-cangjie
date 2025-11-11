@@ -128,9 +128,9 @@ let getRandomSelection = (arr: array<'a>, count: int): array<'a> => {
   // Fisher-Yates shuffle
   for i in 0 to len - 1 {
     let j = Js.Math.random_int(0, len)
-    let temp = shuffled[i]
-    shuffled[i] = shuffled[j]
-    shuffled[j] = temp
+    let temp = shuffled->Array.getUnsafe(i)
+    shuffled->Array.setUnsafe(i, shuffled->Array.getUnsafe(j))
+    shuffled->Array.setUnsafe(j, temp)
   }
 
   shuffled->Js.Array2.slice(~start=0, ~end_=Js.Math.min_int(count, len))

@@ -117,9 +117,9 @@ let getRandomCharactersByCodeLength = (db: array<dbEntry>, length: int, count: i
   // Fisher-Yates shuffle
   for i in 0 to shuffled->Js.Array2.length - 1 {
     let j = Js.Math.random_int(0, shuffled->Js.Array2.length)
-    let temp = shuffled[i]
-    shuffled[i] = shuffled[j]
-    shuffled[j] = temp
+    let temp = shuffled->Array.getUnsafe(i)
+    shuffled->Array.setUnsafe(i, shuffled->Array.getUnsafe(j))
+    shuffled->Array.setUnsafe(j, temp)
   }
 
   shuffled->Js.Array2.slice(~start=0, ~end_=Js.Math.min_int(count, shuffled->Js.Array2.length))

@@ -918,6 +918,273 @@ let mixedPatternCharacters = [
   makeChar("回", "WR", Some(["田", "口"]), ()),
 ]
 
+// Lesson 30: Four-Key Complex Patterns
+// Characters with 4 keys showing various structural combinations
+let fourKeyPatternCharacters = [
+  // Four keys: complex left-right structures
+  makeChar("謝", "YRHHI", Some(["卜", "口", "竹", "竹", "戈"]), ()), // thanks: speech + body
+  makeChar("謝", "YRHHI", Some(["卜", "口", "竹", "竹", "戈"]), ()),
+  makeChar("請", "YRQMB", Some(["卜", "口", "手", "一", "月"]), ()), // please: speech + invite
+  makeChar("請", "YRQMB", Some(["卜", "口", "手", "一", "月"]), ()),
+  makeChar("課", "YRWD", Some(["卜", "口", "田", "木"]), ()), // lesson: speech + fruit
+  makeChar("課", "YRWD", Some(["卜", "口", "田", "木"]), ()),
+
+  // Four keys: complex top-bottom structures
+  makeChar("思", "WP", Some(["田", "心"]), ()), // think: field + heart
+  makeChar("思", "WP", Some(["田", "心"]), ()),
+  makeChar("意", "YTAP", Some(["卜", "廿", "日", "心"]), ()), // meaning: sound + heart
+  makeChar("意", "YTAP", Some(["卜", "廿", "日", "心"]), ()),
+  makeChar("愛", "BBPE", Some(["月", "月", "心", "水"]), ()), // love: claw + heart + walk
+  makeChar("愛", "BBPE", Some(["月", "月", "心", "水"]), ()),
+
+  // Four keys: enclosed structures
+  makeChar("國", "WIRM", Some(["田", "戈", "口", "一"]), ()), // country: enclosure + jade
+  makeChar("國", "WIRM", Some(["田", "戈", "口", "一"]), ()),
+  makeChar("園", "WGRV", Some(["田", "土", "口", "女"]), ()), // garden: enclosure + yuan
+  makeChar("園", "WGRV", Some(["田", "土", "口", "女"]), ()),
+
+  // Mix practice
+  makeChar("謝", "YRHHI", Some(["卜", "口", "竹", "竹", "戈"]), ()),
+  makeChar("思", "WP", Some(["田", "心"]), ()),
+  makeChar("國", "WIRM", Some(["田", "戈", "口", "一"]), ()),
+  makeChar("意", "YTAP", Some(["卜", "廿", "日", "心"]), ()),
+]
+
+// Lesson 31: Five-Key Maximum Complexity
+// The most complex characters use all 5 keys (first-second-third-last rule)
+let fiveKeyPatternCharacters = [
+  // Understanding the first-last rule for complex characters
+  makeChar("樹", "DGTI", Some(["木", "土", "廿", "戈"]), ()), // tree: wood + bean + inch
+  makeChar("樹", "DGTI", Some(["木", "土", "廿", "戈"]), ()),
+  makeChar("樂", "VID", Some(["女", "戈", "木"]), ()), // music/joy: white + wood
+  makeChar("樂", "VID", Some(["女", "戈", "木"]), ()),
+  makeChar("藥", "TVID", Some(["廿", "女", "戈", "木"]), ()), // medicine: grass + music
+  makeChar("藥", "TVID", Some(["廿", "女", "戈", "木"]), ()),
+
+  // Five key characters with complex radicals
+  makeChar("機", "DVII", Some(["木", "女", "戈", "戈"]), ()), // machine: wood + chance
+  makeChar("機", "DVII", Some(["木", "女", "戈", "戈"]), ()),
+  makeChar("橋", "DHKB", Some(["木", "竹", "大", "月"]), ()), // bridge: wood + high
+  makeChar("橋", "DHKB", Some(["木", "竹", "大", "月"]), ()),
+  makeChar("權", "DTRG", Some(["木", "廿", "口", "土"]), ()), // power/right: wood + authority
+  makeChar("權", "DTRG", Some(["木", "廿", "口", "土"]), ()),
+
+  // Characters showing first-second-third-last selection
+  makeChar("難", "TOOG", Some(["廿", "人", "人", "土"]), ()), // difficult: many components
+  makeChar("難", "TOOG", Some(["廿", "人", "人", "土"]), ()),
+  makeChar("變", "VFOK", Some(["女", "火", "人", "大"]), ()), // change: complex structure
+  makeChar("變", "VFOK", Some(["女", "火", "人", "大"]), ()),
+
+  // Mix practice
+  makeChar("樹", "DGTI", Some(["木", "土", "廿", "戈"]), ()),
+  makeChar("藥", "TVID", Some(["廿", "女", "戈", "木"]), ()),
+  makeChar("難", "TOOG", Some(["廿", "人", "人", "土"]), ()),
+  makeChar("機", "DVII", Some(["木", "女", "戈", "戈"]), ()),
+]
+
+// Lesson 32: Connected vs Disconnected Components
+// Understanding when strokes are considered connected or separate
+let connectedComponentsCharacters = [
+  // Connected components count as one radical
+  makeChar("木", "D", Some(["木"]), ()), // wood: connected strokes
+  makeChar("木", "D", Some(["木"]), ()),
+  makeChar("林", "DD", Some(["木", "木"]), ()), // forest: two separate woods
+  makeChar("林", "DD", Some(["木", "木"]), ()),
+  makeChar("日", "A", Some(["日"]), ()), // sun: connected enclosure
+  makeChar("日", "A", Some(["日"]), ()),
+
+  // Disconnected components are separate radicals
+  makeChar("八", "HO", Some(["竹", "人"]), ()), // eight: two separated strokes
+  makeChar("八", "HO", Some(["竹", "人"]), ()),
+  makeChar("小", "FH", Some(["火", "竹"]), ()), // small: disconnected vertical + dots
+  makeChar("小", "FH", Some(["火", "竹"]), ()),
+  makeChar("川", "LLL", Some(["中", "中", "中"]), ()), // river: three separate strokes
+  makeChar("川", "LLL", Some(["中", "中", "中"]), ()),
+
+  // Characters where connection matters
+  makeChar("口", "R", Some(["口"]), ()), // mouth: connected enclosure (1 key)
+  makeChar("口", "R", Some(["口"]), ()),
+  makeChar("人", "O", Some(["人"]), ()), // person: connected strokes (1 key)
+  makeChar("人", "O", Some(["人"]), ()),
+  makeChar("個", "OWJR", Some(["人", "田", "十", "口"]), ()), // individual: person + solid
+  makeChar("個", "OWJR", Some(["人", "田", "十", "口"]), ()),
+
+  // Mix practice
+  makeChar("林", "DD", Some(["木", "木"]), ()),
+  makeChar("八", "HO", Some(["竹", "人"]), ()),
+  makeChar("川", "LLL", Some(["中", "中", "中"]), ()),
+  makeChar("個", "OWJR", Some(["人", "田", "十", "口"]), ()),
+]
+
+// Lesson 33: First-Last Rule Deep Dive
+// Understanding how to handle characters with many components
+let firstLastRuleCharacters = [
+  // Two components: take all keys
+  makeChar("明", "AB", Some(["日", "月"]), ()), // 2 components: both keys
+  makeChar("明", "AB", Some(["日", "月"]), ()),
+  makeChar("林", "DD", Some(["木", "木"]), ()), // 2 components: both keys
+  makeChar("林", "DD", Some(["木", "木"]), ()),
+
+  // Three components: take all keys
+  makeChar("草", "TAJ", Some(["廿", "日", "十"]), ()), // 3 components: all keys
+  makeChar("草", "TAJ", Some(["廿", "日", "十"]), ()),
+  makeChar("思", "WP", Some(["田", "心"]), ()), // 2 components: field + heart
+  makeChar("思", "WP", Some(["田", "心"]), ()),
+
+  // Five+ strokes: first, second, third, last
+  makeChar("難", "TOOG", Some(["廿", "人", "人", "土"]), ()), // many strokes: 1st,2nd,3rd,last
+  makeChar("難", "TOOG", Some(["廿", "人", "人", "土"]), ()),
+  makeChar("贏", "YNBUC", Some(["卜", "弓", "月", "山", "金"]), ()), // win: complex character
+  makeChar("贏", "YNBUC", Some(["卜", "弓", "月", "山", "金"]), ()),
+
+  // Understanding which strokes to count
+  makeChar("爾", "MFBK", Some(["一", "火", "月", "大"]), ()), // you (formal): many parts
+  makeChar("爾", "MFBK", Some(["一", "火", "月", "大"]), ()),
+  makeChar("華", "TMTJ", Some(["廿", "一", "廿", "十"]), ()), // magnificent: flower radical
+  makeChar("華", "TMTJ", Some(["廿", "一", "廿", "十"]), ()),
+
+  // Practice characters showing the rule
+  makeChar("義", "TGHQI", Some(["廿", "土", "竹", "手", "戈"]), ()), // righteousness/meaning
+  makeChar("義", "TGHQI", Some(["廿", "土", "竹", "手", "戈"]), ()),
+  makeChar("羣", "SRTQ", Some(["尸", "口", "廿", "手"]), ()), // group (variant)
+  makeChar("羣", "SRTQ", Some(["尸", "口", "廿", "手"]), ()),
+
+  // Mix practice
+  makeChar("難", "TOOG", Some(["廿", "人", "人", "土"]), ()),
+  makeChar("贏", "YNBUC", Some(["卜", "弓", "月", "山", "金"]), ()),
+  makeChar("華", "TMTJ", Some(["廿", "一", "廿", "十"]), ()),
+  makeChar("義", "TGHQI", Some(["廿", "土", "竹", "手", "戈"]), ()),
+]
+
+// Lesson 34: Radical Variations
+// Same radical appears differently based on position
+let radicalVariationCharacters = [
+  // 人 (O) vs 亻(O) - person radical in different positions
+  makeChar("人", "O", Some(["人"]), ()), // person standalone
+  makeChar("人", "O", Some(["人"]), ()),
+  makeChar("你", "ONF", Some(["人", "弓", "火"]), ()), // you: person + you
+  makeChar("你", "ONF", Some(["人", "弓", "火"]), ()),
+  makeChar("他", "OPD", Some(["人", "心", "木"]), ()), // he: person + also
+  makeChar("他", "OPD", Some(["人", "心", "木"]), ()),
+
+  // 水 (E) vs 氵(E) - water radical variations
+  makeChar("水", "E", Some(["水"]), ()), // water standalone
+  makeChar("水", "E", Some(["水"]), ()),
+  makeChar("河", "EMNR", Some(["水", "一", "弓", "口"]), ()), // river: water + can
+  makeChar("河", "EMNR", Some(["水", "一", "弓", "口"]), ()),
+  makeChar("江", "EM", Some(["水", "一"]), ()), // river: water + work
+  makeChar("江", "EM", Some(["水", "一"]), ()),
+
+  // 心 (P) vs 忄(P) vs ⺗(P) - heart radical variations
+  makeChar("心", "P", Some(["心"]), ()), // heart standalone
+  makeChar("心", "P", Some(["心"]), ()),
+  makeChar("怕", "PHA", Some(["心", "竹", "日"]), ()), // fear: heart + white
+  makeChar("怕", "PHA", Some(["心", "竹", "日"]), ()),
+  makeChar("思", "WP", Some(["田", "心"]), ()), // think: heart at bottom
+  makeChar("思", "WP", Some(["田", "心"]), ()),
+
+  // 手 (Q) vs 扌(Q) - hand radical variations
+  makeChar("手", "Q", Some(["手"]), ()), // hand standalone
+  makeChar("手", "Q", Some(["手"]), ()),
+  makeChar("打", "QMN", Some(["手", "一", "弓"]), ()), // hit: hand + nail
+  makeChar("打", "QMN", Some(["手", "一", "弓"]), ()),
+  makeChar("拿", "ORQ", Some(["人", "口", "手"]), ()), // take: hand + together
+  makeChar("拿", "ORQ", Some(["人", "口", "手"]), ()),
+
+  // Mix practice
+  makeChar("你", "ONF", Some(["人", "弓", "火"]), ()),
+  makeChar("河", "EMNR", Some(["水", "一", "弓", "口"]), ()),
+  makeChar("思", "WP", Some(["田", "心"]), ()),
+  makeChar("打", "QMN", Some(["手", "一", "弓"]), ()),
+]
+
+// Lesson 35: Exception Characters and Special Cases
+// Characters that don't follow obvious patterns - learn by memory
+let exceptionCharacters = [
+  // Common exceptions that trip up learners
+  makeChar("必", "PH", Some(["心", "竹"]), ()), // must: heart + stroke (not obvious)
+  makeChar("必", "PH", Some(["心", "竹"]), ()),
+  makeChar("世", "PT", Some(["心", "廿"]), ()), // world: unusual decomposition
+  makeChar("世", "PT", Some(["心", "廿"]), ()),
+  makeChar("或", "IRM", Some(["戈", "口", "一"]), ()), // or: complex breakdown
+  makeChar("或", "IRM", Some(["戈", "口", "一"]), ()),
+
+  // Characters where radical isn't obvious
+  makeChar("重", "HJWG", Some(["竹", "十", "田", "土"]), ()), // heavy/repeat: not intuitive
+  makeChar("重", "HJWG", Some(["竹", "十", "田", "土"]), ()),
+  makeChar("書", "LGA", Some(["中", "土", "日"]), ()), // book: special form
+  makeChar("書", "LGA", Some(["中", "土", "日"]), ()),
+  makeChar("車", "JWJ", Some(["十", "田", "十"]), ()), // car/vehicle: symmetrical
+  makeChar("車", "JWJ", Some(["十", "田", "十"]), ()),
+
+  // Simplified vs traditional differences
+  makeChar("學", "HBND", Some(["竹", "月", "弓", "木"]), ()), // study: complex traditional
+  makeChar("學", "HBND", Some(["竹", "月", "弓", "木"]), ()),
+  makeChar("愛", "BBPE", Some(["月", "月", "心", "水"]), ()), // love: has claw + heart
+  makeChar("愛", "BBPE", Some(["月", "月", "心", "水"]), ()),
+
+  // Characters with hidden components
+  makeChar("為", "IKNF", Some(["戈", "大", "弓", "火"]), ()), // for/do: hand + elephant
+  makeChar("為", "IKNF", Some(["戈", "大", "弓", "火"]), ()),
+  makeChar("與", "HXYC", Some(["竹", "難", "卜", "金"]), ()), // give/and: unusual
+  makeChar("與", "HXYC", Some(["竹", "難", "卜", "金"]), ()),
+
+  // Mix practice - memorize these!
+  makeChar("必", "PH", Some(["心", "竹"]), ()),
+  makeChar("重", "HJWG", Some(["竹", "十", "田", "土"]), ()),
+  makeChar("學", "HBND", Some(["竹", "月", "弓", "木"]), ()),
+  makeChar("為", "IKNF", Some(["戈", "大", "弓", "火"]), ()),
+]
+
+// Lesson 36: Comprehensive Pattern Review
+// Mix all patterns learned in lessons 26-35
+let comprehensivePatternReview = [
+  // Simple patterns (Lesson 26-27)
+  makeChar("明", "AB", Some(["日", "月"]), ()),
+  makeChar("林", "DD", Some(["木", "木"]), ()),
+  makeChar("草", "TAJ", Some(["廿", "日", "十"]), ()),
+  makeChar("字", "JND", Some(["十", "弓", "木"]), ()),
+
+  // Enclosures (Lesson 28)
+  makeChar("回", "WR", Some(["田", "口"]), ()),
+  makeChar("因", "WK", Some(["田", "大"]), ()),
+  makeChar("同", "BMR", Some(["月", "一", "口"]), ()),
+
+  // Four-key patterns (Lesson 30)
+  makeChar("謝", "YRHHI", Some(["卜", "口", "竹", "竹", "戈"]), ()),
+  makeChar("思", "WP", Some(["田", "心"]), ()),
+  makeChar("國", "WIRM", Some(["田", "戈", "口", "一"]), ()),
+
+  // Five-key complexity (Lesson 31)
+  makeChar("難", "TOOG", Some(["廿", "人", "人", "土"]), ()),
+  makeChar("樹", "DGTI", Some(["木", "土", "廿", "戈"]), ()),
+
+  // Connected components (Lesson 32)
+  makeChar("八", "HO", Some(["竹", "人"]), ()),
+  makeChar("川", "LLL", Some(["中", "中", "中"]), ()),
+
+  // First-last rule (Lesson 33)
+  makeChar("贏", "YNBUC", Some(["卜", "弓", "月", "山", "金"]), ()),
+  makeChar("華", "TMTJ", Some(["廿", "一", "廿", "十"]), ()),
+
+  // Radical variations (Lesson 34)
+  makeChar("你", "ONF", Some(["人", "弓", "火"]), ()),
+  makeChar("河", "EMNR", Some(["水", "一", "弓", "口"]), ()),
+  makeChar("打", "QMN", Some(["手", "一", "弓"]), ()),
+
+  // Exceptions (Lesson 35)
+  makeChar("必", "PH", Some(["心", "竹"]), ()),
+  makeChar("重", "HJWG", Some(["竹", "十", "田", "土"]), ()),
+  makeChar("學", "HBND", Some(["竹", "月", "弓", "木"]), ()),
+
+  // Final comprehensive mix
+  makeChar("明", "AB", Some(["日", "月"]), ()),
+  makeChar("國", "WIRM", Some(["田", "戈", "口", "一"]), ()),
+  makeChar("難", "TOOG", Some(["廿", "人", "人", "土"]), ()),
+  makeChar("思", "WP", Some(["田", "心"]), ()),
+  makeChar("為", "IKNF", Some(["戈", "大", "弓", "火"]), ()),
+]
+
 // Top 100 Most Common Characters - Advanced Lessons
 // Each lesson: 5 characters, each repeated 3-4 times for practice
 
@@ -1634,44 +1901,79 @@ let getAllLessons = (): array<lesson> => {
     makeLesson(29, "拆字探索 4：綜合練習", "綜合複習所有拆字規則",
       Advanced, CommonWords, MixedReview, [],
       mixedPatternCharacters, ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[26, 27, 28], ()),
+
+    // Lesson 30: Four-Key Complex Patterns
+    makeLesson(30, "拆字探索 5：四鍵複合", "學習四鍵複雜字型結構",
+      Advanced, CommonWords, Practice, [],
+      fourKeyPatternCharacters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 31: Five-Key Maximum Complexity
+    makeLesson(31, "拆字探索 6：五鍵最複雜", "掌握五鍵最複雜字型與首尾規則",
+      Advanced, CommonWords, Practice, [],
+      fiveKeyPatternCharacters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 32: Connected vs Disconnected Components
+    makeLesson(32, "拆字探索 7：連接與分離", "理解筆畫連接與分離的判斷",
+      Advanced, CommonWords, Practice, [],
+      connectedComponentsCharacters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 33: First-Last Rule Deep Dive
+    makeLesson(33, "拆字探索 8：首尾規則深入", "深入學習處理多部件字的方法",
+      Advanced, CommonWords, Practice, [],
+      firstLastRuleCharacters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 34: Radical Variations
+    makeLesson(34, "拆字探索 9：部首變形", "理解部首在不同位置的變化",
+      Advanced, CommonWords, Practice, [],
+      radicalVariationCharacters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 35: Exception Characters
+    makeLesson(35, "拆字探索 10：特殊例外字", "記憶不遵循常規的特殊字",
+      Advanced, CommonWords, Practice, [],
+      exceptionCharacters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 36: Comprehensive Pattern Review
+    makeLesson(36, "拆字探索 11：全面複習", "全面複習26-35課所有拆字規則",
+      Advanced, CommonWords, MixedReview, [],
+      comprehensivePatternReview, ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[26, 27, 28, 29, 30, 31, 32, 33, 34, 35], ()),
   ]
 
-  // SECTION 6: TOP COMMON (前100個字) - Lessons 30-onwards
+  // SECTION 6: TOP COMMON (前100個字) - Lessons 37-onwards
   // Pattern: 3-4 content lessons → review → comprehensive review
 
   let commonCharLessons = [
-    // SET 1: Lessons 30-35 (Characters 1-20)
-    makeLesson(30, "常用字（一）：的一是不了", "學習最常用的五個字",
+    // SET 1: Lessons 37-42 (Characters 1-20)
+    makeLesson(37, "常用字（一）：的一是不了", "學習最常用的五個字",
       TopCommon, CommonWords, Practice, [], commonChars1, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(31, "常用字（二）：人我在有他", "學習常用代詞和動詞",
+    makeLesson(38, "常用字（二）：人我在有他", "學習常用代詞和動詞",
       TopCommon, CommonWords, Practice, [], commonChars2, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(32, "常用字（三）：這為之大來", "學習常用連詞和動詞",
+    makeLesson(39, "常用字（三）：這為之大來", "學習常用連詞和動詞",
       TopCommon, CommonWords, Practice, [], commonChars3, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(33, "常用字（四）：以個中上們", "學習常用介詞和量詞",
+    makeLesson(40, "常用字（四）：以個中上們", "學習常用介詞和量詞",
       TopCommon, CommonWords, Practice, [], commonChars4, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(34, "複習：字符 1-20", "複習第三十到三十三課的常用字",
+    makeLesson(41, "複習：字符 1-20", "複習第三十七到四十課的常用字",
       TopCommon, CommonWords, Review, [],
       Js.Array2.concat(commonChars1, Js.Array2.concat(commonChars2, Js.Array2.concat(commonChars3, commonChars4))),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[30, 31, 32, 33], ()),
-    makeLesson(35, "綜合複習：字符 1-20", "隨機複習所有已學常用字",
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[37, 38, 39, 40], ()),
+    makeLesson(42, "綜合複習：字符 1-20", "隨機複習所有已學常用字",
       TopCommon, CommonWords, MixedReview, [],
       CangjieUtils.shuffleArray(Js.Array2.concat(commonChars1, Js.Array2.concat(commonChars2, Js.Array2.concat(commonChars3, commonChars4)))),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[30, 31, 32, 33], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[37, 38, 39, 40], ()),
 
-    // SET 2: Lessons 36-41 (Characters 21-40)
-    makeLesson(36, "常用字（五）：到說國和地", "學習常用動詞和名詞",
+    // SET 2: Lessons 43-48 (Characters 21-40)
+    makeLesson(43, "常用字（五）：到說國和地", "學習常用動詞和名詞",
       TopCommon, CommonWords, Practice, [], commonChars5, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(37, "常用字（六）：也子時道出", "學習常用副詞和時間詞",
+    makeLesson(44, "常用字（六）：也子時道出", "學習常用副詞和時間詞",
       TopCommon, CommonWords, Practice, [], commonChars6, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(38, "常用字（七）：而要於就下", "學習常用連詞和方位詞",
+    makeLesson(45, "常用字（七）：而要於就下", "學習常用連詞和方位詞",
       TopCommon, CommonWords, Practice, [], commonChars7, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(39, "常用字（八）：得可你年生", "學習常用動詞和名詞",
+    makeLesson(46, "常用字（八）：得可你年生", "學習常用動詞和名詞",
       TopCommon, CommonWords, Practice, [], commonChars8, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(40, "複習：字符 21-40", "複習第三十六到三十九課的常用字",
+    makeLesson(47, "複習：字符 21-40", "複習第四十三到四十六課的常用字",
       TopCommon, CommonWords, Review, [],
       Js.Array2.concat(commonChars5, Js.Array2.concat(commonChars6, Js.Array2.concat(commonChars7, commonChars8))),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[36, 37, 38, 39], ()),
-    makeLesson(41, "綜合複習：字符 1-40", "隨機複習所有已學常用字",
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[43, 44, 45, 46], ()),
+    makeLesson(48, "綜合複習：字符 1-40", "隨機複習所有已學常用字",
       TopCommon, CommonWords, MixedReview, [],
       CangjieUtils.shuffleArray(
         Js.Array2.concat(
@@ -1679,22 +1981,22 @@ let getAllLessons = (): array<lesson> => {
           Js.Array2.concat(commonChars5, Js.Array2.concat(commonChars6, Js.Array2.concat(commonChars7, commonChars8)))
         )
       ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[30, 31, 32, 33, 36, 37, 38, 39], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[37, 38, 39, 40, 43, 44, 45, 46], ()),
 
-    // SET 3: Lessons 42-47 (Characters 41-60)
-    makeLesson(42, "常用字（九）：自會那後能", "學習常用代詞和助動詞",
+    // SET 3: Lessons 49-54 (Characters 41-60)
+    makeLesson(49, "常用字（九）：自會那後能", "學習常用代詞和助動詞",
       TopCommon, CommonWords, Practice, [], commonChars9, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(43, "常用字（十）：對著事其里", "學習常用動詞和名詞",
+    makeLesson(50, "常用字（十）：對著事其里", "學習常用動詞和名詞",
       TopCommon, CommonWords, Practice, [], commonChars10, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(44, "常用字（十一）：所去行過家", "學習常用動詞和名詞",
+    makeLesson(51, "常用字（十一）：所去行過家", "學習常用動詞和名詞",
       TopCommon, CommonWords, Practice, [], commonChars11, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(45, "常用字（十二）：十用發天如", "學習常用數詞和動詞",
+    makeLesson(52, "常用字（十二）：十用發天如", "學習常用數詞和動詞",
       TopCommon, CommonWords, Practice, [], commonChars12, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(46, "複習：字符 41-60", "複習第四十二到四十五課的常用字",
+    makeLesson(53, "複習：字符 41-60", "複習第四十二到四十五課的常用字",
       TopCommon, CommonWords, Review, [],
       Js.Array2.concat(commonChars9, Js.Array2.concat(commonChars10, Js.Array2.concat(commonChars11, commonChars12))),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[42, 43, 44, 45], ()),
-    makeLesson(47, "綜合複習：字符 1-60", "隨機複習所有已學常用字",
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[49, 50, 51, 52], ()),
+    makeLesson(54, "綜合複習：字符 1-60", "隨機複習所有已學常用字",
       TopCommon, CommonWords, MixedReview, [],
       CangjieUtils.shuffleArray(
         Js.Array2.concat(
@@ -1705,20 +2007,20 @@ let getAllLessons = (): array<lesson> => {
           Js.Array2.concat(commonChars9, Js.Array2.concat(commonChars10, Js.Array2.concat(commonChars11, commonChars12)))
         )
       ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[30, 31, 32, 33, 36, 37, 38, 39, 42, 43, 44, 45], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[37, 38, 39, 40, 43, 44, 45, 46, 49, 50, 51, 52], ()),
 
-    // SET 4: Lessons 48-52 (Characters 61-75)
-    makeLesson(48, "常用字（十三）：然作方成者", "學習常用副詞和動詞",
+    // SET 4: Lessons 55-59 (Characters 61-75)
+    makeLesson(55, "常用字（十三）：然作方成者", "學習常用副詞和動詞",
       TopCommon, CommonWords, Practice, [], commonChars13, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(49, "常用字（十四）：多日都三同", "學習常用量詞和形容詞",
+    makeLesson(56, "常用字（十四）：多日都三同", "學習常用量詞和形容詞",
       TopCommon, CommonWords, Practice, [], commonChars14, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(50, "常用字（十五）：已經法當起", "學習常用副詞和動詞",
+    makeLesson(57, "常用字（十五）：已經法當起", "學習常用副詞和動詞",
       TopCommon, CommonWords, Practice, [], commonChars15, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(51, "複習：字符 61-75", "複習第四十八到五十課的常用字",
+    makeLesson(58, "複習：字符 61-75", "複習第四十八到五十課的常用字",
       TopCommon, CommonWords, Review, [],
       Js.Array2.concat(commonChars13, Js.Array2.concat(commonChars14, commonChars15)),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[48, 49, 50], ()),
-    makeLesson(52, "綜合複習：字符 1-75", "隨機複習所有已學常用字",
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[55, 56, 57], ()),
+    makeLesson(59, "綜合複習：字符 1-75", "隨機複習所有已學常用字",
       TopCommon, CommonWords, MixedReview, [],
       CangjieUtils.shuffleArray(
         Js.Array2.concat(
@@ -1732,22 +2034,22 @@ let getAllLessons = (): array<lesson> => {
           Js.Array2.concat(commonChars13, Js.Array2.concat(commonChars14, commonChars15))
         )
       ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[30, 31, 32, 33, 36, 37, 38, 39, 42, 43, 44, 45, 48, 49, 50], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[37, 38, 39, 40, 43, 44, 45, 46, 49, 50, 51, 52, 55, 56, 57], ()),
 
-    // SET 5: Lessons 53-58 (Characters 76-96)
-    makeLesson(53, "常用字（十六）：與好看學進", "學習常用連詞和動詞",
+    // SET 5: Lessons 60-65 (Characters 76-96)
+    makeLesson(60, "常用字（十六）：與好看學進", "學習常用連詞和動詞",
       TopCommon, CommonWords, Practice, [], commonChars16, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(54, "常用字（十七）：種將還分此", "學習常用名詞和動詞",
+    makeLesson(61, "常用字（十七）：種將還分此", "學習常用名詞和動詞",
       TopCommon, CommonWords, Practice, [], commonChars17, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(55, "常用字（十八）：心前面又定", "學習常用名詞和副詞",
+    makeLesson(62, "常用字（十八）：心前面又定", "學習常用名詞和副詞",
       TopCommon, CommonWords, Practice, [], commonChars18, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(56, "常用字（十九）：見只主沒公從", "學習常用動詞和副詞",
+    makeLesson(63, "常用字（十九）：見只主沒公從", "學習常用動詞和副詞",
       TopCommon, CommonWords, Practice, [], commonChars19, ~showCode=false, ~allowHints=true, ()),
-    makeLesson(57, "複習：字符 76-96", "複習第五十三到五十六課的常用字",
+    makeLesson(64, "複習：字符 76-96", "複習第五十三到五十六課的常用字",
       TopCommon, CommonWords, Review, [],
       Js.Array2.concat(commonChars16, Js.Array2.concat(commonChars17, Js.Array2.concat(commonChars18, commonChars19))),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[53, 54, 55, 56], ()),
-    makeLesson(58, "綜合複習：前100常用字", "隨機複習所有已學的96個常用字",
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[60, 61, 62, 63], ()),
+    makeLesson(65, "綜合複習：前100常用字", "隨機複習所有已學的96個常用字",
       TopCommon, CommonWords, MixedReview, [],
       CangjieUtils.shuffleArray(
         Js.Array2.concat(
@@ -1767,7 +2069,7 @@ let getAllLessons = (): array<lesson> => {
           commonChars19
         )
       ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[30, 31, 32, 33, 36, 37, 38, 39, 42, 43, 44, 45, 48, 49, 50, 53, 54, 55, 56], ()),
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[37, 38, 39, 40, 43, 44, 45, 46, 49, 50, 51, 52, 55, 56, 57, 60, 61, 62, 63], ()),
   ]
 
   // Placement test
@@ -1891,4 +2193,30 @@ let createTimedChallenge = (completedLessonIds: array<int>, durationSeconds: int
       reviewsLessons: [],
     })
   }
+}
+
+// Build a map from character to its earliest lesson ID (for multi-character codes only)
+// This is used for the "EarliestLesson" practice repeat mode setting
+let getCharacterEarliestLessonMap = (): Belt.Map.String.t<int> => {
+  // Start with empty map
+  let map = ref(Belt.Map.String.empty)
+
+  // Iterate through all lessons in order (lowest ID first)
+  allLessons->Js.Array2.forEach(lesson => {
+    // For each character in the lesson
+    lesson.characters->Js.Array2.forEach(charInfo => {
+      // Only track multi-character codes (2+ keys)
+      let isMultiChar = charInfo.cangjieCode->Js.Array2.length > 1
+      if isMultiChar {
+        // Only set if this character hasn't been seen before
+        // (since we iterate lessons in order, first occurrence is earliest)
+        switch map.contents->Belt.Map.String.get(charInfo.character) {
+        | None => map := map.contents->Belt.Map.String.set(charInfo.character, lesson.id)
+        | Some(_) => () // Already have an earlier lesson for this character
+        }
+      }
+    })
+  })
+
+  map.contents
 }

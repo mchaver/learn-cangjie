@@ -113,6 +113,12 @@ type masteryState =
   | Weak          // User clicked "Show Hint" or gave up
   | Mastered      // Typed correctly multiple times
 
+// Practice repeat mode - controls when "practice three times" appears
+type practiceRepeatMode =
+  | Never           // Never show practice-three-times feature
+  | EarliestLesson  // Only show in the earliest lesson where character appears
+  | AnyLesson       // Show on first occurrence within each lesson (original behavior)
+
 // Individual character progress tracking
 type characterProgress = {
   character: string,

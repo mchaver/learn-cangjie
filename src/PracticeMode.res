@@ -35,6 +35,14 @@ let make = (
   // Determine if we're in review mode
   let isReviewMode = lesson.lessonType == Review
 
+  // Get practice repeat mode setting
+  let practiceRepeatMode = LocalStorage.getPracticeRepeatMode()
+
+  // Get character-to-earliest-lesson map (for EarliestLesson mode)
+  let earliestLessonMap = React.useMemo0(() => {
+    CangjieData.getCharacterEarliestLessonMap()
+  })
+
   // Build a map of multi-character codes to their first occurrence index in this lesson
   let firstOccurrenceMap = React.useMemo1(() => {
     let map = Belt.MutableMap.String.make()
@@ -50,7 +58,8 @@ let make = (
     map
   }, [lesson])
 
-  // Check if current character is first-time multi-character code (first occurrence in lesson)
+  // Check if current character should trigger "practice three times"
+  // Based on user's practice repeat mode setting
   let isFirstTimeMultiChar = switch currentChar {
   | None => false
   | Some(charInfo) => {
@@ -58,10 +67,31 @@ let make = (
       if !isMultiChar {
         false
       } else {
-        // Check if this is the first occurrence of this character in the lesson
-        switch firstOccurrenceMap->Belt.MutableMap.String.get(charInfo.character) {
-        | Some(firstIdx) => firstIdx == inputState.currentIndex
-        | None => false
+        // Apply setting logic
+        switch practiceRepeatMode {
+        | Never => false // Never show practice-three-times
+        | AnyLesson => {
+            // Show on first occurrence within this lesson (original behavior)
+            switch firstOccurrenceMap->Belt.MutableMap.String.get(charInfo.character) {
+            | Some(firstIdx) => firstIdx == inputState.currentIndex
+            | None => false
+            }
+          }
+        | EarliestLesson => {
+            // Only show if this is the earliest lesson where character appears
+            switch earliestLessonMap->Belt.Map.String.get(charInfo.character) {
+            | Some(earliestLessonId) => {
+                // This is the earliest lesson AND first occurrence in this lesson
+                let isEarliestLesson = earliestLessonId == lesson.id
+                let isFirstInLesson = switch firstOccurrenceMap->Belt.MutableMap.String.get(charInfo.character) {
+                | Some(firstIdx) => firstIdx == inputState.currentIndex
+                | None => false
+                }
+                isEarliestLesson && isFirstInLesson
+              }
+            | None => false
+            }
+          }
         }
       }
     }

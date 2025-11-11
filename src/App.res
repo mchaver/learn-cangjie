@@ -114,6 +114,7 @@ let make = () => {
             onLessonGenerator={() => Router.push(LessonGenerator)}
             onReview={handleStartReview}
             onTimedChallenge={handleStartTimedChallenge}
+            onSettings={() => Router.push(Settings)}
             userProgress={userProgress}
           />
         | Router.LessonList =>
@@ -207,6 +208,8 @@ let make = () => {
               </button>
             </div>
           }}
+        | Router.Settings =>
+          <SettingsView onBack={handleBackToHome} />
         | Router.NotFound =>
           <div className="error-screen">
             <h2> {React.string("找不到頁面")} </h2>
