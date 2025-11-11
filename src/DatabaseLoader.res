@@ -113,16 +113,17 @@ let getCharactersByCodeLength = (db: array<dbEntry>, length: int, count: int): a
 let getRandomCharactersByCodeLength = (db: array<dbEntry>, length: int, count: int): array<dbEntry> => {
   let filtered = db->Js.Array2.filter(entry => entry.code->Js.String2.length == length)
   let shuffled = filtered->Js.Array2.copy
+  let len = shuffled->Js.Array2.length
 
-  // Fisher-Yates shuffle
-  for i in 0 to shuffled->Js.Array2.length - 1 {
-    let j = Js.Math.random_int(0, shuffled->Js.Array2.length)
+  // Fisher-Yates shuffle using functional iteration
+  Belt.Array.range(0, len - 1)->Array.forEach(i => {
+    let j = Js.Math.random_int(0, len)
     let temp = shuffled->Array.getUnsafe(i)
     shuffled->Array.setUnsafe(i, shuffled->Array.getUnsafe(j))
     shuffled->Array.setUnsafe(j, temp)
-  }
+  })
 
-  shuffled->Js.Array2.slice(~start=0, ~end_=Js.Math.min_int(count, shuffled->Js.Array2.length))
+  shuffled->Js.Array2.slice(~start=0, ~end_=Js.Math.min_int(count, len))
 }
 
 // Look up text and return character info array

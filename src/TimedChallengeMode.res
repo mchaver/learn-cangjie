@@ -2,8 +2,8 @@
 
 open Types
 
-type htmlElement
-@send external focus: htmlElement => unit = "focus"
+// Proper DOM element binding for focus that works with any object
+@send external focus: {..} => unit = "focus"
 
 @react.component
 let make = (
@@ -21,7 +21,7 @@ let make = (
   React.useEffect0(() => {
     inputRef.current
     ->Js.Nullable.toOption
-    ->Belt.Option.forEach(elem => focus(elem->ReactDOM.domElementToObj->Obj.magic))
+    ->Option.forEach(elem => focus(elem->ReactDOM.domElementToObj))
     None
   })
 

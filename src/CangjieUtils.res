@@ -78,7 +78,8 @@ let shuffleArray = (arr: array<'a>): array<'a> => {
   let shuffled = arr->Array.copy
   let length = shuffled->Array.length
 
-  for i in 0 to length - 1 {
+  // Use functional iteration instead of imperative loop
+  Belt.Array.range(0, length - 1)->Array.forEach(i => {
     // Generate random index from i to end of array
     let j = i + Js.Math.floor(Js.Math.random() *. float_of_int(length - i))
 
@@ -86,7 +87,7 @@ let shuffleArray = (arr: array<'a>): array<'a> => {
     let temp = shuffled->Array.getUnsafe(i)
     shuffled->Array.setUnsafe(i, shuffled->Array.getUnsafe(j))
     shuffled->Array.setUnsafe(j, temp)
-  }
+  })
 
   shuffled
 }

@@ -125,13 +125,13 @@ let getRandomSelection = (arr: array<'a>, count: int): array<'a> => {
   let shuffled = arr->Js.Array2.copy
   let len = shuffled->Js.Array2.length
 
-  // Fisher-Yates shuffle
-  for i in 0 to len - 1 {
+  // Fisher-Yates shuffle using functional iteration
+  Belt.Array.range(0, len - 1)->Array.forEach(i => {
     let j = Js.Math.random_int(0, len)
     let temp = shuffled->Array.getUnsafe(i)
     shuffled->Array.setUnsafe(i, shuffled->Array.getUnsafe(j))
     shuffled->Array.setUnsafe(j, temp)
-  }
+  })
 
   shuffled->Js.Array2.slice(~start=0, ~end_=Js.Math.min_int(count, len))
 }

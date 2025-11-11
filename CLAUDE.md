@@ -43,6 +43,7 @@ This comprehensive guide provides the complete API reference for ReScript with R
 6. **Never chain promises with `then_`** - use async/await
 7. **Don't add unnecessary module imports** - ReScript modules are globally available
 8. **Don't add `let default = make`** - Components are exported automatically
+9. **Don't do `let _ = ...`** - use `->ignore` instead
 
 #### Embrace These Patterns
 
