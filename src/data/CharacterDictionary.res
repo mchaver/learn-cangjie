@@ -102,6 +102,7 @@ let characterDictionary: Belt.Map.String.t<characterInfo> = Belt.Map.String.from
 
   // 2-key characters
   ("昌", makeChar("昌", "AA", Some(["日", "日"]), ())),
+  ("㸓", makeChar("㸓", "BA", Some(["月", "日"]), ())),
   ("明", makeChar("明", "AB", Some(["日", "月"]), ())),
   ("杲", makeChar("杲", "AD", Some(["日", "木"]), ())),
   ("早", makeChar("早", "AJ", Some(["日", "十"]), ())),

@@ -5,25 +5,62 @@ open Types
 open CharacterDictionary
 
 let lesson1Characters = [
+  // part 1
   // Introduce 日
   char("日"),
   char("日"),
   char("日"),
   char("日"),
+  // Introduce 月
+  char("月"),
+  char("月"),
+  char("月"),
+  char("月"),
+
+  // part2
   char("日"),
-  // Characters with 日日
+  char("月"),
+  char("日"),
+  char("月"),
+  char("月"),
+  char("日"),
+  char("月"),
+  char("日"),
+
+  // part3
+  // Introduce 昌
   char("昌"),
   char("昌"),
   char("昌"),
-  // Practice mix
-  char("日"),
   char("昌"),
-  char("日"),
+  // Introduce 朋
+  char("朋"),
+  char("朋"),
+  char("朋"),
+  char("朋"),
+
+  // part4
+  // Introduce 明
+  char("明"),
+  char("明"),
   char("昌"),
-  char("日"),
-  char("日"),
+  char("朋"),
+
+  // Introduce 㸓
+  char("㸓"),
+  char("㸓"),
   char("昌"),
+  char("明"),
+  
+  // part 5
+  char("月"),
   char("日"),
+  char("明"),
+  char("㸓"),  
+  char("朋"),  
+  char("㸓"),
+  char("明"),
+  char("昌"),
 ]
 
 // Lesson 2: 月 - Learn B (月) - Can only use: A, B
@@ -673,7 +710,7 @@ let getPhilosophyLessons = (): array<Types.lesson> => {
   let basicRadicalLessons = [
     makeLesson(1, "哲理 1：日月", "學習 A(日) 和 B(月)",
       Philosophy, Radicals, Practice, [A, B],
-      Js.Array2.concat(lesson1Characters, lesson2Characters), ~showCode=false, ~allowHints=true, ()),
+      lesson1Characters, ~showCode=false, ~allowHints=true, ()),
 
     // Lesson 2: 金木
     makeLesson(2, "哲理 2：金木", "學習 C(金) 和 D(木)",
