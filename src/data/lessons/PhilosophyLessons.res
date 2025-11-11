@@ -179,49 +179,51 @@ let lesson3Characters = [
   char("采"),
 ]
 
-// Lesson 3: 金 - Learn C (金) - Can only use: A, B, C
-let _lesson3Characters = [
-  // Introduce 金
-  char("金"),
-  char("金"),
-  char("金"),
-  char("金"),
-  char("金"),
-  // Practice with previous keys
-  char("日"),
-  char("月"),
-  char("金"),
-  char("明"),
-  char("金"),
-  char("朋"),
-  char("金"),
-  char("昌"),
-  char("金"),
-  char("明"),
-  char("金"),
-]
-
-// Lesson 4: 木 - Learn D (木) - Can only use: A, B, C, D
+// Lesson 4: 水火
 let lesson4Characters = [
-  // Introduce 木
-  char("木"),
-  char("木"),
-  char("木"),
-  char("木"),
-  char("木"),
-  // Characters with 木
-  char("林"),
-  char("林"),
-  char("林"),
-  // Practice mix with previous
-  char("木"),
-  char("林"),
-  char("日"),
-  char("木"),
-  char("月"),
-  char("林"),
-  char("金"),
-  char("木"),
+  // Part 1
+  // Introduce 水
+  char("水"),
+  char("水"),
+  char("水"),
+  char("水"),
+  // Introduce 火
+  char("火"),
+  char("火"),
+  char("火"),
+  char("火"),
+
+  // Part 2
+  char("水"),
+  char("火"),
+  char("水"),
+  char("火"),
+  char("火"),
+  char("水"),
+  char("火"),
+  char("水"),  
+
+  // Part 3
+  char("汉"),
+  char("汉"),
+  char("炎"),
+  char("炎"),
+
+  char("肖"),
+  char("肖"),
+  char("脊"),
+  char("脊"),
+
+  // Part 4
+  char("沐"),
+  char("沐"),
+  char("消"),
+  char("消"),
+
+  char("汉"),
+  char("炎"),
+  char("肖"),
+  char("脊"),
 ]
 
 // Lesson 5: 水 - Learn E (水) - Can only use: A, B, C, D, E
@@ -815,10 +817,10 @@ let getPhilosophyLessons = (): array<Types.lesson> => {
       Philosophy, Radicals, Review, [A, B, C, D],
       lesson3Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 3: 水火
-    makeLesson(3, "哲理 3：水火", "學習 E(水) 和 F(火)",
+    // Lesson 4: 水火
+    makeLesson(4, "哲理 3：水火", "學習 E(水) 和 F(火)",
       Philosophy, Radicals, Practice, [E, F],
-      Js.Array2.concat(lesson5Characters, lesson6Characters), ~showCode=false, ~allowHints=true, ()),
+      lesson4Characters, ~showCode=false, ~allowHints=true, ()),
 
     // Lesson 4: 土
     makeLesson(4, "哲理 4：土", "學習 G(土)",
