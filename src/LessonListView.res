@@ -44,10 +44,10 @@ let make = (~onLessonSelect: int => unit, ~onBack: unit => unit, ~userProgress: 
 
   let getSectionDescription = (section: lessonSection): string => {
     switch section {
-    | Philosophy => "五行：金木水火土"
-    | Strokes => "基礎筆畫：日月一大十田"
-    | BodyParts => "身體部位：人心手"
-    | CharacterShapes => "常見字形：口中山女竹戈"
+    | Philosophy => "日月金木水火土"
+    | Strokes => "竹戈十大中一弓"
+    | BodyParts => "人心手口"
+    | CharacterShapes => "尸廿山女田卜"
     | SpecialKeys => "特殊按鍵"
     | TopCommon => "最常用的100個字"
     | Advanced => "進階課程"
