@@ -134,7 +134,7 @@ let lesson2Characters = [
 ]
 
 // Lesson 3: Review 日月金木
-let _lesson3 = [
+let lesson3Characters = [
   // part 1
   char("日"),
   char("月"),
@@ -146,19 +146,41 @@ let _lesson3 = [
   char("日"),
 
   // part 2
-  char("朋"),  
+  char("金"),
+  char("日"),
+  char("木"),
+  char("月"),
+
   char("明"),
-  char("森"),
+  char("朋"),  
   char("昌"),
+  char("㸓"),
+
+  // part 3
+  char("森"),
+  char("朳"),  
   char("釟"),
-  char("朳"),
+  char("林"),
+
+  char("鈅"),
+  char("㓁"),
+  char("杲"),
+  char("杳"),
+
+  // part 4   
+  char("采"),
+  char("朿"),   
+  char("㓁"),
+  char("釟"),
+
   char("㸓"),
   char("㓁"),
-  
+  char("朿"),   
+  char("采"),
 ]
 
 // Lesson 3: 金 - Learn C (金) - Can only use: A, B, C
-let lesson3Characters = [
+let _lesson3Characters = [
   // Introduce 金
   char("金"),
   char("金"),
@@ -787,6 +809,11 @@ let getPhilosophyLessons = (): array<Types.lesson> => {
     makeLesson(2, "哲理 2：金木", "學習 C(金) 和 D(木)",
       Philosophy, Radicals, Practice, [C, D],
       lesson2Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 3: 複習日月金木
+    makeLesson(3, "複習日月金木", "日月金木",
+      Philosophy, Radicals, Review, [A, B, C, D],
+      lesson3Characters, ~showCode=false, ~allowHints=true, ()),
 
     // Lesson 3: 水火
     makeLesson(3, "哲理 3：水火", "學習 E(水) 和 F(火)",
