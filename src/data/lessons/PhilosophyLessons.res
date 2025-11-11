@@ -157,25 +157,25 @@ let lesson3Characters = [
   char("㸓"),
 
   // part 3
-  char("森"),
-  char("朳"),  
-  char("釟"),
+  char("昌"),
+  char("朋"),
+  char("明"),
   char("林"),
 
+  char("朳"),  
+  char("釟"),
+  char("森"),
+  char("采"),
+  
+  // part4
+  char("㓁"),
   char("鈅"),
   char("㓁"),
   char("杲"),
-  char("杳"),
 
-  // part 4   
-  char("采"),
-  char("朿"),   
-  char("㓁"),
-  char("釟"),
-
+  char("朿"),
   char("㸓"),
-  char("㓁"),
-  char("朿"),   
+  char("杳"),
   char("采"),
 ]
 
@@ -270,9 +270,71 @@ let lesson5Characters = [
   char("月"),
 ]
 
-// Lesson 6: 火 - Learn F (火) - Can only use: A, B, C, D, E, F
+// Lesson 6: Review 日月金木水火
 let lesson6Characters = [
+  // Part 1
+  char("土"),
+  char("火"),
+  char("水"),
+  char("日"),
+  char("月"),
+  char("土"),
+  char("火"),
+  char("木"),
 
+  // Part 2
+  char("日"),
+  char("火"),
+  char("月"),
+  char("土"),
+  char("水"),
+  char("火"),
+  char("木"),
+  char("水"),
+
+  // Part 3
+  char("肚"),
+  char("灶"),
+  char("桂"),
+  char("圣"),
+
+  char("森"),
+  char("朳"),
+  char("釟"),
+  char("林"),
+
+  // part 4
+  char("鈅"),
+  char("㓁"),
+  char("杲"),
+  char("杳"),
+
+  char("采"),
+  char("朿"),
+  char("㓁"),
+  char("釟"),
+
+  // part 5
+  char("㸓"),
+  char("㓁"),
+  char("朿"),
+  char("采"),
+
+  char("沐"),
+  char("消"),
+  char("汉"),
+  char("炎"),
+
+  // part 6
+  char("肖"),
+  char("脊"),
+  char("肚"),
+  char("灶"),
+
+  char("㓁"),
+  char("采"),
+  char("朿"),
+  char("圣"),
 ]
 
 // Lesson 7: 土 - Learn G (土) - Can only use: A, B, C, D, E, F, G
@@ -805,7 +867,7 @@ let philosophyApplicationCharacters = [
 // Strokes Application: Only uses A-N (日月金木水火土竹戈十大中一弓)
 
 let getPhilosophyLessons = (): array<Types.lesson> => {
-  let basicRadicalLessons = [
+  [
     makeLesson(1, "哲理 1：日月", "學習 A(日) 和 B(月)",
       Philosophy, Radicals, Practice, [A, B],
       lesson1Characters, ~showCode=false, ~allowHints=true, ()),
@@ -830,23 +892,13 @@ let getPhilosophyLessons = (): array<Types.lesson> => {
       Philosophy, Radicals, Practice, [G],
       lesson5Characters, ~showCode=false, ~allowHints=true, ()),
     
-    // Lesson 5: Review
-    makeLesson(5, "哲理複習", "複習哲理類所有部首",
+    // Lesson 6: Review
+    makeLesson(6, "哲理複習", "複習哲理類所有部首",
       Philosophy, Radicals, Review, [A, B, C, D, E, F, G],
-      Js.Array2.concat(
-        Js.Array2.concat(lesson1Characters, lesson2Characters),
-        Js.Array2.concat(
-          Js.Array2.concat(lesson3Characters, lesson4Characters),
-          Js.Array2.concat(
-            Js.Array2.concat(lesson5Characters, lesson6Characters),
-            lesson7Characters
-          )
-        )
-      ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 3, 4], ()),
+      lesson6Characters, ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 3, 4, 5], ()),
 
     // Lesson 6: Comprehensive Review
-    makeLesson(6, "哲理綜合", "綜合練習哲理類應用",
+    makeLesson(7, "哲理綜合", "綜合練習哲理類應用",
       Philosophy, Radicals, MixedReview, [A, B, C, D, E, F, G],
       Js.Array2.concat(
         Js.Array2.concat(
@@ -862,9 +914,5 @@ let getPhilosophyLessons = (): array<Types.lesson> => {
         philosophyApplicationCharacters
       ),
       ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 3, 4], ()),
-
-    // SECTION 2: STROKES (筆畫類) - Lessons 7-12
-    // Lesson 7: 竹戈
   ]
-  basicRadicalLessons
 }
