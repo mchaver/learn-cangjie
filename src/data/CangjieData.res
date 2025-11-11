@@ -32,9 +32,32 @@ let getAllLessons = (): array<lesson> => {
 
 let allLessons = getAllLessons()
 
+// Cache for lesson 7 - regenerated once per visit
+let lesson7Cache: ref<option<lesson>> = ref(None)
+
+// Clear the lesson 7 cache to trigger regeneration on next access
+let clearLesson7Cache = () => {
+  lesson7Cache := None
+}
+
 // Get lesson by ID
+// Special case: Lesson 7 is cached per visit and regenerated only when cache is cleared
 let getLessonById = (id: int): option<lesson> => {
-  allLessons->Js.Array2.find(lesson => lesson.id == id)
+  if id == 7 {
+    switch lesson7Cache.contents {
+    | Some(cachedLesson) => Some(cachedLesson)
+    | None => {
+        // Generate fresh lesson 7
+        let lessons = Philosophy.getPhilosophyLessons()
+        let lesson7 = lessons->Js.Array2.find(lesson => lesson.id == 7)
+        // Cache it
+        lesson7Cache := lesson7
+        lesson7
+      }
+    }
+  } else {
+    allLessons->Js.Array2.find(lesson => lesson.id == id)
+  }
 }
 
 // Get next lesson after completing one

@@ -39,6 +39,8 @@ let make = () => {
   }
 
   let handleBackToList = () => {
+    // Clear lesson 7 cache so it regenerates on next visit
+    CangjieData.clearLesson7Cache()
     Router.push(LessonList)
   }
 
