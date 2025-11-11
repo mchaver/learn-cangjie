@@ -75,24 +75,49 @@ type audioDestinationNode
 @send external stop: (oscillatorNode, float) => unit = "stop"
 @get external destination: audioContext => audioDestinationNode = "destination"
 @get external currentTime: audioContext => float = "currentTime"
+@get external state: audioContext => string = "state"
+@send external resume: audioContext => Js.Promise.t<unit> = "resume"
 
-let playKeystrokeSound = (isCorrect: bool) => {
-  // Try to get AudioContext (with webkit fallback for Safari)
-  let ctx = try {
-    Some(makeAudioContext())
-  } catch {
-  | _ =>
-    try {
-      Some(makeWebkitAudioContext())
-    } catch {
-    | _ => None
+// Shared AudioContext - created once and reused
+// This prevents the "too many AudioContext" error
+let sharedAudioContext: ref<option<audioContext>> = ref(None)
+
+let getOrCreateAudioContext = (): option<audioContext> => {
+  switch sharedAudioContext.contents {
+  | Some(ctx) => Some(ctx)
+  | None => {
+      // Try to create AudioContext (with webkit fallback for Safari)
+      let ctx = try {
+        Some(makeAudioContext())
+      } catch {
+      | _ =>
+        try {
+          Some(makeWebkitAudioContext())
+        } catch {
+        | _ => None
+        }
+      }
+
+      // Store the context for reuse
+      sharedAudioContext := ctx
+      ctx
     }
   }
+}
+
+let playKeystrokeSound = (isCorrect: bool) => {
+  // Get or create the shared audio context
+  let ctx = getOrCreateAudioContext()
 
   // If we have an audio context, play a simple tone
   switch ctx {
   | Some(context) => {
       try {
+        // Resume context if it was suspended (browsers auto-suspend to save resources)
+        if context->state == "suspended" {
+          context->resume->ignore
+        }
+
         // Create oscillator for beep sound
         let oscillator = context->createOscillator
         let gainNode = context->createGain
