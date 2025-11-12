@@ -203,34 +203,79 @@ let lesson10Characters = [
   char("床"),
 ]
 
-// Lesson 11: 大 - Learn K (大) - Can only use: A, B, C, D, E, F, G, H, I, J, K
+// Lesson 11: 中一
 let lesson11Characters = [
-  // Introduce 大
-  char("大"),
-  char("大"),
-  char("大"),
-  char("大"),
-  char("大"),
-  // Characters with 大 (A-K available)
-  char("友"),
-  char("友"),
-  char("灰"),
-  char("灰"),
-  char("有"),
-  char("有"),
-  char("太"), // Fixed code: KI not KA
-  char("太"),
-  // Practice mix (removed 夫 - uses Q,O not available)
-  char("大"),
-  char("友"),
-  char("灰"),
-  char("大"),
-  char("有"),
-  char("太"),
+  // part 1
+  char("中"),
+  char("中"),
+  char("中"),
+  char("中"),
+  
+  char("一"),
+  char("一"),
+  char("一"),
+  char("一"),
+
+  // part 2
+  char("中"),
+  char("一"),
+  char("中"),
+  char("一"),
+
+  char("一"),
+  char("中"),
+  char("一"),
+  char("中"),
+
+  // part 3
+  char("串"), 
+  char("串"),
+  char("央"), 
+  char("央"),
+  
+  char("書"),
+  char("書"),
+  char("原",),
+  char("原",),
+  
+  // part 3 
+  char("天"),
+  char("天"),
+  char("旦"),
+  char("旦"),
+
+  char("三"),
+  char("三"),
+  char("工"),
+  char("工"),
+
+  // part 4
+  char("原",),
+  char("串"),
+  char("央"), 
+  char("書"),
+  
+  char("天"),
+  char("旦"),
+  char("三"),
+  char("工"),
+  
 ]
+
+// 原
+// 十金一 空
+//   char("申"),
+//  char("申"),
+
 
 // Lesson 12: 中 - Learn L (中) - Can only use: A, B, C, D, E, F, G, H, I, J, K, L
 let lesson12Characters = [
+  char("弓"),
+  char("弓"),
+  char("弓"),
+  char("弓"),
+
+
   // Introduce 中
   char("中"),
   char("中"),
@@ -670,8 +715,9 @@ let getStrokesLessons = (): array<Types.lesson> => {
       Strokes, Radicals, Review, [H, I, J, K],
       lesson10Characters, ~showCode=false, ~allowHints=true, ()),
 
-    makeLesson(11, "筆畫 4：弓", "學習 N(弓)",
-      Strokes, Radicals, Practice, [N], lesson14Characters, ~showCode=false, ~allowHints=true, ()),
+    makeLesson(11, "筆畫 3：中一", "學習 中(L) 和 M(一)",
+      Strokes, Radicals, Practice, [L, M],
+      lesson11Characters, ~showCode=false, ~allowHints=true, ()),
 
     makeLesson(12, "筆畫複習", "複習筆畫類所有部首",
       Strokes, Radicals, Review, [H, I, J, K, L, M, N],
