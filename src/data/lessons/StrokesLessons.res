@@ -4,81 +4,203 @@
 open Types
 open CharacterDictionary
 
+// Lesson 8: 竹戈
 let lesson8Characters = [
-  // Introduce 竹
+  // Part 1
   char("竹"),
   char("竹"),
   char("竹"),
   char("竹"),
+  
+  char("戈"),
+  char("戈"),
+  char("戈"),
+  char("戈"),
+
+  // Part 1
   char("竹"),
-  // Characters with 竹 (A-H available)
-  char("竺"),
-  char("竺"),
+  char("戈"),  
+  char("竹"),
+  char("戈"),
+
+  char("戈"),
+  char("竹"),
+  char("戈"),  
+  char("竹"),
+
+  // Part 3
   char("白"),
   char("白"),
+  char("床"),
+  char("床"),
+
+  char("去"),
+  char("去"),
+  char("公"),
+  char("公"),
+
+  // Part 4
   char("禾"),
   char("禾"),
   char("少"),
   char("少"),
-  // Practice mix (removed 皇 - uses M not available yet)
-  char("竹"),
-  char("白"),
-  char("竺"),
+
+  char("寸"),
+  char("寸"),
+  char("戊"),
+  char("戊"),
+
+  // Part 5
+  char("戊"),
+  char("白"),  
+  char("寸"),
   char("禾"),
+  
+  char("去"),
+  char("公"),
+  char("床"),
   char("少"),
-  char("竹"),
+
+  // Part 6
+  char("去"),  
+  char("床"),
+  char("白"),
+  char("公"),
+  
+  char("寸"),
+  char("少"),  
+  char("戊"),
+  char("禾"),
 ]
 
-// Lesson 9: 戈 - Learn I (戈) - Can only use: A, B, C, D, E, F, G, H, I
+// char("竺"),
+
+// Lesson 9: 十大
 let lesson9Characters = [
-  // Introduce 戈
-  char("戈"),
-  char("戈"),
-  char("戈"),
-  char("戈"),
-  char("戈"),
-  // Characters with 戈 (A-I available)
-  char("去"),
-  char("去"),
-  char("公"),
-  char("公"),
-  char("寸"),
-  char("寸"),
-  char("戊"), // Fixed code: IH not GI
-  char("戊"),
-  // Practice mix (removed 戒 - uses T not available)
-  char("戈"),
-  char("去"),
-  char("公"),
-  char("戊"),
-  char("寸"),
-  char("戈"),
+  // Part 1
+  char("十"),
+  char("十"),
+  char("十"),
+  char("十"),
+
+  char("大"),
+  char("大"),
+  char("大"),
+  char("大"),
+
+  // Part 2
+  char("十"),
+  char("大"),
+  char("十"),
+  char("大"),
+  char("大"),
+  char("十"),
+  char("大"),
+  char("十"),
+
+  // Part 3
+  char("早"),
+  char("早"),
+  char("末"),
+  char("末"),
+
+  char("友"),
+  char("友"),
+  char("灰"),
+  char("灰"),
+
+  // Part 4
+  char("千"),
+  char("千"),
+  char("支"),
+  char("支"),
+
+  char("有"),
+  char("有"),
+  char("太"),
+  char("太"),
+
+  // Part 5
+  char("丈"),
+  char("丈"),
+  char("灰"),
+  char("千"),
+
+  char("友"),
+  char("末"),
+  char("早"),
+  char("支"),
+  
+  // Part 6
+  char("友"),
+  char("末"),
+  char("早"),
+  char("友"),
+  
+  char("支"),
+  char("有"),
+  char("太"),
+  char("丈"),
 ]
 
-// Lesson 10: 十 - Learn J (十) - Can only use: A, B, C, D, E, F, G, H, I, J
+// char("成"),
+
+// Lesson 10: Review 竹戈十大
 let lesson10Characters = [
-  // Introduce 十
+  // Part 1
+  char("竹"),
+  char("戈"),
   char("十"),
+  char("大"),
+
+  char("戈"),
+  char("大"),
+  char("竹"),  
   char("十"),
-  char("十"),
-  char("十"),
-  char("十"),
-  // Characters with 十 (A-J available)
-  char("早"),
-  char("早"),
-  char("末"),
-  char("末"),
-  char("千"),
+
+  // Part 2
+  char("大"),
+  char("十"),  
+  char("戈"),
+  char("竹"),  
+
+  char("白"),
+  char("床"),
+  char("禾"),
+  char("少"),
+
+  // Part 3  
+  char("去"),
+  char("公"),
+  char("寸"),
+  char("戊"),
+
   char("千"),
   char("支"),
-  char("支"),
-  char("成"),
-  char("成"),
-  // Practice mix (removed 卉 - uses T not available)
-  char("十"),
-  char("早"),
+  char("有"),
+  char("太"),
+
+  // Part 4
+  char("丈"),
+  char("床"),
+  char("公"),
+  char("白"),
+
+  char("去"),
+  char("灰"),
+  char("禾"),
   char("千"),
-  char("成"),
+
+  // Part 5
+  char("有"),
+  char("禾"),
+  char("千"),
+  char("支"),
+
+  char("寸"),
+  char("灰"),
+  char("白"),
+  char("床"),
 ]
 
 // Lesson 11: 大 - Learn K (大) - Can only use: A, B, C, D, E, F, G, H, I, J, K
@@ -536,26 +658,22 @@ let strokesApplicationCharacters = [
 
 let getStrokesLessons = (): array<Types.lesson> => {
   let strokesLessons = [
-    makeLesson(7, "筆畫 1：竹戈", "學習 H(竹) 和 I(戈)",
+    makeLesson(8, "筆畫 1：竹戈", "學習 H(竹) 和 I(戈)",
       Strokes, Radicals, Practice, [H, I],
-      Js.Array2.concat(lesson8Characters, lesson9Characters), ~showCode=false, ~allowHints=true, ()),
+      lesson8Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 8: 十大
-    makeLesson(8, "筆畫 2：十大", "學習 J(十) 和 K(大)",
+    makeLesson(9, "筆畫 2：十大", "學習 J(十) 和 K(大)",
       Strokes, Radicals, Practice, [J, K],
-      Js.Array2.concat(lesson10Characters, lesson11Characters), ~showCode=false, ~allowHints=true, ()),
+      lesson9Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 9: 中一
-    makeLesson(9, "筆畫 3：中一", "學習 L(中) 和 M(一)",
-      Strokes, Radicals, Practice, [L, M],
-      Js.Array2.concat(lesson12Characters, lesson13Characters), ~showCode=false, ~allowHints=true, ()),
+    makeLesson(10, "複習竹戈十大", "日月金木複習竹戈十大",    
+      Strokes, Radicals, Review, [H, I, J, K],
+      lesson10Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 10: 弓
-    makeLesson(10, "筆畫 4：弓", "學習 N(弓)",
+    makeLesson(11, "筆畫 4：弓", "學習 N(弓)",
       Strokes, Radicals, Practice, [N], lesson14Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 11: Review
-    makeLesson(11, "筆畫複習", "複習筆畫類所有部首",
+    makeLesson(12, "筆畫複習", "複習筆畫類所有部首",
       Strokes, Radicals, Review, [H, I, J, K, L, M, N],
       Js.Array2.concat(
         Js.Array2.concat(lesson8Characters, lesson9Characters),
@@ -570,22 +688,22 @@ let getStrokesLessons = (): array<Types.lesson> => {
       ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[7, 8, 9, 10], ()),
 
     // Lesson 12: Comprehensive Review
-    makeLesson(12, "筆畫綜合", "綜合練習筆畫類應用",
-      Strokes, Radicals, MixedReview, [H, I, J, K, L, M, N],
-      Js.Array2.concat(
-        Js.Array2.concat(
-          Js.Array2.concat(lesson8Characters, lesson9Characters),
-          Js.Array2.concat(
-            Js.Array2.concat(lesson10Characters, lesson11Characters),
-            Js.Array2.concat(
-              Js.Array2.concat(lesson12Characters, lesson13Characters),
-              lesson14Characters
-            )
-          )
-        ),
-        strokesApplicationCharacters
-      ),
-      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[7, 8, 9, 10], ()),
+    // makeLesson(13, "筆畫綜合", "綜合練習筆畫類應用",
+    //   Strokes, Radicals, MixedReview, [H, I, J, K, L, M, N],
+    //   Js.Array2.concat(
+    //     Js.Array2.concat(
+    //       Js.Array2.concat(lesson8Characters, lesson9Characters),
+    //       Js.Array2.concat(
+    //         Js.Array2.concat(lesson10Characters, lesson11Characters),
+    //         Js.Array2.concat(
+    //           Js.Array2.concat(lesson12Characters, lesson13Characters),
+    //           lesson14Characters
+    //         )
+    //       )
+    //     ),
+    //     strokesApplicationCharacters
+    //   ),
+    //   ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[7, 8, 9, 10], ()),
 
     // SECTION 3: BODY PARTS (人體類) - Lessons 13-16
     // Lesson 13: 人心
