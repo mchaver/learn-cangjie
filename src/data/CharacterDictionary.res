@@ -262,5 +262,25 @@ let char = (c: string): characterInfo => {
   }
 }
 
-// PHILOSOPHY (哲理類) - Lessons 1-7
-// Lesson 1: 日 - Learn A (日) - Can only use: A
+let generateTest = (characters: array<characterInfo>, size: int): array<characterInfo> => {
+// Get unique characters by using character string as key
+  let uniqueCharsMap = Belt.Map.String.empty
+  let uniqueCharsMap = characters->Array.reduce(uniqueCharsMap, (acc, charInfo) => {
+    acc->Belt.Map.String.set(charInfo.character, charInfo)
+  })
+
+  let uniqueChars = uniqueCharsMap->Belt.Map.String.valuesToArray
+
+  // Build weighted pool: 1-key = weight 1, 2+ keys = weight 2
+  let weightedPool = uniqueChars->Array.flatMap(charInfo => {
+    let codeLength = charInfo.cangjieCode->Array.length
+    if codeLength == 1 {
+      [charInfo] // Add once for 1-key characters
+    } else {
+      [charInfo, charInfo] // Add twice for 2+ key characters
+    }
+  })
+
+  // Shuffle and take 48
+  CangjieUtils.shuffleArray(weightedPool)->Array.slice(~start=0, ~end=size)
+}

@@ -378,36 +378,14 @@ let lesson7Characters = [
   char("圣"),
 ]
 
-// Generate dynamic review of Philosophy characters with weighted randomization
-// Collects unique characters from lessons 1-5, weights by code complexity
 let generatePhilosophyTest = (): array<characterInfo> => {
-  // Collect all characters from lessons 1-5
-  let allSourceChars =
+  Array.flat([
     lesson1Characters
-    ->Array.concat(lesson2Characters)
-    ->Array.concat(lesson4Characters)
-    ->Array.concat(lesson5Characters)
-    
-  // Get unique characters by using character string as key
-  let uniqueCharsMap = Belt.Map.String.empty
-  let uniqueCharsMap = allSourceChars->Array.reduce(uniqueCharsMap, (acc, charInfo) => {
-    acc->Belt.Map.String.set(charInfo.character, charInfo)
-  })
-
-  let uniqueChars = uniqueCharsMap->Belt.Map.String.valuesToArray
-
-  // Build weighted pool: 1-key = weight 1, 2+ keys = weight 2
-  let weightedPool = uniqueChars->Array.flatMap(charInfo => {
-    let codeLength = charInfo.cangjieCode->Array.length
-    if codeLength == 1 {
-      [charInfo] // Add once for 1-key characters
-    } else {
-      [charInfo, charInfo] // Add twice for 2+ key characters
-    }
-  })
-
-  // Shuffle and take 48
-  CangjieUtils.shuffleArray(weightedPool)->Array.slice(~start=0, ~end=48)
+  , lesson2Characters
+  , lesson4Characters
+  , lesson5Characters
+  ])
+  ->generateTest(48)
 }
 
 let getPhilosophyLessons = (): array<Types.lesson> => {
@@ -449,7 +427,7 @@ let getPhilosophyLessons = (): array<Types.lesson> => {
 
     // test
     // Lesson 8: Comprehensive Review (Dynamic - regenerated each time)
-    makeLesson(8, "哲理綜合", "綜合練習哲理類應用",
+    makeLesson(8, "哲理考試", "綜合練習哲理類應用",
       Philosophy, Radicals, MixedReview, [A, B, C, D, E, F, G],
       generatePhilosophyTest(), ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 4, 5], ()),
   ]

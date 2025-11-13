@@ -84,20 +84,9 @@ let make = (~onLessonSelect: int => unit, ~onBack: unit => unit, ~userProgress: 
         {React.string(getLessonTypeIcon(lesson.lessonType))}
       </div>
 
-      {lesson.introducedKeys->Js.Array2.length > 0
-        ? <div className="lesson-tile-keys">
-            {lesson.introducedKeys
-            ->Js.Array2.slice(~start=0, ~end_=5)
-            ->Js.Array2.map(key => {
-              <span key={CangjieUtils.keyToString(key)} className="key-indicator">
-                {React.string(CangjieUtils.keyToRadicalName(key))}
-              </span>
-            })
-            ->React.array}
-          </div>
-        : <div className="lesson-tile-title">
-            {React.string(lesson.title->Js.String2.slice(~from=0, ~to_=12))}
-          </div>}
+      <div className="lesson-tile-title">
+        {React.string(lesson.title->Js.String2.slice(~from=0, ~to_=12))}
+      </div>
 
       {isCompleted
         ? <div className="lesson-tile-stars">
@@ -110,7 +99,7 @@ let make = (~onLessonSelect: int => unit, ~onBack: unit => unit, ~userProgress: 
             ->React.array}
           </div>
         : <div className="lesson-tile-status">
-            {React.string("開始")}
+            {React.string("\u00a0")}
           </div>}
     </button>
   }

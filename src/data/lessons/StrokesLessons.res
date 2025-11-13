@@ -420,32 +420,26 @@ let lesson15Characters = [
 ]
 
 let generateStrokesTest = (): array<characterInfo> => {
-  let allSourceChars =
+  Array.flat([
     lesson9Characters
-    ->Array.concat(lesson10Characters)
-    ->Array.concat(lesson12Characters)
-    ->Array.concat(lesson13Characters)
-    
-  // Get unique characters by using character string as key
-  let uniqueCharsMap = Belt.Map.String.empty
-  let uniqueCharsMap = allSourceChars->Array.reduce(uniqueCharsMap, (acc, charInfo) => {
-    acc->Belt.Map.String.set(charInfo.character, charInfo)
-  })
+  , lesson10Characters
+  , lesson12Characters
+  , lesson13Characters])
+  ->generateTest(48)
+}
 
-  let uniqueChars = uniqueCharsMap->Belt.Map.String.valuesToArray
-
-  // Build weighted pool: 1-key = weight 1, 2+ keys = weight 2
-  let weightedPool = uniqueChars->Array.flatMap(charInfo => {
-    let codeLength = charInfo.cangjieCode->Array.length
-    if codeLength == 1 {
-      [charInfo] // Add once for 1-key characters
-    } else {
-      [charInfo, charInfo] // Add twice for 2+ key characters
-    }
-  })
-
-  // Shuffle and take 48
-  CangjieUtils.shuffleArray(weightedPool)->Array.slice(~start=0, ~end=48)
+let generatePhilosophyAndStrokesTest = (): array<characterInfo> => {
+  open PhilosophyLessons
+  Array.flat([
+    lesson1Characters
+  , lesson2Characters
+  , lesson4Characters
+  , lesson5Characters  
+  , lesson9Characters
+  , lesson10Characters
+  , lesson12Characters
+  , lesson13Characters])
+  ->generateTest(80) 
 }
 
 let getStrokesLessons = (): array<Types.lesson> => {
@@ -480,9 +474,13 @@ let getStrokesLessons = (): array<Types.lesson> => {
       Strokes, Radicals, Review, [H, I, J, K, L, M, N],
       lesson15Characters, ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[9, 10, 12, 13], ()),
 
-    makeLesson(16, "筆畫複習", "綜合練習筆畫複習應用",
+    makeLesson(16, "筆畫考試", "綜合練習筆畫複習應用",
       Strokes, Radicals, MixedReview, [H, I, J, K, L, M, N],
       generateStrokesTest(), ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[9, 10, 12, 13], ()),
+
+    makeLesson(17, "哲理筆畫考試", "綜合練習哲理和筆畫複習應用",
+      Strokes, Radicals, MixedReview, [A, B, C, D, E, F, G, H, I, J, K, L, M, N],
+      generateStrokesTest(), ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 4, 5, 9, 10, 12, 13], ()),
     
   ]
   strokesLessons
