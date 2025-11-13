@@ -4,8 +4,8 @@
 open Types
 open CharacterDictionary
 
-// Lesson 8: 竹戈
-let lesson8Characters = [
+// Lesson 9: 竹戈
+let lesson9Characters = [
   // Part 1
   char("竹"),
   char("竹"),
@@ -75,8 +75,8 @@ let lesson8Characters = [
 
 // char("竺"),
 
-// Lesson 9: 十大
-let lesson9Characters = [
+// Lesson 10: 十大
+let lesson10Characters = [
   // Part 1
   char("十"),
   char("十"),
@@ -145,8 +145,8 @@ let lesson9Characters = [
 
 // char("成"),
 
-// Lesson 10: Review 竹戈十大
-let lesson10Characters = [
+// Lesson 11: Review 竹戈十大
+let lesson11Characters = [
   // Part 1
   char("竹"),
   char("戈"),
@@ -203,8 +203,8 @@ let lesson10Characters = [
   char("床"),
 ]
 
-// Lesson 11: 中一
-let lesson11Characters = [
+// Lesson 12: 中一
+let lesson12Characters = [
   // part 1
   char("中"),
   char("中"),
@@ -267,8 +267,8 @@ let lesson11Characters = [
 //  char("申"),
 
 
-// Lesson 12: 弓
-let lesson12Characters = [
+// Lesson 13: 弓
+let lesson13Characters = [
   // Part 1
   char("弓"),
   char("弓"),
@@ -316,8 +316,8 @@ let lesson12Characters = [
 // 中一弓
 //
 
-// Lesson 13: 一 - Learn M (一) - Can only use: A, B, C, D, E, F, G, H, I, J, K, L, M
-let lesson13Characters = [
+// Lesson 14: 一 - Learn M (一) - Can only use: A, B, C, D, E, F, G, H, I, J, K, L, M
+let lesson14Characters = [
   // Introduce 一
   char("一"),
   char("一"),
@@ -343,7 +343,7 @@ let lesson13Characters = [
   char("三"),
 ]
 
-let lesson14Characters = [
+let lesson15Characters = [
   // Introduce 弓
   char("弓"),
   char("弓"),
@@ -369,25 +369,25 @@ let lesson14Characters = [
 
 let getStrokesLessons = (): array<Types.lesson> => {
   let strokesLessons = [
-    makeLesson(8, "筆畫 1：竹戈", "學習 H(竹) 和 I(戈)",
+    makeLesson(9, "筆畫 1：竹戈", "學習 H(竹) 和 I(戈)",
       Strokes, Radicals, Practice, [H, I],
-      lesson8Characters, ~showCode=false, ~allowHints=true, ()),
-
-    makeLesson(9, "筆畫 2：十大", "學習 J(十) 和 K(大)",
-      Strokes, Radicals, Practice, [J, K],
       lesson9Characters, ~showCode=false, ~allowHints=true, ()),
 
-    makeLesson(10, "複習竹戈十大", "日月金木複習竹戈十大",    
-      Strokes, Radicals, Review, [H, I, J, K],
+    makeLesson(10, "筆畫 2：十大", "學習 J(十) 和 K(大)",
+      Strokes, Radicals, Practice, [J, K],
       lesson10Characters, ~showCode=false, ~allowHints=true, ()),
 
-    makeLesson(11, "筆畫 3：中一", "學習 中(L) 和 一(M)",
-      Strokes, Radicals, Practice, [L, M],
+    makeLesson(11, "複習竹戈十大", "日月金木複習竹戈十大",    
+      Strokes, Radicals, Review, [H, I, J, K],
       lesson11Characters, ~showCode=false, ~allowHints=true, ()),
 
-    makeLesson(12, "筆畫 5：弓", "學習 弓(N)",
+    makeLesson(12, "筆畫 3：中一", "學習 中(L) 和 一(M)",
+      Strokes, Radicals, Practice, [L, M],
+      lesson12Characters, ~showCode=false, ~allowHints=true, ()),
+
+    makeLesson(13, "筆畫 5：弓", "學習 弓(N)",
       Strokes, Radicals, Practice, [N],
-      lesson12Characters,
+      lesson13Characters,
       ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[], ()),
 
     // Lesson 12: Comprehensive Review

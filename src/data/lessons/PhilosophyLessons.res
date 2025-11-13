@@ -270,8 +270,52 @@ let lesson5Characters = [
   char("月"),
 ]
 
-// Lesson 6: Review 日月金木水火土
+// Lesson 6: Review 水火土
 let lesson6Characters = [
+  // part 1
+  char("水"),
+  char("火"),
+  char("土"),
+  char("水"),
+
+  char("土"),
+  char("火"),  
+  char("土"),
+  char("水"),
+
+  // part 2
+  char("肚"),
+  char("灶"),  
+  char("桂"),
+  char("圣"),
+  char("沐"),
+  char("消"),
+  char("汉"),
+  char("炎"),
+
+  // part 3
+  char("沐"),
+  char("脊"),  
+  char("汉"),
+  char("炎"),
+  char("肖"),
+  char("脊"),
+  char("汉"),
+  char("炎"),
+
+  // part 4
+  char("肚"),  
+  char("灶"),  
+  char("桂"),
+  char("圣"),
+  char("汉"),
+  char("炎"),
+  char("肖"),
+  char("脊"),  
+]
+
+// Lesson 7: Review 日月金木水火土
+let lesson7Characters = [
   // Part 1
   char("土"),
   char("火"),
@@ -337,9 +381,9 @@ let lesson6Characters = [
   char("圣"),
 ]
 
-// Generate dynamic lesson 7 characters with weighted randomization
+// Generate dynamic review of Philosophy characters with weighted randomization
 // Collects unique characters from lessons 1-5, weights by code complexity
-let generateLesson7Characters = (): array<characterInfo> => {
+let generatePhilosophyTest = (): array<characterInfo> => {
   // Collect all characters from lessons 1-5
   let allSourceChars =
     lesson1Characters
@@ -347,7 +391,9 @@ let generateLesson7Characters = (): array<characterInfo> => {
     ->Array.concat(lesson3Characters)
     ->Array.concat(lesson4Characters)
     ->Array.concat(lesson5Characters)
-
+    ->Array.concat(lesson6Characters)
+    ->Array.concat(lesson7Characters)
+    
   // Get unique characters by using character string as key
   let uniqueCharsMap = Belt.Map.String.empty
   let uniqueCharsMap = allSourceChars->Array.reduce(uniqueCharsMap, (acc, charInfo) => {
@@ -367,8 +413,7 @@ let generateLesson7Characters = (): array<characterInfo> => {
   })
 
   // Shuffle and take 48
-  let shuffled = CangjieUtils.shuffleArray(weightedPool)
-  shuffled->Array.slice(~start=0, ~end=48)
+  CangjieUtils.shuffleArray(weightedPool)->Array.slice(~start=0, ~end=48)
 }
 
 let getPhilosophyLessons = (): array<Types.lesson> => {
@@ -385,7 +430,7 @@ let getPhilosophyLessons = (): array<Types.lesson> => {
     // Lesson 3: 複習日月金木
     makeLesson(3, "複習日月金木", "日月金木",
       Philosophy, Radicals, Review, [A, B, C, D],
-      lesson3Characters, ~showCode=false, ~allowHints=true, ()),
+      lesson3Characters, ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2], ()),
 
     // Lesson 4: 水火
     makeLesson(4, "哲理 3：水火", "學習 E(水) 和 F(火)",
@@ -397,19 +442,21 @@ let getPhilosophyLessons = (): array<Types.lesson> => {
       Philosophy, Radicals, Practice, [G],
       lesson5Characters, ~showCode=false, ~allowHints=true, ()),
 
-    // Lesson 6: Review
-    // 水火土
+    // Lesson 6: Review 水火土
+    makeLesson(6, "複習水火土", "水火土",
+      Philosophy, Radicals, Review, [E, F, G],
+      lesson6Characters, ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[4, 5], ()),
     
-    // Lesson 6: Review
+    // Lesson 7: Review
     // 日月金木水火土
-    makeLesson(6, "哲理複習", "複習哲理類所有部首",
+    makeLesson(7, "哲理複習", "複習哲理類所有部首",
       Philosophy, Radicals, Review, [A, B, C, D, E, F, G],
-      lesson6Characters, ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 3, 4, 5], ()),
+      lesson7Characters, ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 4, 5], ()),
 
     // test
-    // Lesson 7: Comprehensive Review (Dynamic - regenerated each time)
-    makeLesson(7, "哲理綜合", "綜合練習哲理類應用",
+    // Lesson 8: Comprehensive Review (Dynamic - regenerated each time)
+    makeLesson(8, "哲理綜合", "綜合練習哲理類應用",
       Philosophy, Radicals, MixedReview, [A, B, C, D, E, F, G],
-      generateLesson7Characters(), ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 3, 4, 5], ()),
+      generatePhilosophyTest(), ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 3, 4, 5, 6, 7], ()),
   ]
 }
