@@ -270,7 +270,7 @@ let lesson5Characters = [
   char("月"),
 ]
 
-// Lesson 6: Review 日月金木水火
+// Lesson 6: Review 日月金木水火土
 let lesson6Characters = [
   // Part 1
   char("土"),
@@ -396,12 +396,17 @@ let getPhilosophyLessons = (): array<Types.lesson> => {
     makeLesson(5, "哲理 4：土", "學習 G(土)",
       Philosophy, Radicals, Practice, [G],
       lesson5Characters, ~showCode=false, ~allowHints=true, ()),
+
+    // Lesson 6: Review
+    // 水火土
     
     // Lesson 6: Review
+    // 日月金木水火土
     makeLesson(6, "哲理複習", "複習哲理類所有部首",
       Philosophy, Radicals, Review, [A, B, C, D, E, F, G],
       lesson6Characters, ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 3, 4, 5], ()),
 
+    // test
     // Lesson 7: Comprehensive Review (Dynamic - regenerated each time)
     makeLesson(7, "哲理綜合", "綜合練習哲理類應用",
       Philosophy, Radicals, MixedReview, [A, B, C, D, E, F, G],
