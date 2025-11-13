@@ -143,8 +143,6 @@ let lesson10Characters = [
   char("丈"),
 ]
 
-// char("成"),
-
 // Lesson 11: Review 竹戈十大
 let lesson11Characters = [
   // Part 1
@@ -238,18 +236,18 @@ let lesson12Characters = [
   char("原",),
   char("原",),
   
-  // part 3 
-  char("天"),
-  char("天"),
-  char("旦"),
-  char("旦"),
-
-  char("三"),
-  char("三"),
-  char("工"),
-  char("工"),
-
   // part 4
+  char("天"),
+  char("天"),
+  char("旦"),
+  char("旦"),
+
+  char("三"),
+  char("三"),
+  char("工"),
+  char("工"),
+
+  // part 5
   char("原",),
   char("串"),
   char("央"), 
@@ -258,14 +256,8 @@ let lesson12Characters = [
   char("天"),
   char("旦"),
   char("三"),
-  char("工"),  
+  char("工"),
 ]
-
-// 原
-// 十金一 空
-//   char("申"),
-//  char("申"),
-
 
 // Lesson 13: 弓
 let lesson13Characters = [
@@ -311,61 +303,150 @@ let lesson13Characters = [
   char("弱"),
   char("弗"),
   char("到"),
+  char("弗"),  
 ]
 
-// 中一弓
-//
-
-// Lesson 14: 一 - Learn M (一) - Can only use: A, B, C, D, E, F, G, H, I, J, K, L, M
+// Lesson 14: Review 中一弓
 let lesson14Characters = [
-  // Introduce 一
+  // Part 1
+  char("中"),
   char("一"),
+  char("弓"),
   char("一"),
+  char("弓"),  
+  char("中"),
   char("一"),
+  char("中"),
+
+  // Part 2
+  char("弓"),
   char("一"),
+  char("中"),
   char("一"),
-  // Characters with 一 (A-M available)
-  char("天"),
+  
+  char("書"),
+  char("原",),
   char("天"),
   char("旦"),
+
+  // Part 3
+  char("原"),
+  char("串"),
+  char("央"), 
+  char("書"),
+  
+  char("天"),
   char("旦"),
   char("三"),
-  char("三"),
-  char("二"),
-  char("二"),
-  char("工"), // Fixed code: MLM not M
   char("工"),
-  // Practice mix
-  char("一"),
-  char("天"),
-  char("旦"),
-  char("二"),
-  char("三"),
+
+  // Part 4
+  char("央"), 
+  char("書"),
+  char("弔"),
+  char("弱"),
+  
+  char("引"),
+  char("弗"),
+  char("到"),
+  char("原"),  
 ]
 
+// Lesson 15: Review 竹戈十大中一弓
 let lesson15Characters = [
-  // Introduce 弓
+  // Part 1
+  char("竹"),
+  char("戈"),
+  char("十"),
+  char("大"),
+  char("中"),  
+  char("一"),
   char("弓"),
+  char("十"),
+
+  // Part 2
+  char("竹"),
+  char("戈"),
+  char("十"),
+  char("大"),
+  char("中"),  
+  char("一"),
   char("弓"),
-  char("弓"),
-  char("弓"),
-  char("弓"),
-  // Characters with 弓 (A-N available)
-  char("引"),
-  char("引"),
-  char("弱"),
-  char("弱"),
-  char("弔"), // Fixed code: NL not NJB
-  char("弔"),
-  char("弗"), // Fixed code: LLN not NHE
-  char("弗"),
-  // Practice mix
-  char("弓"),
-  char("引"),
-  char("弱"),
-  char("弔"),
-  char("弓"),
+  char("十"),
+
+  // Part 3
+  char("白"),
+  char("少"),
+  char("床"),  
+  char("天"),
+
+  char("旦"), 
+  char("戊"),
+  char("公"),
+  char("寸"),
+  
+  // Part 4
+  char("去"),
+  char("禾"),  
+  char("千"),
+  char("支"),
+  
+  char("有"),
+  char("太"),
+  char("原"),
+  char("串"),
+
+  // Part 5
+  char("旦"),  
+  char("央"), 
+  char("書"),
+  char("天"),
+
+  char("有"),
+  char("旦"),
+  char("三"),
+  char("工"),
+
+  // Part 6
+  char("少"),
+  char("床"),  
+  char("書"),
+  char("天"),
+
+  char("去"),
+  char("工"),
+  char("戊"),
+  char("支"),
 ]
+
+let generateStrokesTest = (): array<characterInfo> => {
+  let allSourceChars =
+    lesson9Characters
+    ->Array.concat(lesson10Characters)
+    ->Array.concat(lesson12Characters)
+    ->Array.concat(lesson13Characters)
+    
+  // Get unique characters by using character string as key
+  let uniqueCharsMap = Belt.Map.String.empty
+  let uniqueCharsMap = allSourceChars->Array.reduce(uniqueCharsMap, (acc, charInfo) => {
+    acc->Belt.Map.String.set(charInfo.character, charInfo)
+  })
+
+  let uniqueChars = uniqueCharsMap->Belt.Map.String.valuesToArray
+
+  // Build weighted pool: 1-key = weight 1, 2+ keys = weight 2
+  let weightedPool = uniqueChars->Array.flatMap(charInfo => {
+    let codeLength = charInfo.cangjieCode->Array.length
+    if codeLength == 1 {
+      [charInfo] // Add once for 1-key characters
+    } else {
+      [charInfo, charInfo] // Add twice for 2+ key characters
+    }
+  })
+
+  // Shuffle and take 48
+  CangjieUtils.shuffleArray(weightedPool)->Array.slice(~start=0, ~end=48)
+}
 
 let getStrokesLessons = (): array<Types.lesson> => {
   let strokesLessons = [
@@ -379,34 +460,30 @@ let getStrokesLessons = (): array<Types.lesson> => {
 
     makeLesson(11, "複習竹戈十大", "日月金木複習竹戈十大",    
       Strokes, Radicals, Review, [H, I, J, K],
-      lesson11Characters, ~showCode=false, ~allowHints=true, ()),
+      lesson11Characters, ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[9, 10], ()),
 
     makeLesson(12, "筆畫 3：中一", "學習 中(L) 和 一(M)",
       Strokes, Radicals, Practice, [L, M],
       lesson12Characters, ~showCode=false, ~allowHints=true, ()),
 
-    makeLesson(13, "筆畫 5：弓", "學習 弓(N)",
+    makeLesson(13, "筆畫 4：弓", "學習 弓(N)",
       Strokes, Radicals, Practice, [N],
       lesson13Characters,
       ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[], ()),
 
-    // Lesson 12: Comprehensive Review
-    // makeLesson(13, "筆畫綜合", "綜合練習筆畫類應用",
-    //   Strokes, Radicals, MixedReview, [H, I, J, K, L, M, N],
-    //   Js.Array2.concat(
-    //     Js.Array2.concat(
-    //       Js.Array2.concat(lesson8Characters, lesson9Characters),
-    //       Js.Array2.concat(
-    //         Js.Array2.concat(lesson10Characters, lesson11Characters),
-    //         Js.Array2.concat(
-    //           Js.Array2.concat(lesson12Characters, lesson13Characters),
-    //           lesson14Characters
-    //         )
-    //       )
-    //     ),
-    //     strokesApplicationCharacters
-    //   ),
-    //   ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[7, 8, 9, 10], ()),
+    makeLesson(14, "複習中一弓", "中一弓",
+      Strokes, Radicals, Practice, [N],
+      lesson14Characters,
+      ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[12, 13], ()),
+
+    makeLesson(15, "筆畫複習", "複習筆畫類所有部首",
+      Strokes, Radicals, Review, [H, I, J, K, L, M, N],
+      lesson15Characters, ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[9, 10, 12, 13], ()),
+
+    makeLesson(16, "筆畫複習", "綜合練習筆畫複習應用",
+      Strokes, Radicals, MixedReview, [H, I, J, K, L, M, N],
+      generateStrokesTest(), ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[9, 10, 12, 13], ()),
+    
   ]
   strokesLessons
 }

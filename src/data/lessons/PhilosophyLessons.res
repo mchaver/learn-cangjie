@@ -1,6 +1,3 @@
-// Expanded Cangjie lesson data with words, phrases, chengyu, and sentences
-// This module generates lessons dynamically and includes much more content
-
 open Types
 open CharacterDictionary
 
@@ -388,11 +385,8 @@ let generatePhilosophyTest = (): array<characterInfo> => {
   let allSourceChars =
     lesson1Characters
     ->Array.concat(lesson2Characters)
-    ->Array.concat(lesson3Characters)
     ->Array.concat(lesson4Characters)
     ->Array.concat(lesson5Characters)
-    ->Array.concat(lesson6Characters)
-    ->Array.concat(lesson7Characters)
     
   // Get unique characters by using character string as key
   let uniqueCharsMap = Belt.Map.String.empty
@@ -457,6 +451,6 @@ let getPhilosophyLessons = (): array<Types.lesson> => {
     // Lesson 8: Comprehensive Review (Dynamic - regenerated each time)
     makeLesson(8, "哲理綜合", "綜合練習哲理類應用",
       Philosophy, Radicals, MixedReview, [A, B, C, D, E, F, G],
-      generatePhilosophyTest(), ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 3, 4, 5, 6, 7], ()),
+      generatePhilosophyTest(), ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 4, 5], ()),
   ]
 }
