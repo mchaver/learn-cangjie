@@ -213,7 +213,9 @@ let characterDictionary: Belt.Map.String.t<characterInfo> = Belt.Map.String.from
   ("妃", makeChar("妃", "VSU", Some(["女", "尸", "山"]), ())),
   ("男", makeChar("男", "WKS", Some(["田", "大", "尸"]), ())),
   ("卡", makeChar("卡", "YMY", Some(["卜", "一", "卜"]), ())),
-
+  ("老", makeChar("老", "JKP", Some(["十", "大", "心"]), ())),
+  ("代", makeChar("代", "OIP", Some(["人", "戈", "心"]), ())),
+  
   // 4-key characters
   ("愛", makeChar("愛", "BBPE", Some(["月", "月", "心", "水"]), ())),
   ("樹", makeChar("樹", "DGTI", Some(["木", "土", "廿", "戈"]), ())),
@@ -239,7 +241,8 @@ let characterDictionary: Belt.Map.String.t<characterInfo> = Belt.Map.String.from
   ("意", makeChar("意", "YTAP", Some(["卜", "廿", "日", "心"]), ())),
   ("原", makeChar("原", "MHAF", Some(["一", "竹", "日", "火"]), ())),
   ("到", makeChar("到", "MGLN", Some(["一", "土", "中", "弓"]), ())),
-
+  ("承", makeChar("承", "NNQO", Some(["弓", "弓", "手", "人"]), ())),
+  
   // 5-key characters
   ("卵", makeChar("卵", "HHSLI", Some(["難", "竹", "手", "火"]), ())),
   ("從", makeChar("從", "HOOOO", Some(["人", "人"]), ())),

@@ -480,7 +480,7 @@ let getStrokesLessons = (): array<Types.lesson> => {
 
     makeLesson(17, "哲理筆畫考試", "綜合練習哲理和筆畫複習應用",
       Strokes, Radicals, MixedReview, [A, B, C, D, E, F, G, H, I, J, K, L, M, N],
-      generateStrokesTest(), ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 4, 5, 9, 10, 12, 13], ()),
+      generatePhilosophyAndStrokesTest(), ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 4, 5, 9, 10, 12, 13], ()),
     
   ]
   strokesLessons
