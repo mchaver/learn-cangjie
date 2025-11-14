@@ -145,7 +145,7 @@ let playKeystrokeSound = (isCorrect: bool) => {
 }
 
 @react.component
-let make = (~nextKey: option<string>, ~lastKeyPressed: option<(string, bool)>, ~showRadicals: bool=true, ~onKeyClick: option<string => unit>=?, ~highlightNextKey: bool=true) => {
+let make = (~nextKey: option<string>, ~lastKeyPressed: option<(string, bool)>, ~showRadicals: bool=true, ~onKeyClick: option<string => unit>=?, ~highlightNextKey: bool=true, ~onSpaceClick: option<unit => unit>=?, ~onBackspaceClick: option<unit => unit>=?) => {
   // Track animation state
   let (animatingKey, setAnimatingKey) = React.useState(() => None)
 
@@ -207,12 +207,34 @@ let make = (~nextKey: option<string>, ~lastKeyPressed: option<(string, bool)>, ~
     <div className="keyboard-visual">
       <div className="keyboard-row keyboard-row-1">
         {row1Keys->Js.Array2.map(renderKey)->React.array}
+        {switch onBackspaceClick {
+        | Some(callback) =>
+          <div
+            className="animated-key key-special key-backspace"
+            onClick={_ => callback()}
+          >
+            <div className="key-radical"> {React.string("刪除")} </div>
+          </div>
+        | None => React.null
+        }}
       </div>
       <div className="keyboard-row keyboard-row-2">
         {row2Keys->Js.Array2.map(renderKey)->React.array}
       </div>
       <div className="keyboard-row keyboard-row-3">
         {row3Keys->Js.Array2.map(renderKey)->React.array}
+      </div>
+      <div className="keyboard-row keyboard-row-4">
+        {switch onSpaceClick {
+        | Some(callback) =>
+          <div
+            className="animated-key key-special key-space"
+            onClick={_ => callback()}
+          >
+            <div className="key-radical"> {React.string("空格")} </div>
+          </div>
+        | None => React.null
+        }}
       </div>
     </div>
   </div>

@@ -2036,7 +2036,7 @@ p {
 
 .keyboard-row {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
 
@@ -2171,6 +2171,45 @@ p {
 
   @media (max-width: 768px) {
     padding-left: 40px;
+  }
+}
+
+.keyboard-row-4 {
+  // Align with X in row 3: Z padding (60px) + Z width (60px) + gap (8px)
+  padding-left: 128px;
+
+  @media (max-width: 768px) {
+    // Z padding (40px) + Z width (50px) + gap (5px)
+    padding-left: 95px;
+  }
+}
+
+.key-special {
+  background: color.adjust($primary-color, $lightness: 35%);
+  border-color: $primary-color;
+  cursor: pointer;
+
+  &:hover {
+    background: color.adjust($primary-color, $lightness: 30%);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.key-backspace {
+  // Same size as regular keys, placed after P in row 1
+}
+
+.key-space {
+  // Spans from X to N (5 keys * 60px + 4 gaps * 8px)
+  width: 332px !important;
+
+  @media (max-width: 768px) {
+    // (5 keys * 50px + 4 gaps * 5px)
+    width: 270px !important;
   }
 }
 

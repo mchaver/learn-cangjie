@@ -172,111 +172,129 @@ let make = (
         let expectedCode = CangjieUtils.keysToCode(charInfo.cangjieCode)
         let currentLength = inputState.currentInput->Js.String2.length
 
+        // Allow input up to the expected length
         if currentLength < expectedCode->Js.String2.length {
-          let expectedChar = expectedCode->Js.String2.charAt(currentLength)
-          let isCorrect = key == expectedChar
+          let newInput = inputState.currentInput ++ key
 
-          // Trigger animation and sound
-          setLastKeyPressed(_ => Some((key, isCorrect)))
+          // Trigger animation and sound (no validation yet)
+          setLastKeyPressed(_ => Some((key, true)))
 
-          if isCorrect {
-            let newInput = inputState.currentInput ++ key
-
-            // Check if we've completed this character
-            if newInput == expectedCode {
-              let isLast = inputState.currentIndex == lesson.characters->Js.Array2.length - 1
-
-              // For multi-char codes, trigger fade-out animation
-              if expectedCode->Js.String2.length > 1 {
-                setJustCompleted(_ => Some(newInput))
-                let _ = Js.Global.setTimeout(() => {
-                  setJustCompleted(_ => None)
-                }, 600)
-                ()
-              }
-
-              // Handle first-time multi-character practice (need 3 completions)
-              if isFirstTimeMultiChar && firstTimeAttempt < 2 {
-                // Increment attempt counter and reset input
-                setFirstTimeAttempt(prev => prev + 1)
-                setInputState(prev => {...prev, currentInput: ""})
-              } else {
-                // Record correct attempt in character progress
-                LocalStorage.recordCorrectAttempt(charInfo.character, lesson.showCode || showHint)
-
-                // Hide hint for next character
-                setShowHint(_ => false)
-
-                // Move to next character
-                setInputState(prev => {
-                  {
-                    currentIndex: prev.currentIndex + 1,
-                    currentInput: "",
-                    stats: {
-                      ...prev.stats,
-                      totalCharacters: prev.stats.totalCharacters + 1,
-                      correctCharacters: prev.stats.correctCharacters + 1,
-                    },
-                    errors: prev.errors,
-                  }
-                })
-
-                if isLast {
-                  onComplete()
-                }
-              }
-            } else {
-              // Add correct key to input
-              setInputState(prev => {
-                {...prev, currentInput: newInput}
-              })
-            }
-          } else {
-            // Wrong key - flash error
-            // Record incorrect attempt in character progress
-            LocalStorage.recordIncorrectAttempt(charInfo.character)
-
-            if expectedCode->Js.String2.length == 1 {
-              // For single character, flash the whole character
-              setShowError(_ => true)
-              let _ = Js.Global.setTimeout(() => {
-                setShowError(_ => false)
-              }, 300)
-              ()
-            } else {
-              // For multi-character, flash the specific input box
-              setWrongBoxIndex(_ => Some(currentLength))
-              let _ = Js.Global.setTimeout(() => {
-                setWrongBoxIndex(_ => None)
-              }, 300)
-              ()
-            }
-
-            setInputState(prev => {
-              {
-                ...prev,
-                stats: {
-                  ...prev.stats,
-                  totalCharacters: prev.stats.totalCharacters + 1,
-                  incorrectCharacters: prev.stats.incorrectCharacters + 1,
-                },
-                errors: prev.errors->Js.Array2.concat([(prev.currentIndex, key)]),
-              }
-            })
-          }
+          // Just add the key to input without validation
+          setInputState(prev => {...prev, currentInput: newInput})
         }
       }
     }
   }
 
+  // Handle space bar to validate and submit
+  let handleSpaceBar = () => {
+    switch currentChar {
+    | None => ()
+    | Some(charInfo) => {
+        let expectedCode = CangjieUtils.keysToCode(charInfo.cangjieCode)
+        let isCorrect = inputState.currentInput == expectedCode
+        let isLast = inputState.currentIndex == lesson.characters->Js.Array2.length - 1
+
+        if isCorrect {
+          // Trigger fade-out animation for multi-char codes
+          if expectedCode->Js.String2.length > 1 {
+            setJustCompleted(_ => Some(inputState.currentInput))
+            let _ = Js.Global.setTimeout(() => {
+              setJustCompleted(_ => None)
+            }, 600)
+            ()
+          }
+
+          // Handle first-time multi-character practice (need 3 completions)
+          if isFirstTimeMultiChar && firstTimeAttempt < 2 {
+            setFirstTimeAttempt(prev => prev + 1)
+            setInputState(prev => {...prev, currentInput: ""})
+          } else {
+            // Record correct attempt
+            LocalStorage.recordCorrectAttempt(charInfo.character, lesson.showCode || showHint)
+            setShowHint(_ => false)
+
+            // Move to next character
+            setInputState(prev => {
+              {
+                currentIndex: prev.currentIndex + 1,
+                currentInput: "",
+                stats: {
+                  ...prev.stats,
+                  totalCharacters: prev.stats.totalCharacters + 1,
+                  correctCharacters: prev.stats.correctCharacters + 1,
+                },
+                errors: prev.errors,
+              }
+            })
+
+            if isLast {
+              onComplete()
+            }
+          }
+        } else {
+          // Wrong input - flash error
+          LocalStorage.recordIncorrectAttempt(charInfo.character)
+
+          if expectedCode->Js.String2.length == 1 {
+            setShowError(_ => true)
+            let _ = Js.Global.setTimeout(() => {
+              setShowError(_ => false)
+            }, 300)
+            ()
+          } else {
+            // Flash all input boxes
+            setWrongBoxIndex(_ => Some(0))
+            let _ = Js.Global.setTimeout(() => {
+              setWrongBoxIndex(_ => None)
+            }, 300)
+            ()
+          }
+
+          // Record error and clear input to retry
+          setInputState(prev => {
+            {
+              ...prev,
+              currentInput: "",
+              stats: {
+                ...prev.stats,
+                totalCharacters: prev.stats.totalCharacters + 1,
+                incorrectCharacters: prev.stats.incorrectCharacters + 1,
+              },
+              errors: prev.errors->Js.Array2.concat([(prev.currentIndex, inputState.currentInput)]),
+            }
+          })
+        }
+      }
+    }
+  }
+
+  // Handle backspace to delete last character
+  let handleBackspace = () => {
+    if inputState.currentInput->Js.String2.length > 0 {
+      let newInput = inputState.currentInput->Js.String2.slice(~from=0, ~to_=-1)
+      setInputState(prev => {...prev, currentInput: newInput})
+    }
+  }
+
   // Handle physical keyboard input
   let handleKeyDown = (event: {..}) => {
-    let key = event["key"]->Js.String2.toUpperCase
+    let key = event["key"]
 
-    // Only handle letter keys A-Z
-    if key->Js.String2.length == 1 && Js.Re.test_(%re("/^[A-Z]$/"), key) {
+    // Handle space bar
+    if key == " " {
       event["preventDefault"]()
-      processKeyInput(key)
+      handleSpaceBar()
+    } else if key == "Backspace" {
+      event["preventDefault"]()
+      handleBackspace()
+    } else {
+      // Only handle letter keys A-Z
+      let upperKey = key->Js.String2.toUpperCase
+      if upperKey->Js.String2.length == 1 && Js.Re.test_(%re("/^[A-Z]$/"), upperKey) {
+        event["preventDefault"]()
+        processKeyInput(upperKey)
+      }
     }
   }
 
@@ -438,7 +456,7 @@ let make = (
                       )}
                     </div>
                   : React.null}
-                {isCurrentChar && expectedCode->Js.String2.length > 1
+                {isCurrentChar
                   ? <div className="char-input-boxes">
                       {Belt.Array.range(0, expectedCode->Js.String2.length - 1)
                       ->Js.Array2.map(i => {
@@ -526,7 +544,15 @@ let make = (
     }}
 
     {keyboardVisible
-      ? <AnimatedKeyboard nextKey={nextExpectedKey} lastKeyPressed={lastKeyPressed} showRadicals={true} onKeyClick={handleKeyClick} highlightNextKey={lesson.lessonType == Practice} />
+      ? <AnimatedKeyboard
+          nextKey={nextExpectedKey}
+          lastKeyPressed={lastKeyPressed}
+          showRadicals={true}
+          onKeyClick={handleKeyClick}
+          highlightNextKey={lesson.lessonType == Practice}
+          onSpaceClick=?{Some(handleSpaceBar)}
+          onBackspaceClick=?{Some(handleBackspace)}
+        />
       : React.null}
   </div>
 }
