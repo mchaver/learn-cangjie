@@ -175,7 +175,8 @@ let characterDictionary: Belt.Map.String.t<characterInfo> = Belt.Map.String.from
   ("上", makeChar("上", "YM", Some(["卜", "一"]), ())),
   ("占", makeChar("占", "YR", Some(["卜", "口"]), ())),
   ("丈", makeChar("丈", "JK", Some(["十", "大"]), ())),
-
+  ("年", makeChar("年", "OQ", Some(["人", "手"]), ())),
+  
   // 3-key characters
   ("同", makeChar("同", "BMR", Some(["月", "一", "口"]), ())),
   ("森", makeChar("森", "DDD", Some(["木", "木", "木"]), ())),
@@ -242,6 +243,7 @@ let characterDictionary: Belt.Map.String.t<characterInfo> = Belt.Map.String.from
   ("原", makeChar("原", "MHAF", Some(["一", "竹", "日", "火"]), ())),
   ("到", makeChar("到", "MGLN", Some(["一", "土", "中", "弓"]), ())),
   ("承", makeChar("承", "NNQO", Some(["弓", "弓", "手", "人"]), ())),
+
   
   // 5-key characters
   ("卵", makeChar("卵", "HHSLI", Some(["難", "竹", "手", "火"]), ())),
