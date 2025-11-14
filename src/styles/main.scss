@@ -1592,6 +1592,15 @@ p {
   z-index: 10;
 }
 
+.char-x-above {
+  position: absolute;
+  top: -2.5rem;
+  font-size: 1.5rem;
+  color: $error-color;
+  font-weight: bold;
+  z-index: 10;
+}
+
 .char-item {
   display: flex;
   flex-direction: column;
@@ -1649,7 +1658,7 @@ p {
 
   &.completed-char {
     background: $bg-primary;
-    border: 1px solid $success-color;
+    border: 2px solid $success-color;
 
     .char-main {
       color: $success-color;
@@ -1658,17 +1667,21 @@ p {
 
   &.error-char {
     background: color.adjust($error-color, $lightness: 40%);
-    border-color: $error-color;
-    animation: shake 0.3s ease;
+    border: 2px solid $error-color;
 
     .char-main {
       color: $error-color;
     }
+
+    // Only shake on current character errors, not completed ones
+    &.current-char {
+      animation: shake 0.3s ease;
+    }
   }
 }
 
-// Hint appears below the square box
-.char-code-hint {
+// Hint appears below the square box (only in char-item context)
+.char-item .char-code-hint {
   position: absolute;
   top: 100%;
   left: 50%;
@@ -1689,15 +1702,10 @@ p {
   }
 }
 
-// Input boxes appear below the char-item square
+// Input boxes styling (shared)
 .char-input-boxes {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   gap: 0.25rem;
-  margin-top: 1rem;
   justify-content: center;
 
   &.fade-out {
@@ -1729,6 +1737,15 @@ p {
       animation: shake 0.3s ease;
     }
   }
+}
+
+// Input boxes appear below the char-item square (only in normal character view)
+.char-item .char-input-boxes {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 1rem;
 }
 
 @keyframes shake {

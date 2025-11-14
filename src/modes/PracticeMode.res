@@ -396,12 +396,18 @@ let make = (
             let expectedCode = CangjieUtils.keysToCode(charInfo.cangjieCode)
             let shouldShowFadeOut = isPrevCompleted && justCompleted->Belt.Option.isSome
 
+            // Check if this character had any errors
+            let absoluteIndex = batchStartIndex + idx
+            let hadError = inputState.errors->Js.Array2.some(((errorIdx, _)) => errorIdx == absoluteIndex)
+
             <div key={Belt.Int.toString(batchStartIndex + idx)} className="char-wrapper">
               {isCompleted
-                ? <div className="char-checkmark-above"> {React.string("✓")} </div>
+                ? <div className={hadError ? "char-x-above" : "char-checkmark-above"}>
+                    {React.string(hadError ? "✗" : "✓")}
+                  </div>
                 : React.null}
               <div
-                className={`char-item ${isCurrentChar ? "current-char" : ""} ${isCompleted ? "completed-char" : ""} ${isCurrentChar && showError ? "error-char" : ""}`}
+                className={`char-item ${isCurrentChar ? "current-char" : ""} ${isCompleted && !hadError ? "completed-char" : ""} ${isCompleted && hadError ? "error-char" : ""} ${isCurrentChar && showError ? "error-char" : ""}`}
               >
                 <div className="char-main"> {React.string(charInfo.character)} </div>
                 {isCurrentChar && (lesson.showCode || showHint)
