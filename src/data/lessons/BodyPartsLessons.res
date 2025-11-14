@@ -248,7 +248,7 @@ let generatePhilosophyStrokesAndBodyPartsTest = (): array<characterInfo> => {
 
 
 let getBodyPartsLessons = (): array<Types.lesson> => {
-  let bodyPartsLessons = [
+  [
     makeLesson(18, "人體 1：人心", "學習 O(人) 和 P(心)",
       BodyParts, Radicals, Practice, [O, P],
       lesson18Characters, ~showCode=false, ~allowHints=true, ()),
@@ -263,12 +263,11 @@ let getBodyPartsLessons = (): array<Types.lesson> => {
       ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[16, 17], ()),
 
     makeLesson(21, "人體考試", "綜合練習人體習應用",
-      BodyParts, Radicals, MixedReview, [A, B, C, D, E, F, G, H, I, J, K, L, M, N],
+      BodyParts, Radicals, MixedReview, [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R],
       generateBodyPartsTest(), ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[18, 19], ()),
 
-    makeLesson(22, "哲理筆畫考試", "綜合練習哲理筆畫和人體複習應用",
-      BodyParts, Radicals, MixedReview, [A, B, C, D, E, F, G, H, I, J, K, L, M, N],
+    makeLesson(22, "哲理筆畫人體考試", "綜合練習哲理筆畫和人體複習應用",
+      BodyParts, Radicals, MixedReview, [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R],
       generatePhilosophyStrokesAndBodyPartsTest(), ~showCode=false, ~allowHints=false, ~allowGiveUp=true, ~reviewsLessons=[1, 2, 4, 5, 9, 10, 12, 13, 18, 19], ()),
   ]
-  bodyPartsLessons
 }
