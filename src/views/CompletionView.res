@@ -96,14 +96,17 @@ let make = (~lessonId: int, ~onBack: unit => unit) => {
     setRetryInputState(_ => None)
   }
 
+  // Redirect to lesson list if no data available
+  React.useEffect2(() => {
+    switch (lesson, completionData) {
+    | (None, _) | (_, None) => Router.push(LessonList)
+    | _ => ()
+    }
+    None
+  }, (lesson, completionData))
+
   switch (lesson, completionData, state) {
-  | (None, _, _) | (_, None, _) =>
-    <div className="lesson-view">
-      <div className="lesson-header">
-        <button className="btn btn-back" onClick={_ => onBack()}> {React.string("← 返回")} </button>
-      </div>
-      <div className="error-message"> {React.string("找不到課程資料")} </div>
-    </div>
+  | (None, _, _) | (_, None, _) => React.null
 
   | (Some(_lesson), Some((_lessonId, _inputState)), RetryingErrors) =>
     switch (retryLesson, retryInputState) {
@@ -204,35 +207,44 @@ let make = (~lessonId: int, ~onBack: unit => unit) => {
           </div>
 
           {inputState.errors->Js.Array2.length > 0
-            ? <div className="completion-errors">
-                <h3> {React.string("錯誤記錄")} </h3>
-                <div className="errors-list">
-                  {inputState.errors
-                  ->Js.Array2.slice(~start=0, ~end_=5)
-                  ->Js.Array2.map(((charIndex, wrongInput)) => {
-                    let charInfo = lesson.characters->Belt.Array.get(charIndex)
-                    switch charInfo {
-                    | Some(info) =>
-                      <div key={Belt.Int.toString(charIndex)} className="error-item">
-                        <span className="error-char"> {React.string(info.character)} </span>
-                        <span className="error-input"> {React.string(`輸入: ${wrongInput}`)} </span>
-                        <span className="error-correct">
-                          {React.string(`正確: ${CangjieUtils.keysToCode(info.cangjieCode)}`)}
-                        </span>
-                      </div>
-                    | None => React.null
-                    }
-                  })
-                  ->React.array}
+            ? {
+                // Group errors by character index and count them
+                let errorCounts = inputState.errors->Js.Array2.reduce((acc, (charIndex, _)) => {
+                  let currentCount = acc->Belt.Map.Int.get(charIndex)->Belt.Option.getWithDefault(0)
+                  acc->Belt.Map.Int.set(charIndex, currentCount + 1)
+                }, Belt.Map.Int.empty)
+
+                // Convert to array of (charIndex, count) - show all
+                let uniqueErrors = errorCounts->Belt.Map.Int.toArray
+
+                <div className="completion-errors">
+                  <h3> {React.string("錯誤記錄")} </h3>
+                  <div className="errors-list">
+                    {uniqueErrors
+                    ->Js.Array2.map(((charIndex, count)) => {
+                      let charInfo = lesson.characters->Belt.Array.get(charIndex)
+                      switch charInfo {
+                      | Some(info) =>
+                        <div key={Belt.Int.toString(charIndex)} className="error-item">
+                          <span className="error-char"> {React.string(info.character)} </span>
+                          <span className="error-correct">
+                            {React.string(
+                              info.cangjieCode
+                              ->Js.Array2.map(CangjieUtils.keyToRadicalName)
+                              ->Js.Array2.joinWith("")
+                            )}
+                          </span>
+                          <span className="error-count">
+                            {React.string(`×${Belt.Int.toString(count)}`)}
+                          </span>
+                        </div>
+                      | None => React.null
+                      }
+                    })
+                    ->React.array}
+                  </div>
                 </div>
-                {inputState.errors->Js.Array2.length > 5
-                  ? <div className="errors-more">
-                      {React.string(
-                        `還有 ${Belt.Int.toString(inputState.errors->Js.Array2.length - 5)} 個錯誤...`,
-                      )}
-                    </div>
-                  : React.null}
-              </div>
+              }
             : React.null}
 
           <div className="completion-actions">
