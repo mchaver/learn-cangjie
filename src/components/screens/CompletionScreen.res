@@ -9,6 +9,7 @@ let make = (
   ~onRestart: unit => unit,
   ~onBack: unit => unit,
   ~onNext: option<unit => unit>=?,
+  ~onRetryErrors: option<unit => unit>=?,
 ) => {
   let duration = Js.Date.now() -. inputState.stats.startTime
   let accuracy = CangjieUtils.calculateAccuracy(
@@ -117,6 +118,13 @@ let make = (
         <button className="btn btn-secondary" onClick={_ => onRestart()}>
           {React.string("重新練習")}
         </button>
+        {switch onRetryErrors {
+        | Some(retryHandler) when inputState.errors->Js.Array2.length > 0 =>
+          <button className="btn btn-warning" onClick={_ => retryHandler()}>
+            {React.string("練習錯誤的字")}
+          </button>
+        | _ => React.null
+        }}
         <button className="btn btn-primary" onClick={_ => onBack()}>
           {React.string("返回課程列表")}
         </button>

@@ -2,6 +2,10 @@
 
 open Types
 
+type retryState =
+  | ShowingResults
+  | RetryingErrors
+
 @react.component
 let make = (~lessonId: int, ~onBack: unit => unit) => {
   // Load completion stats from localStorage
@@ -9,6 +13,11 @@ let make = (~lessonId: int, ~onBack: unit => unit) => {
 
   // Get lesson data
   let lesson = CangjieData.getLessonById(lessonId)
+
+  // Track retry state
+  let (state, setState) = React.useState(() => ShowingResults)
+  let (retryInputState, setRetryInputState) = React.useState(() => None)
+  let (retryLesson, setRetryLesson) = React.useState(() => None)
 
   // Clear completion stats when component unmounts
   React.useEffect0(() => {
@@ -29,8 +38,66 @@ let make = (~lessonId: int, ~onBack: unit => unit) => {
     }
   }
 
-  switch (lesson, completionData) {
-  | (None, _) | (_, None) =>
+  let handleRetryErrors = (lesson: lesson, inputState: inputState) => {
+    // Extract unique character indices that had errors and shuffle them
+    let errorIndices = inputState.errors
+      ->Js.Array2.map(((idx, _)) => idx)
+      ->Belt.Set.Int.fromArray
+      ->Belt.Set.Int.toArray
+
+    // Shuffle the error indices
+    let shuffledIndices = {
+      let arr = errorIndices->Js.Array2.copy
+      // Fisher-Yates shuffle
+      let length = arr->Js.Array2.length
+      for i in 0 to length - 2 {
+        let j = i + Js.Math.random_int(i, length)
+        let temp = Belt.Array.getUnsafe(arr, i)
+        Belt.Array.setUnsafe(arr, i, Belt.Array.getUnsafe(arr, j))
+        Belt.Array.setUnsafe(arr, j, temp)
+      }
+      arr
+    }
+
+    // Create retry lesson with shuffled error characters
+    let newRetryLesson = {
+      ...lesson,
+      title: `${lesson.title} - 錯誤字練習`,
+      characters: shuffledIndices
+        ->Js.Array2.map(idx => lesson.characters[idx])
+        ->Js.Array2.filter(Belt.Option.isSome)
+        ->Js.Array2.map(Belt.Option.getExn),
+      allowHints: true,
+      allowGiveUp: false,
+      showCode: false,
+    }
+
+    setRetryLesson(_ => Some(newRetryLesson))
+
+    // Create initial retry input state
+    setRetryInputState(_ => Some({
+      currentIndex: 0,
+      currentInput: "",
+      stats: {
+        totalCharacters: 0,
+        correctCharacters: 0,
+        incorrectCharacters: 0,
+        startTime: Js.Date.now(),
+        endTime: None,
+      },
+      errors: [],
+    }))
+
+    setState(_ => RetryingErrors)
+  }
+
+  let handleRetryComplete = () => {
+    setState(_ => ShowingResults)
+    setRetryInputState(_ => None)
+  }
+
+  switch (lesson, completionData, state) {
+  | (None, _, _) | (_, None, _) =>
     <div className="lesson-view">
       <div className="lesson-header">
         <button className="btn btn-back" onClick={_ => onBack()}> {React.string("← 返回")} </button>
@@ -38,7 +105,28 @@ let make = (~lessonId: int, ~onBack: unit => unit) => {
       <div className="error-message"> {React.string("找不到課程資料")} </div>
     </div>
 
-  | (Some(lesson), Some((_, inputState))) =>
+  | (Some(_lesson), Some((_lessonId, _inputState)), RetryingErrors) =>
+    switch (retryLesson, retryInputState) {
+    | (Some(lesson), Some(inputState)) =>
+      <div className="lesson-view">
+        <div className="lesson-header">
+          <button className="btn btn-back" onClick={_ => handleRetryComplete()}>
+            {React.string("← 返回結果")}
+          </button>
+          <h1 className="lesson-title"> {React.string(lesson.title)} </h1>
+        </div>
+
+        <PracticeMode
+          lesson={lesson}
+          inputState={inputState}
+          setInputState={updater => setRetryInputState(prev => prev->Belt.Option.map(updater))}
+          onComplete={handleRetryComplete}
+        />
+      </div>
+    | _ => React.null
+    }
+
+  | (Some(lesson), Some((_, inputState)), ShowingResults) =>
     let duration = Js.Date.now() -. inputState.stats.startTime
     let accuracy = CangjieUtils.calculateAccuracy(
       inputState.stats.correctCharacters,
@@ -151,6 +239,11 @@ let make = (~lessonId: int, ~onBack: unit => unit) => {
             <button className="btn btn-secondary" onClick={_ => handleRestart()}>
               {React.string("重新練習")}
             </button>
+            {inputState.errors->Js.Array2.length > 0
+              ? <button className="btn btn-warning" onClick={_ => handleRetryErrors(lesson, inputState)}>
+                  {React.string("練習錯誤的字")}
+                </button>
+              : React.null}
             <button className="btn btn-primary" onClick={_ => onBack()}>
               {React.string("返回課程列表")}
             </button>

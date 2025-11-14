@@ -6,6 +6,7 @@ type lessonState =
   | Ready
   | Active
   | Completed
+  | RetryingErrors
 
 @react.component
 let make = (
@@ -28,6 +29,9 @@ let make = (
       errors: [],
     }: inputState
   ))
+  let (completedInputState, setCompletedInputState) = React.useState(() => None)
+  let (retryInputState, setRetryInputState) = React.useState(() => None)
+  let (retryLesson, setRetryLesson) = React.useState(() => None)
 
   let handleStart = () => {
     setInputState(_ => (
@@ -48,6 +52,8 @@ let make = (
   }
 
   let handleComplete = () => {
+    // Save the completed input state
+    setCompletedInputState(_ => Some(inputState))
     setState(_ => Completed)
 
     // Calculate final stats
@@ -65,6 +71,67 @@ let make = (
 
   let handleRestart = () => {
     setState(_ => Ready)
+  }
+
+  let handleRetryErrors = () => {
+    switch completedInputState {
+    | Some(completed) =>
+      // Extract unique character indices that had errors and shuffle them
+      let errorIndices = completed.errors
+        ->Js.Array2.map(((idx, _)) => idx)
+        ->Belt.Set.Int.fromArray
+        ->Belt.Set.Int.toArray
+
+      // Shuffle the error indices
+      let shuffledIndices = {
+        let arr = errorIndices->Js.Array2.copy
+        // Fisher-Yates shuffle
+        let length = arr->Js.Array2.length
+        for i in 0 to length - 2 {
+          let j = i + Js.Math.random_int(i, length)
+          let temp = Belt.Array.getUnsafe(arr, i)
+          Belt.Array.setUnsafe(arr, i, Belt.Array.getUnsafe(arr, j))
+          Belt.Array.setUnsafe(arr, j, temp)
+        }
+        arr
+      }
+
+      // Create retry lesson with shuffled error characters
+      let newRetryLesson = {
+        ...lesson,
+        title: `${lesson.title} - 錯誤字練習`,
+        characters: shuffledIndices
+          ->Js.Array2.map(idx => lesson.characters[idx])
+          ->Js.Array2.filter(Belt.Option.isSome)
+          ->Js.Array2.map(Belt.Option.getExn),
+        allowHints: true,
+        allowGiveUp: false,
+        showCode: false,
+      }
+
+      setRetryLesson(_ => Some(newRetryLesson))
+
+      // Initialize retry input state
+      setRetryInputState(_ => Some({
+        currentIndex: 0,
+        currentInput: "",
+        stats: {
+          totalCharacters: 0,
+          correctCharacters: 0,
+          incorrectCharacters: 0,
+          startTime: Js.Date.now(),
+          endTime: None,
+        },
+        errors: [],
+      }))
+      setState(_ => RetryingErrors)
+    | None => ()
+    }
+  }
+
+  let handleRetryComplete = () => {
+    setState(_ => Completed)
+    setRetryInputState(_ => None)
   }
 
   <div className="lesson-view">
@@ -93,13 +160,36 @@ let make = (
           onComplete={handleComplete}
         />
       }
+    | RetryingErrors =>
+      switch (retryLesson, retryInputState) {
+      | (Some(lesson), Some(retry)) =>
+        <PracticeMode
+          lesson={lesson}
+          inputState={retry}
+          setInputState={updater => setRetryInputState(_ => Some(updater(retry)))}
+          onComplete={handleRetryComplete}
+        />
+      | _ => React.null
+      }
     | Completed =>
-      <CompletionScreen
-        lesson={lesson}
-        inputState={inputState}
-        onRestart={handleRestart}
-        onBack={onBack}
-      />
+      switch completedInputState {
+      | Some(completed) =>
+        <CompletionScreen
+          lesson={lesson}
+          inputState={completed}
+          onRestart={handleRestart}
+          onBack={onBack}
+          onRetryErrors=?{Some(handleRetryErrors)}
+        />
+      | None =>
+        <CompletionScreen
+          lesson={lesson}
+          inputState={inputState}
+          onRestart={handleRestart}
+          onBack={onBack}
+          onRetryErrors=?{Some(handleRetryErrors)}
+        />
+      }
     }}
   </div>
 }
