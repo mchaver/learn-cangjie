@@ -5,6 +5,12 @@ open Types
 @val @scope("document") external addEventListener: (string, 'a => unit) => unit = "addEventListener"
 @val @scope("document") external removeEventListener: (string, 'a => unit) => unit = "removeEventListener"
 
+type window
+@val external window: window = "window"
+@get external innerWidth: window => int = "innerWidth"
+@send external addWindowEventListener: (window, string, 'a => unit) => unit = "addEventListener"
+@send external removeWindowEventListener: (window, string, 'a => unit) => unit = "removeEventListener"
+
 @react.component
 let make = (
   ~lesson: lesson,
@@ -32,6 +38,22 @@ let make = (
 
   // Track keyboard visibility
   let (keyboardVisible, setKeyboardVisible) = React.useState(() => LocalStorage.getKeyboardVisibility())
+
+  // Track if on mobile (for batch size)
+  let (isMobile, setIsMobile) = React.useState(() => false)
+
+  // Detect mobile screen size
+  React.useEffect0(() => {
+    let checkMobile = () => {
+      setIsMobile(_ => window->innerWidth <= 768)
+    }
+    checkMobile()
+
+    let handleResize = (_event) => checkMobile()
+    window->addWindowEventListener("resize", handleResize)
+
+    Some(() => window->removeWindowEventListener("resize", handleResize))
+  })
 
   // Toggle keyboard visibility and save preference
   let toggleKeyboard = () => {
@@ -328,10 +350,11 @@ let make = (
     }
   }
 
-  // Calculate which batch of 8 characters we're showing
-  let batchIndex = inputState.currentIndex / 8
-  let batchStartIndex = batchIndex * 8
-  let batchEndIndex = Js.Math.min_int(batchStartIndex + 8, lesson.characters->Js.Array2.length)
+  // Calculate which batch of characters we're showing (4 on mobile, 8 on desktop)
+  let batchSize = isMobile ? 4 : 8
+  let batchIndex = inputState.currentIndex / batchSize
+  let batchStartIndex = batchIndex * batchSize
+  let batchEndIndex = Js.Math.min_int(batchStartIndex + batchSize, lesson.characters->Js.Array2.length)
   let visibleChars = lesson.characters->Js.Array2.slice(~start=batchStartIndex, ~end_=batchEndIndex)
   let relativeCurrentIndex = inputState.currentIndex - batchStartIndex
 

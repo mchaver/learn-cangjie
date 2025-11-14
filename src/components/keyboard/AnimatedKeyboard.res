@@ -207,22 +207,22 @@ let make = (~nextKey: option<string>, ~lastKeyPressed: option<(string, bool)>, ~
     <div className="keyboard-visual">
       <div className="keyboard-row keyboard-row-1">
         {row1Keys->Js.Array2.map(renderKey)->React.array}
-        {switch onBackspaceClick {
-        | Some(callback) =>
-          <div
-            className="animated-key key-special key-backspace"
-            onClick={_ => callback()}
-          >
-            <div className="key-radical"> {React.string("刪除")} </div>
-          </div>
-        | None => React.null
-        }}
       </div>
       <div className="keyboard-row keyboard-row-2">
         {row2Keys->Js.Array2.map(renderKey)->React.array}
       </div>
       <div className="keyboard-row keyboard-row-3">
         {row3Keys->Js.Array2.map(renderKey)->React.array}
+        {switch onBackspaceClick {
+        | Some(callback) =>
+          <div
+            className="animated-key key-special key-backspace"
+            onClick={_ => callback()}
+          >
+            <div className="key-letter"> {React.string("×")} </div>
+          </div>
+        | None => React.null
+        }}
       </div>
       <div className="keyboard-row keyboard-row-4">
         {switch onSpaceClick {
