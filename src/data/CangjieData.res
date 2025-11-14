@@ -15,19 +15,14 @@ module Advanced = AdvancedLessons
 
 // Combine all lessons into a single array
 let getAllLessons = (): array<lesson> => {
-  Js.Array2.concat(
+  Array.flat([
     Philosophy.getPhilosophyLessons(),
-    Js.Array2.concat(
-      Strokes.getStrokesLessons(),
-      Js.Array2.concat(
-        BodyParts.getBodyPartsLessons(),
-        Js.Array2.concat(
-          CharacterShapes.getCharacterShapesLessons(),
-          Advanced.getAdvancedLessons()
-        )
-      )
-    )
-  )
+    Strokes.getStrokesLessons(),
+    BodyParts.getBodyPartsLessons(),
+    CharacterShapes.getCharacterShapesLessons(),
+    DifficultCharactersLesson.getDifficultCharactersLessons(),
+    Advanced.getAdvancedLessons()    
+  ])
 }
 
 let allLessons = getAllLessons()
