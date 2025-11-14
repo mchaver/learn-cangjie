@@ -1754,7 +1754,7 @@ p {
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  margin-top: 1rem;
+  margin-top: 3rem; // Extra space to clear the hint when it's shown
 }
 
 @keyframes shake {

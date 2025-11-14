@@ -116,13 +116,18 @@ let make = (
   }, [inputState.currentIndex])
 
   // Handle hint button click
-  let handleShowHint = () => {
-    setShowHint(_ => true)
-    // Record hint usage
-    switch currentChar {
-    | Some(charInfo) => LocalStorage.recordHintUsed(charInfo.character, isReviewMode)
-    | None => ()
-    }
+  let handleToggleHint = () => {
+    setShowHint(prev => {
+      let newValue = !prev
+      // Only record hint usage when showing (not when hiding)
+      if newValue {
+        switch currentChar {
+        | Some(charInfo) => LocalStorage.recordHintUsed(charInfo.character, isReviewMode)
+        | None => ()
+        }
+      }
+      newValue
+    })
   }
 
   // Handle give up button click
@@ -504,9 +509,9 @@ let make = (
     | None => React.null
     | Some(_) =>
       <div className="practice-controls">
-        {lesson.allowHints && !showHint
-          ? <button className="hint-button" onClick={_ => handleShowHint()}>
-              {React.string("顯示提示")}
+        {lesson.allowHints
+          ? <button className="hint-button" onClick={_ => handleToggleHint()}>
+              {React.string(showHint ? "隱藏提示" : "顯示提示")}
             </button>
           : React.null}
         {lesson.allowGiveUp
