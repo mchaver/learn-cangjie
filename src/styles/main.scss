@@ -1441,12 +1441,10 @@ p {
 .test-area {
   display: flex;
   justify-content: center;
-  align-items: center;
-  min-height: 450px;
+  align-items: flex-start;
   padding: 0.75rem;
 
   @media (max-width: 768px) {
-    min-height: 400px;
     padding: 0.5rem;
   }
 }
@@ -1458,7 +1456,6 @@ p {
   align-items: center;
   justify-content: center;
   max-width: 900px;
-  min-height: 400px;
   margin: 0 auto;
   padding: 2rem;
 
@@ -1466,7 +1463,6 @@ p {
     flex-direction: column;
     gap: 2rem;
     padding: 1rem;
-    min-height: 350px;
   }
 }
 
@@ -1569,11 +1565,9 @@ p {
   flex-wrap: wrap;
   justify-content: center;
   max-width: 100%;
-  min-height: 400px;
 
   @media (max-width: 768px) {
     gap: 0.75rem;
-    min-height: 350px;
   }
 }
 
@@ -1582,6 +1576,11 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 150px; // Reserve space for character + input boxes
+
+  @media (max-width: 768px) {
+    min-height: 140px;
+  }
 }
 
 .char-checkmark-above {
@@ -1597,18 +1596,22 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
   padding: 0.75rem;
   border-radius: 8px;
   background: $bg-primary;
   border: 2px solid $border-color;
   transition: all 0.3s ease;
-  min-width: 60px;
+  width: 80px;
+  height: 80px;
   position: relative;
+  flex-shrink: 0;
+  overflow: visible;
 
   @media (max-width: 768px) {
     padding: 0.5rem;
-    min-width: 50px;
+    width: 70px;
+    height: 70px;
   }
 
   .char-main {
@@ -1619,43 +1622,6 @@ p {
 
     @media (max-width: 768px) {
       font-size: 2rem;
-    }
-  }
-
-  // Box-based input display for multi-character codes
-  .char-input-boxes {
-    display: flex;
-    gap: 0.25rem;
-    margin-top: 0.5rem;
-
-    &.fade-out {
-      animation: fadeOut 0.6s ease forwards;
-    }
-
-    .input-box {
-      width: 2rem;
-      height: 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid $primary-color;
-      border-radius: 4px;
-      background: $bg-primary;
-      font-size: 1.2rem;
-      font-weight: 400;
-      color: $text-primary;
-
-      @media (max-width: 768px) {
-        width: 1.75rem;
-        height: 1.75rem;
-        font-size: 1rem;
-      }
-
-      &.input-box-error {
-        background: color.adjust($error-color, $lightness: 40%);
-        border-color: $error-color;
-        animation: shake 0.3s ease;
-      }
     }
   }
 
@@ -1701,6 +1667,70 @@ p {
   }
 }
 
+// Hint appears below the square box
+.char-code-hint {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.5rem;
+  white-space: nowrap;
+  font-size: 1rem;
+  color: $primary-color;
+  background: color.adjust($primary-color, $lightness: 45%);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  border: 1px solid $primary-color;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    padding: 0.2rem 0.4rem;
+  }
+}
+
+// Input boxes appear below the char-item square
+.char-input-boxes {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.25rem;
+  margin-top: 1rem;
+  justify-content: center;
+
+  &.fade-out {
+    animation: fadeOut 0.6s ease forwards;
+  }
+
+  .input-box {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid $primary-color;
+    border-radius: 4px;
+    background: $bg-primary;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: $text-primary;
+
+    @media (max-width: 768px) {
+      width: 1.75rem;
+      height: 1.75rem;
+      font-size: 1rem;
+    }
+
+    &.input-box-error {
+      background: color.adjust($error-color, $lightness: 40%);
+      border-color: $error-color;
+      animation: shake 0.3s ease;
+    }
+  }
+}
+
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   25% { transform: translateX(-8px); }
@@ -1715,22 +1745,6 @@ p {
   100% {
     opacity: 0;
     transform: translateY(-10px);
-  }
-}
-
-.char-code-hint {
-  font-size: 1rem;
-  color: $primary-color;
-  background: color.adjust($primary-color, $lightness: 45%);
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  margin-top: 0.5rem;
-  font-weight: 500;
-  border: 1px solid $primary-color;
-
-  @media (max-width: 768px) {
-    font-size: 0.9rem;
-    padding: 0.2rem 0.4rem;
   }
 }
 
