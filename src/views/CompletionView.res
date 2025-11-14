@@ -151,13 +151,12 @@ let make = (~lessonId: int, ~onBack: unit => unit) => {
             <button className="btn btn-secondary" onClick={_ => handleRestart()}>
               {React.string("重新練習")}
             </button>
-            {passed
-              ? <button className="btn btn-primary" onClick={_ => handleNextLesson()}>
-                  {React.string("下一課")}
-                </button>
-              : <button className="btn btn-primary" onClick={_ => onBack()}>
-                  {React.string("返回課程列表")}
-                </button>}
+            <button className="btn btn-primary" onClick={_ => onBack()}>
+              {React.string("返回課程列表")}
+            </button>
+            <button className={passed ? "btn btn-primary" : "btn btn-warning"} onClick={_ => handleNextLesson()}>
+              {React.string("下一課")}
+            </button>
           </div>
         </div>
       </div>

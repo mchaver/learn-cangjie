@@ -8,6 +8,7 @@ let make = (
   ~inputState: inputState,
   ~onRestart: unit => unit,
   ~onBack: unit => unit,
+  ~onNext: option<unit => unit>=?,
 ) => {
   let duration = Js.Date.now() -. inputState.stats.startTime
   let accuracy = CangjieUtils.calculateAccuracy(
@@ -119,6 +120,13 @@ let make = (
         <button className="btn btn-primary" onClick={_ => onBack()}>
           {React.string("返回課程列表")}
         </button>
+        {switch onNext {
+        | Some(nextHandler) =>
+          <button className={passed ? "btn btn-primary" : "btn btn-warning"} onClick={_ => nextHandler()}>
+            {React.string("下一課")}
+          </button>
+        | None => React.null
+        }}
       </div>
     </div>
   </div>
