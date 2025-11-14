@@ -14,9 +14,9 @@ let getRadical = (key: string): option<string> => {
 }
 
 @react.component
-let make = (~nextKey: option<string>, ~showRadicals: bool=true, ~onKeyClick: option<string => unit>=?) => {
+let make = (~nextKey: option<string>, ~showRadicals: bool=true, ~onKeyClick: option<string => unit>=?, ~highlightNextKey: bool=false) => {
   let renderKey = (key: string) => {
-    let isHighlighted = switch nextKey {
+    let isHighlighted = highlightNextKey && switch nextKey {
     | Some(next) => next->Js.String2.toUpperCase == key
     | None => false
     }

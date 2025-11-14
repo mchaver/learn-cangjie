@@ -521,7 +521,7 @@ let make = (
     }}
 
     {keyboardVisible
-      ? <AnimatedKeyboard nextKey={nextExpectedKey} lastKeyPressed={lastKeyPressed} showRadicals={true} onKeyClick={handleKeyClick} highlightNextKey={true} />
+      ? <AnimatedKeyboard nextKey={nextExpectedKey} lastKeyPressed={lastKeyPressed} showRadicals={true} onKeyClick={handleKeyClick} highlightNextKey={lesson.lessonType == Practice} />
       : React.null}
   </div>
 }
