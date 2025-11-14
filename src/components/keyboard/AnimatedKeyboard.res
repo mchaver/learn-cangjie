@@ -145,7 +145,7 @@ let playKeystrokeSound = (isCorrect: bool) => {
 }
 
 @react.component
-let make = (~nextKey: option<string>, ~lastKeyPressed: option<(string, bool)>, ~showRadicals: bool=true, ~onKeyClick: option<string => unit>=?) => {
+let make = (~nextKey: option<string>, ~lastKeyPressed: option<(string, bool)>, ~showRadicals: bool=true, ~onKeyClick: option<string => unit>=?, ~highlightNextKey: bool=true) => {
   // Track animation state
   let (animatingKey, setAnimatingKey) = React.useState(() => None)
 
@@ -168,7 +168,7 @@ let make = (~nextKey: option<string>, ~lastKeyPressed: option<(string, bool)>, ~
   }, [lastKeyPressed])
 
   let renderKey = (key: string) => {
-    let isHighlighted = switch nextKey {
+    let isHighlighted = highlightNextKey && switch nextKey {
     | Some(next) => next->Js.String2.toUpperCase == key
     | None => false
     }

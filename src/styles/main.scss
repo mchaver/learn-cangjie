@@ -1395,7 +1395,7 @@ p {
 
 .practice-header,
 .test-header {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .progress-bar {
@@ -1442,10 +1442,10 @@ p {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 0.75rem;
+  padding: 0 0.75rem 0.75rem 0.75rem;
 
   @media (max-width: 768px) {
-    padding: 0.5rem;
+    padding: 0 0.5rem 0.5rem 0.5rem;
   }
 }
 
@@ -1770,6 +1770,7 @@ p {
   justify-content: center;
   gap: 1rem;
   margin: 1rem 0;
+  flex-wrap: wrap;
 
   button {
     padding: 0.5rem 1.5rem;
@@ -1810,6 +1811,15 @@ p {
 
     &:hover {
       background: color.adjust($border-color, $lightness: -10%);
+    }
+  }
+
+  .keyboard-toggle-button {
+    background: $secondary-color;
+    color: white;
+
+    &:hover {
+      background: color.adjust($secondary-color, $lightness: -10%);
     }
   }
 }

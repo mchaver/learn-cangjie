@@ -565,3 +565,23 @@ let getPracticeRepeatMode = (): practiceRepeatMode => {
 let setPracticeRepeatMode = (mode: practiceRepeatMode): unit => {
   setItem(practiceRepeatModeKey, encodePracticeRepeatMode(mode))
 }
+
+// ========================================
+// Keyboard Visibility Setting
+// ========================================
+
+let keyboardVisibilityKey = "cangjie_keyboard_visibility"
+
+// Get keyboard visibility setting (default: true)
+let getKeyboardVisibility = (): bool => {
+  switch getItem(keyboardVisibilityKey)->Js.Nullable.toOption {
+  | None => true // Default: visible
+  | Some("false") => false
+  | Some(_) => true
+  }
+}
+
+// Set keyboard visibility setting
+let setKeyboardVisibility = (visible: bool): unit => {
+  setItem(keyboardVisibilityKey, visible ? "true" : "false")
+}

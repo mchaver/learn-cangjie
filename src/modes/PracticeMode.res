@@ -30,6 +30,18 @@ let make = (
   // Track first-time multi-character practice
   let (firstTimeAttempt, setFirstTimeAttempt) = React.useState(() => 0) // 0, 1, 2 for three attempts
 
+  // Track keyboard visibility
+  let (keyboardVisible, setKeyboardVisible) = React.useState(() => LocalStorage.getKeyboardVisibility())
+
+  // Toggle keyboard visibility and save preference
+  let toggleKeyboard = () => {
+    setKeyboardVisible(prev => {
+      let newValue = !prev
+      LocalStorage.setKeyboardVisibility(newValue)
+      newValue
+    })
+  }
+
   let currentChar = lesson.characters->Belt.Array.get(inputState.currentIndex)
 
   // Determine if we're in review mode
@@ -502,9 +514,14 @@ let make = (
               {React.string("跳過")}
             </button>
           : React.null}
+        <button className="keyboard-toggle-button" onClick={_ => toggleKeyboard()}>
+          {React.string(keyboardVisible ? "隱藏鍵盤" : "顯示鍵盤")}
+        </button>
       </div>
     }}
 
-    <AnimatedKeyboard nextKey={nextExpectedKey} lastKeyPressed={lastKeyPressed} showRadicals={true} onKeyClick={handleKeyClick} />
+    {keyboardVisible
+      ? <AnimatedKeyboard nextKey={nextExpectedKey} lastKeyPressed={lastKeyPressed} showRadicals={true} onKeyClick={handleKeyClick} highlightNextKey={true} />
+      : React.null}
   </div>
 }
